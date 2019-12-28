@@ -4,22 +4,29 @@ import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import styles from './style';
-import meuIcon from '../../imagem/iconMinhaFoto/minhaFoto.png';
+import iconResponsavel from '../../imagem/iconResponsavel/minhaFoto.png';
+import iconVeiculo from '../../imagem/iconVeiculo/iconVeiculo.png';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      locAluno: {
+        coords: {
+          latitude: 0,
+          longitude: 0,
+        },
+      },
       region: {
         coords: {
           latitude: 0,
           longitude: 0,
         },
       },
-    
     };
     this.getLocation();
+    this.getLocation2();
   }
 
   getLocation() {
@@ -38,21 +45,53 @@ export default class App extends Component {
     );
   }
 
-convertTime(e){
-  // let dt = new Date(e * 1000);
-  // let hora = dt.getHours();
-  // let min = dt.getMinutes();
-  // let secs = dt.getSeconds();
+  getLocation2() {
+    Geolocation.getCurrentPosition(position => {
+      const secondPosition = JSON.stringify(position);
+      const secondPosition2 = JSON.parse(secondPosition);
 
-  // let data = hora +':'+ min +':'+ secs
-  let data = new Date(e).toLocaleDateString("pt-PTBR")
-  let time = new Date(e).toLocaleTimeString("pt-PTBR")
+      const loc2 = {
+        coords: {
+          latitude: 37.7785951,
+          longitude: -122.3914585,
+        },
+      };
 
-  let dtFim = data +'   '+ time
+      this.setState({locAluno: loc2});
 
-  return dtFim
+      console.info('===>> secondPosition2 ' + secondPosition);
+      console.info('secondPosition' + this.state.locAluno.coords.latitude);
+      console.info('secondPosition' + this.state.locAluno.coords.longitude);
+    });
+    // const loc = {
+    //   latitude: 37.7785951,
+    //   longitude: -122.3914585,
+    //   latitudeDelta: 0.0922,
+    //   longitudeDelta: 0.0421,
+    // };
 
-}
+    // const alun = this.state.locAluno;
+
+    // this.setState({alun: loc});
+
+    // console.info('===>>' + loc);
+    // console.info('===>>' + alun);
+  }
+
+  convertTime(e) {
+    // let dt = new Date(e * 1000);
+    // let hora = dt.getHours();
+    // let min = dt.getMinutes();
+    // let secs = dt.getSeconds();
+
+    // let data = hora +':'+ min +':'+ secs
+    let data = new Date(e).toLocaleDateString('pt-PTBR');
+    let time = new Date(e).toLocaleTimeString('pt-PTBR');
+
+    let dtFim = data + '   ' + time;
+
+    return dtFim;
+  }
 
   render() {
     return (
@@ -77,77 +116,27 @@ convertTime(e){
             coordinate={{
               latitude: this.state.region.coords.latitude,
               longitude: this.state.region.coords.longitude,
-              
             }}
+            // TODO title deverá receber  como parametro o nome de quem esta logado
             title={'Responsavel'}
             description={this.convertTime(this.state.region.timestamp)}
-            image={meuIcon}
-            >
+            // TODO image deverá receber a imagem do responsavel atual logado
+            image={iconResponsavel}>
             <View>
               {/* <Text>{this.convertTime(this.state.region.timestamp)}</Text> */}
             </View>
           </Marker>
+          <Marker
+            coordinate={{
+              latitude: this.state.locAluno.coords.latitude,
+              longitude: this.state.locAluno.coords.longitude,
+            }}
+            title={'Aluno'}
+            description={this.convertTime(this.state.region.timestamp)}
+            image={iconVeiculo}
+          />
         </MapView>
       </View>
     );
   }
 }
-
-// 'use strict';
-
-// import React from 'react';
-// import {StyleSheet, Text, View, Alert} from 'react-native';
-// import Geolocation from '@react-native-community/geolocation';
-
-// export default class GeolocationExample extends React.Component<
-//   {},
-//   $FlowFixMeState,
-// > {
-//   state = {
-//     initialPosition: 'unknown',
-//     lastPosition: 'unknown',
-//   };
-
-//   watchID: ?number = null;
-
-//   componentDidMount() {
-//     Geolocation.getCurrentPosition(
-//       position => {
-//         const initialPosition = JSON.stringify(position); // converter para json [Object object]
-//         this.setState({initialPosition});
-//         console.info('=====>>'+ initialPosition);
-//       },
-//       error => Alert.alert('Error', JSON.stringify(error)),
-//       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-//     );
-//     this.watchID = Geolocation.watchPosition(position => {
-//       const lastPosition = JSON.stringify(position);
-//       this.setState({lastPosition});
-//     });
-//   }
-
-//   componentWillUnmount() {
-//     this.watchID != null && Geolocation.clearWatch(this.watchID);
-//   }
-
-//   render() {
-//     return (
-//       <View>
-//         <Text>
-//           <Text style={styles.title}>Initial position: </Text>
-//           {this.state.initialPosition}
-//         </Text>
-//         <Text>
-//           <Text style={styles.title}>Current position: </Text>
-//           {this.state.lastPosition}
-//         </Text>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   title: {
-//     fontWeight: '500',
-//   },
-// });
