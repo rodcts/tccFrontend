@@ -2,9 +2,9 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import Home from './components/home';
-import ListaResponsavel from './components/listar';
-import EditarResponsavel from './components/editar';
-import ScreenResponsavel from './components/mapa';
+import ListaResponsavel from './components/responsavel/listar';
+import EditarResponsavel from './components/responsavel/editar';
+import ScreenResponsavel from './components/responsavel/mapa';
 
 const AppNavigator = createStackNavigator({
   Home: {
