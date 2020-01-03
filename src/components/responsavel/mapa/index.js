@@ -24,59 +24,70 @@ export default class App extends Component {
           longitude: 0,
         },
       },
+      locResponsavel: {
+        coords: {
+          latitude: 0,
+          longitude: 0,
+        },
+      },
+      latitude: 0,
+      longitude: 0,
     };
-    this.getLocation();
-    this.getLocation2();
+    this.getPrimaryLocation();
+    this.getSecondLocation();
+    this.watchLocation();
+
+    // Geolocation.getCurrentPosition(info => console.log(info));
   }
 
-  getLocation() {
+  watchLocation() {
+    Geolocation.watchPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      error => Alert.alert('Error', JSON.stringify(error)),
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000,
+        distanceFilter: 1,
+      },
+    );
+  }
+
+  getPrimaryLocation() {
     Geolocation.getCurrentPosition(
       position => {
         const initialPosition = JSON.stringify(position); // converter de objeto json para texto [Object object]
         const initialPosition2 = JSON.parse(initialPosition); // converter para texto para objeto json
-        this.setState({region: initialPosition2});
-        // console.info('=====>>' + position.coords.latitude);
-        // console.info('=====>>' + initialPosition);
-        // console.info('=====>>' + initialPosition2.coords.latitude);
-        console.info('=====>> region    ' + initialPosition);
-        console.info('=====>> region  position   ' + JSON.stringify(position));
+        this.setState({locResponsavel: initialPosition2});
       },
       error => Alert.alert('Error', JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
   }
 
-  getLocation2() {
-    Geolocation.getCurrentPosition(position => {
-      const secondPosition = JSON.stringify(position);
-      const secondPosition2 = JSON.parse(secondPosition);
+  getSecondLocation() {
+    Geolocation.getCurrentPosition(
+      position => {
+        const secondPosition = JSON.stringify(position);
+        const secondPosition2 = JSON.parse(secondPosition);
 
-      const loc2 = {
-        coords: {
-          latitude: 37.7785951,
-          longitude: -122.3914585,
-        },
-      };
-
-      this.setState({locAluno: loc2});
-
-      console.info('===>> secondPosition2 ' + secondPosition);
-      console.info('secondPosition' + this.state.locAluno.coords.latitude);
-      console.info('secondPosition' + this.state.locAluno.coords.longitude);
-    });
-    // const loc = {
-    //   latitude: 37.7785951,
-    //   longitude: -122.3914585,
-    //   latitudeDelta: 0.0922,
-    //   longitudeDelta: 0.0421,
-    // };
-
-    // const alun = this.state.locAluno;
-
-    // this.setState({alun: loc});
-
-    // console.info('===>>' + loc);
-    // console.info('===>>' + alun);
+        const loc2 = {
+          coords: {
+            latitude: 37.7785951,
+            longitude: -122.3914585,
+          },
+        };
+        // this.setState({locAluno: secondPosition2});
+        this.setState({locAluno: loc2});
+      },
+      error => Alert.alert('Error', JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+    );
   }
 
   convertTime(e) {
@@ -97,6 +108,10 @@ export default class App extends Component {
   render() {
     return (
       <View>
+        {/* <Text>
+          Latitude {this.state.latitude} Longitude {this.state.longitude}
+        </Text> */}
+
         <MapView
           style={styles.mapStyle}
           // showsUserLocation={true}
@@ -107,24 +122,27 @@ export default class App extends Component {
           // maxZoomLevel={20}
           enableHighAccuracy={true}
           region={{
-            latitude: this.state.region.coords.latitude,
-            longitude: this.state.region.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: this.state.locResponsavel.coords.latitude,
+            longitude: this.state.locResponsavel.coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
           }}>
           <Marker
             // style={styles.iconMarker}
             coordinate={{
-              latitude: this.state.region.coords.latitude,
-              longitude: this.state.region.coords.longitude,
+              latitude: this.state.locResponsavel.coords.latitude,
+              longitude: this.state.locResponsavel.coords.longitude,
             }}
             // TODO title deverá receber  como parametro o nome de quem esta logado
             title={'Responsavel'}
-            description={this.convertTime(this.state.region.timestamp)}
+            description={this.convertTime(this.state.locResponsavel.timestamp)}
             // TODO image deverá receber a imagem do responsavel atual logado
-            image={iconResponsavel}>
+            // image={iconResponsavel} // deprecated
+          >
             <View>
-              {/* <Text>{this.convertTime(this.state.region.timestamp)}</Text> */}
+              <Image
+                style={{borderRadius: 50}}
+                source={iconResponsavel}></Image>
             </View>
           </Marker>
           <Marker
@@ -133,9 +151,13 @@ export default class App extends Component {
               longitude: this.state.locAluno.coords.longitude,
             }}
             title={'Aluno'}
-            description={this.convertTime(this.state.region.timestamp)}
-            image={iconVeiculo}
-          />
+            description={this.convertTime(this.state.locAluno.timestamp)}
+            // image={iconVeiculo} // deprecated
+          >
+            <View>
+              <Image style={{borderRadius: 50}} source={iconVeiculo}></Image>
+            </View>
+          </Marker>
         </MapView>
       </View>
     );

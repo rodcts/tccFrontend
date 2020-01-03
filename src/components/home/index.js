@@ -14,6 +14,7 @@ export default class Home extends Component {
 
     static navigationOptions = {
         title: 'Home',
+        header:null,
         headerStyle: {
             backgroundColor: '#5DBCD2',
         },
@@ -26,7 +27,7 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1, alignItem: 'center', justifyContent: 'center'}}>
                 <View>
                     <TouchableOpacity
                         title="Tela Responsavel"

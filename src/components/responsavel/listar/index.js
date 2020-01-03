@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 
 import api from '../../../services/api';
@@ -43,16 +43,17 @@ export default class ListaResponsavel extends Component {
   _handleLista = async () => {
     try {
       let response = await api.listaResponsavel();
+      responseJson = JSON.stringify(response)
+      responseObj = JSON.parse(responseJson)
 
-      let res = this.setState(
+      this.setState(
         {
-          data: response,
-          loading: false
+          data: responseObj,
+          loading: false,
         },
         function() {},
       );
-      
-      return res;
+
     } catch (error) {
       return error;
     }
@@ -86,7 +87,7 @@ export default class ListaResponsavel extends Component {
             keyExtractor={item => item._id}
             data={this.state.data}
             renderItem={({item}) => (
-              <View style={{margin: 15, padding: 15}}>
+              <View style={{margin: 15, padding: 15, borderBottomWidth: 1}}>
                 <TextInput
                   style={{color: '#000000'}}
                   onChangeText={text => this._handleChangeText(text)}
@@ -104,10 +105,12 @@ export default class ListaResponsavel extends Component {
                   }}>
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate(
-                        'EditarResponsavel',
-                        this.state.data,
-                      )
+                      this.props.navigation.navigate('EditarResponsavel', {
+                        _id: item._id,
+                        nome: item.nome,
+                        email: item.email,
+                        telefone: item.telefone
+                      })
                     }>
                     <Image
                       style={{width: 30, height: 30}}
