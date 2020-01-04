@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import api from '../../../services/api';
+import iconUpdate from '../../../imagem/iconPlus/iconPlus2.png';
 
 export default class ListaResponsavel extends Component {
   constructor(props) {
@@ -21,16 +22,26 @@ export default class ListaResponsavel extends Component {
       data: [],
       loading: true,
     };
-
     this._handleLista = this._handleLista.bind(this);
   }
   static navigationOptions = {
-    // title: 'Lista',
+    headerRight: (
+      <View>
+        <TouchableOpacity
+          onPress={() => this._insertResponsavel} //TODO criar o metodo que chame o componente de inserir um novo responsavel
+        >
+          <Image
+            style={{width: 30, height: 30, marginRight: 29, borderRadius: 30}}
+            source={iconUpdate}></Image>
+          <Text></Text>
+        </TouchableOpacity>
+      </View>
+    ),
     headerStyle: {
-      backgroundColor: '#5DBCD2',
+      backgroundColor: '#FFFFFF',
     },
     headerBackTitle: null,
-    headerTintColor: '#fff',
+    headerTintColor: '#000',
     headerTitleStyle: {
       fontWeight: 'bold',
     },
@@ -43,8 +54,8 @@ export default class ListaResponsavel extends Component {
   _handleLista = async () => {
     try {
       let response = await api.listaResponsavel();
-      responseJson = JSON.stringify(response)
-      responseObj = JSON.parse(responseJson)
+      responseJson = JSON.stringify(response);
+      responseObj = JSON.parse(responseJson);
 
       this.setState(
         {
@@ -53,11 +64,21 @@ export default class ListaResponsavel extends Component {
         },
         function() {},
       );
-
     } catch (error) {
       return error;
     }
   };
+
+  _insertResponsavel() {
+    try {
+      e = 'EditarResponsavel';
+      const {navigate} = this.props.navigation;
+
+      navigate(e);
+    } catch (err) {
+      console.info('Erro handleNewResponsavel' + err);
+    }
+  }
 
   _handleChangeText = text => {
     this.setState({dtNome: text});
@@ -76,8 +97,13 @@ export default class ListaResponsavel extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <View style={{alignItem: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="#0000ff" />
+        <View
+          style={{
+            marginTop: 150,
+            alignItem: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#5DBCD2" />
         </View>
       );
     } else {
@@ -96,6 +122,11 @@ export default class ListaResponsavel extends Component {
                 <TextInput
                   style={{color: '#000000'}}
                   onChangeText={text => this._handleChangeText(text)}
+                  value={item.cpf}
+                />
+                <TextInput
+                  style={{color: '#000000'}}
+                  onChangeText={text => this._handleChangeText(text)}
                   value={item.email}
                 />
                 <View
@@ -108,19 +139,18 @@ export default class ListaResponsavel extends Component {
                       this.props.navigation.navigate('EditarResponsavel', {
                         _id: item._id,
                         nome: item.nome,
-                        email: item.email,
-                        telefone: item.telefone
+                        cpf: item.cpf,
                       })
                     }>
                     <Image
-                      style={{width: 30, height: 30}}
+                      style={{width: 30, height: 30, borderRadius: 30}}
                       source={require('../../../imagem/iconListar/editar.png')}
                     />
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={this.handleExcluir}>
                     <Image
-                      style={{width: 30, height: 30}}
+                      style={{width: 30, height: 30, borderRadius: 30}}
                       source={require('../../../imagem/iconListar/excluir.png')}
                     />
                   </TouchableOpacity>

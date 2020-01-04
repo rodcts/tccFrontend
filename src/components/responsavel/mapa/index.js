@@ -63,10 +63,18 @@ export default class App extends Component {
       position => {
         const initialPosition = JSON.stringify(position); // converter de objeto json para texto [Object object]
         const initialPosition2 = JSON.parse(initialPosition); // converter para texto para objeto json
-        this.setState({locResponsavel: initialPosition2});
+        
+        const locationFirst = {
+          coords: {
+            latitude: 37.7785951,
+            longitude: -122.3914585,
+          },
+        };
+
+        this.setState({locResponsavel: locationFirst});
       },
       error => Alert.alert('Error', JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
@@ -76,14 +84,8 @@ export default class App extends Component {
         const secondPosition = JSON.stringify(position);
         const secondPosition2 = JSON.parse(secondPosition);
 
-        const loc2 = {
-          coords: {
-            latitude: 37.7785951,
-            longitude: -122.3914585,
-          },
-        };
-        // this.setState({locAluno: secondPosition2});
-        this.setState({locAluno: loc2});
+        this.setState({locAluno: secondPosition2});
+        // this.setState({locAluno: loc2});
       },
       error => Alert.alert('Error', JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
@@ -114,18 +116,21 @@ export default class App extends Component {
 
         <MapView
           style={styles.mapStyle}
-          // showsUserLocation={true}
+          showsMyLocationButton={false}
+          showsUserLocation={true}
           // showsMyLocationButton={true}
-          // showsPointsOfInterest={true}
-          // showsCompass={true}
-          // minZoomLevel={0}
-          // maxZoomLevel={20}
+          userLocationAnnotationTitle='Oieeeee' // O título da anotação para a localização atual do usuário. Isso só funciona se showsUserLocationfor verdade. 
+          // followsUserLocation={true}
+          loadingEnabled={true}
+          showsCompass={false}
+          minZoomLevel={0}
+          maxZoomLevel={20}
           enableHighAccuracy={true}
           region={{
             latitude: this.state.locResponsavel.coords.latitude,
             longitude: this.state.locResponsavel.coords.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            latitudeDelta: 0.551,
+            longitudeDelta: 0.555 ,
           }}>
           <Marker
             // style={styles.iconMarker}
