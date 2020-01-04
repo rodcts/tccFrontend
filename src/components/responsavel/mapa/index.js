@@ -29,16 +29,24 @@ export default class App extends Component {
           latitude: 0,
           longitude: 0,
         },
+
+        latitude: 0,
+        longitude: 0,
       },
-      latitude: 0,
-      longitude: 0,
     };
+    // this.getPrimaryLocation = this.getPrimaryLocation.bind(this);
+    // this.getSecondLocation = this.getSecondLocation.bind(this);
     this.getPrimaryLocation();
     this.getSecondLocation();
-    this.watchLocation();
+    // this.watchLocation();
 
     // Geolocation.getCurrentPosition(info => console.log(info));
   }
+
+  static navigationOptions = {
+    header: null,
+  };
+
 
   watchLocation() {
     Geolocation.watchPosition(
@@ -63,7 +71,7 @@ export default class App extends Component {
       position => {
         const initialPosition = JSON.stringify(position); // converter de objeto json para texto [Object object]
         const initialPosition2 = JSON.parse(initialPosition); // converter para texto para objeto json
-        
+
         const locationFirst = {
           coords: {
             latitude: 37.7785951,
@@ -74,7 +82,7 @@ export default class App extends Component {
         this.setState({locResponsavel: locationFirst});
       },
       error => Alert.alert('Error', JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
   }
 
@@ -108,6 +116,12 @@ export default class App extends Component {
   }
 
   render() {
+    EdgePadding = {
+      top: 30,
+      right: 30,
+      bottom: 30,
+      left: 30,
+    };
     return (
       <View>
         {/* <Text>
@@ -116,21 +130,25 @@ export default class App extends Component {
 
         <MapView
           style={styles.mapStyle}
-          showsMyLocationButton={false}
+          showsMyLocationButton={true}
           showsUserLocation={true}
-          // showsMyLocationButton={true}
-          userLocationAnnotationTitle='Oieeeee' // O título da anotação para a localização atual do usuário. Isso só funciona se showsUserLocationfor verdade. 
-          // followsUserLocation={true}
+          userLocationAnnotationTitle={this.convertTime(
+            this.state.locAluno.timestamp,
+          )} // O título da anotação para a localização atual do usuário. Isso só funciona se showsUserLocationfor verdade.
+          followsUserLocation={false}
           loadingEnabled={true}
-          showsCompass={false}
+          scrollEnabled={true}
+          showsCompass={true}
           minZoomLevel={0}
           maxZoomLevel={20}
+          zoomTapEnabled={true}
           enableHighAccuracy={true}
+          // mapPadding={EdgePadding}
           region={{
             latitude: this.state.locResponsavel.coords.latitude,
             longitude: this.state.locResponsavel.coords.longitude,
             latitudeDelta: 0.551,
-            longitudeDelta: 0.555 ,
+            longitudeDelta: 0.555,
           }}>
           <Marker
             // style={styles.iconMarker}
@@ -140,17 +158,17 @@ export default class App extends Component {
             }}
             // TODO title deverá receber  como parametro o nome de quem esta logado
             title={'Responsavel'}
-            description={this.convertTime(this.state.locResponsavel.timestamp)}
+            description={this.convertTime(this.state.locAluno.timestamp)}
             // TODO image deverá receber a imagem do responsavel atual logado
             // image={iconResponsavel} // deprecated
           >
             <View>
               <Image
-                style={{borderRadius: 50}}
+                style={{borderRadius: 50, width: 30, height: 30}}
                 source={iconResponsavel}></Image>
             </View>
           </Marker>
-          <Marker
+          {/* <Marker
             coordinate={{
               latitude: this.state.locAluno.coords.latitude,
               longitude: this.state.locAluno.coords.longitude,
@@ -162,7 +180,7 @@ export default class App extends Component {
             <View>
               <Image style={{borderRadius: 50}} source={iconVeiculo}></Image>
             </View>
-          </Marker>
+          </Marker> */}
         </MapView>
       </View>
     );
