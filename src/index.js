@@ -16,7 +16,7 @@ const AppNavigator = createStackNavigator({
   EditarResponsavel: {
     screen: EditarResponsavel,
   },
-  ScreenResponsavel: {
+  Mapa: {
     screen: ScreenResponsavel,
   },
 

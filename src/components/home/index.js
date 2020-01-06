@@ -1,66 +1,64 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react';
 import {
-    View, Text
-} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {
+  TouchableOpacity,
+  TextInput,
+  TouchableHighlight,
+} from 'react-native-gesture-handler';
+import styles from './style';
 export default class Home extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props);
+  }
 
+  static navigationOptions = {
+    title: 'Home',
+    header: null,
+    headerStyle: {
+      backgroundColor: '#5DBCD2',
+    },
+    headerBackTitle: null,
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
 
-    }
-
-
-    static navigationOptions = {
-        title: 'Home',
-        header:null,
-        headerStyle: {
-            backgroundColor: '#5DBCD2',
-        },
-        headerBackTitle: null,
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
-    };
-
-    render() {
-        return (
-            <View style={{flex: 1, alignItem: 'center', justifyContent: 'center'}}>
-                <View>
-                    <TouchableOpacity
-                        title="Tela Responsavel"
-                        onPress={() => this.props.navigation.navigate('ScreenResponsavel')}
-                    >
-                        <Text>Responsavel</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity
-                        title="Listar Responsavel"
-                        onPress={() => this.props.navigation.navigate('ListaResponsavel')}
-                        >
-                        <Text>Listar Responsavel</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity
-                        title="Listar Funcionario"
-                        onPress={() => this.props.navigation.navigate('ListaFuncionario')}
-                        >
-                        <Text>Listar Funcionario</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity
-                        title="Listar Veiculo"
-                        onPress={() => this.props.navigation.navigate('ListaVeiculo')}
-                        >
-                        <Text>Listar Veiculo</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <ImageBackground
+        style={{width: '100%', height: '100%'}}
+        source={require('../../imagem/template/gradiente1.png')}>
+        <View style={styles.container}>
+          <View style={styles.containerInput}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={() => this.handleInput}
+              // value={}
+              blurOnSubmit={true}
+            />
+            <TextInput
+              style={styles.textInput}
+              onChangeText={() => this.handleInput}
+              // value={}
+              blurOnSubmit={true}
+            />
+          </View>
+          <View style={styles.containerBtn}>
+            <TouchableHighlight
+              style={styles.btn}
+              onPress={() => this.props.navigation.navigate('Mapa')}>
+              <Text style={styles.textBtn}>ENTRAR</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </ImageBackground>
+    );
+  }
 }
