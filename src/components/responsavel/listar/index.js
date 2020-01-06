@@ -28,12 +28,11 @@ export default class ListaResponsavel extends Component {
     headerRight: (
       <View>
         <TouchableOpacity
-          onPress={() => this._insertResponsavel} //TODO criar o metodo que chame o componente de inserir um novo responsavel
+          onPress={() => this.props.navigation.navigate('Home')} //TODO criar o metodo que chame o componente de inserir um novo responsavel
         >
           <Image
             style={{width: 30, height: 30, marginRight: 29, borderRadius: 30}}
             source={iconUpdate}></Image>
-          <Text></Text>
         </TouchableOpacity>
       </View>
     ),
