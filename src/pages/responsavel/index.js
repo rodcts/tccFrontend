@@ -4,8 +4,8 @@ import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import styles from './style';
-import iconResponsavel from '../../../imagem/iconResponsavel/minhaFoto.png';
-import iconVeiculo from '../../../imagem/iconVeiculo/iconVeiculo.png';
+import iconResponsavel from '../../img/iconResponsavel/minhaFoto.png';
+import iconVeiculo from '../../img/iconVeiculo/iconVeiculo.png';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 
 export default class App extends Component {
@@ -44,9 +44,9 @@ export default class App extends Component {
     // Geolocation.getCurrentPosition(info => console.log(info));
   }
 
-  static navigationOptions = {
-    header: null,
-  };
+  // static navigationOptions = {
+  //   header: null,
+  // };
 
   watchLocation() {
     Geolocation.watchPosition(

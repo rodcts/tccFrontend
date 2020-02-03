@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import api from '../../../services/api';
-import iconUpdate from '../../../imagem/iconPlus/iconPlus2.png';
+import iconUpdate from '../../../img/iconPlus/iconPlus2.png';
 
 export default class ListaResponsavel extends Component {
   constructor(props) {
@@ -143,14 +143,14 @@ export default class ListaResponsavel extends Component {
                     }>
                     <Image
                       style={{width: 30, height: 30, borderRadius: 30}}
-                      source={require('../../../imagem/iconListar/editar.png')}
+                      source={require('../../../img/iconListar/editar.png')}
                     />
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={this.handleExcluir}>
                     <Image
                       style={{width: 30, height: 30, borderRadius: 30}}
-                      source={require('../../../imagem/iconListar/excluir.png')}
+                      source={require('../../../img/iconListar/excluir.png')}
                     />
                   </TouchableOpacity>
                 </View>

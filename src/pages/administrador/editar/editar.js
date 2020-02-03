@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import api from '../../../services/api';
+import styles from './style';
 
 export default class editResp extends Component {
   constructor(props) {
