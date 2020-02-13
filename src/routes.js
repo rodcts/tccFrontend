@@ -1,10 +1,17 @@
+import React from 'react';
+import {TouchableOpacity, Image} from 'react-native';
+
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import ScreenChangeLogin from './pages/changeLogin/index';
 import ScreenAdministrador from './pages/administrador/index';
-import ScreenListaResponsavel from './pages/administrador/listar/index';
-import ScreenEditarResponsavel from './pages/administrador/editar/index';
+import ScreenListaResponsavel from './pages/administrador/listarResponsavel/index';
+import ScreenEditarResponsavel from './pages/administrador/editarResponsavel/index';
+import ScreenListaFuncionario from './pages/administrador/listarFuncionario/index';
+import ScreenEditarFuncionario from './pages/administrador/editarFuncionario/index';
+import ScreenListaVeiculo from './pages/administrador/listarVeiculo/index';
+import ScreenEditarVeiculo from './pages/administrador/editarVeiculo/index';
 import ScreenResponsavel from './pages/responsavel/index';
 import ScreenLoginResponsavel from './pages/login/responsavel/index';
 import ScreenLoginAdministrador from './pages/login/administrador/index';
@@ -12,8 +19,14 @@ import ScreenLoginTransportador from './pages/login/transportador/index';
 
 const AppNavigator = createStackNavigator(
   {
-    ChangeLogin: {
-      screen: ScreenChangeLogin,
+    // ChangeLogin: {
+    //   screen: ScreenChangeLogin,
+    // },
+    LoginResponsavel: {
+      screen: ScreenLoginResponsavel,
+      navigationOptions: {
+        title: 'Responsavel ',
+      },
     },
     Administrador: {
       screen: ScreenAdministrador,
@@ -24,10 +37,28 @@ const AppNavigator = createStackNavigator(
     ListaResponsavel: {
       screen: ScreenListaResponsavel,
     },
-    EditarResponsavel: {
+    EditaResponsavel: {
       screen: ScreenEditarResponsavel,
       navigationOptions: {
         title: 'Editar Responsavel',
+      },
+    },
+    ListaFuncionario: {
+      screen: ScreenListaFuncionario,
+    },
+    Editafuncionario: {
+      screen: ScreenEditarFuncionario,
+      navigationOptions: {
+        title: 'Editar Funcionario',
+      },
+    },
+    ListaVeiculo: {
+      screen: ScreenListaVeiculo,
+    },
+    EditaVeiculo: {
+      screen: ScreenEditarVeiculo,
+      navigationOptions: {
+        title: 'Editar Veiculo',
       },
     },
     Mapa: {
@@ -36,33 +67,29 @@ const AppNavigator = createStackNavigator(
         title: 'Mapa',
       },
     },
-    LoginResponsavel: {
-      screen: ScreenLoginResponsavel,
-      navigationOptions: {
-        title: 'Login Responsavel',
-      },
-    },
+
     LoginAdministrador: {
       screen: ScreenLoginAdministrador,
       navigationOptions: {
-        title: 'Login Administrador',
+        title: 'Administrador',
       },
     },
     LoginTransportador: {
       screen: ScreenLoginTransportador,
       navigationOptions: {
-        title: 'Login Transportador',
+        title: 'Transportador',
       },
     },
 
-    InitialRouteName: 'ChangeLogin',
+    InitialRouteName: 'LoginResponsavel',
   },
   {
     defaultNavigationOptions: {
       headerTintColor: '#fff',
-      headerStyle: {
-        backgroundColor: '#000',
-      },
+      headerShown: false,
+      // headerStyle: {
+      //   backgroundColor: '#000',
+      // },
     },
   },
 );

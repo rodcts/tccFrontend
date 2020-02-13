@@ -19,11 +19,16 @@ export default class ScreenAdministrador extends Component {
     const {navigate} = this.props.navigation;
     console.log(switchAction);
     switch (switchAction) {
-      case 'listar':
-        navigate('ListaResponsavel')
+      case 'listarResponsaveis':
+        navigate('ListaResponsavel');
+
         break;
-      case 'editar':
-        navigate('EditaResponsavel')
+      case 'listarFuncionarios':
+        navigate('ListaFuncionario');
+
+        break;
+      case 'listarVeiculos':
+        navigate('ListaVeiculo');
 
         break;
       default:
@@ -35,12 +40,16 @@ export default class ScreenAdministrador extends Component {
       <View>
         <Text>TELA ADMINISTRADOR</Text>
         <TouchableHighlight
-          onPress={(value = 'listar') => this.handleAdmin(value)}>
-          <Text>Listar</Text>
+          onPress={(value = 'listarResponsaveis') => this.handleAdmin(value)}>
+          <Text>Listar Responsaveis</Text>
         </TouchableHighlight>
         <TouchableHighlight
-          onPress={(value = 'editar') => this.handleAdmin(value)}>
-          <Text>Editar</Text>
+          onPress={(value = 'listarFuncionarios') => this.handleAdmin(value)}>
+          <Text>Listar Funcionarios</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={(value = 'listarVeiculos') => this.handleAdmin(value)}>
+          <Text>Listar Veiculos</Text>
         </TouchableHighlight>
       </View>
     );

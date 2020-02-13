@@ -13,14 +13,16 @@ import {
 } from 'react-native';
 
 import api from '../../../services/api';
+import styles from './style';
 import iconUpdate from '../../../img/iconPlus/iconPlus2.png';
 
-export default class ListaResponsavel extends Component {
+export default class ListaVeiculo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
       loading: true,
+      respStatus: 0,
     };
     this._handleLista = this._handleLista.bind(this);
   }
@@ -50,9 +52,17 @@ export default class ListaResponsavel extends Component {
     this._handleLista();
   }
 
+  componentWillUpdate() {
+    if (this.state.respStatus == 200) {
+      this._handleLista();
+      
+    }
+  }
+
+
   _handleLista = async () => {
     try {
-      let response = await api.listaResponsavel();
+      let response = await api.listaVeiculo();
       responseJson = JSON.stringify(response);
       responseObj = JSON.parse(responseJson);
 
@@ -83,15 +93,28 @@ export default class ListaResponsavel extends Component {
     this.setState({dtNome: text});
   };
 
-  handleExcluir() {
+  handleDeletando = async id => {
+    try {
+      let response = await api.deletaVeiculo(id);
+      this.setState({
+        respStatus: response.status,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleExcluir = _id => {
+    console.log('deleta veiculo  ', _id);
+
     Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      {text: 'OK', onPress: () => this.handleDeletando(_id)},
     ]);
-  }
+  };
 
   render() {
     if (this.state.loading) {
@@ -116,17 +139,27 @@ export default class ListaResponsavel extends Component {
                 <TextInput
                   style={{color: '#000000'}}
                   onChangeText={text => this._handleChangeText(text)}
-                  value={item.nome}
+                  value={item._id}
                 />
                 <TextInput
                   style={{color: '#000000'}}
                   onChangeText={text => this._handleChangeText(text)}
-                  value={item.cpf}
+                  value={item.modelo}
                 />
                 <TextInput
                   style={{color: '#000000'}}
                   onChangeText={text => this._handleChangeText(text)}
-                  value={item.email}
+                  value={item.categoria}
+                />
+                <TextInput
+                  style={{color: '#000000'}}
+                  onChangeText={text => this._handleChangeText(text)}
+                  value={item.ano}
+                />
+                <TextInput
+                  style={{color: '#000000'}}
+                  onChangeText={text => this._handleChangeText(text)}
+                  value={item.placa}
                 />
                 <View
                   style={{
@@ -135,10 +168,10 @@ export default class ListaResponsavel extends Component {
                   }}>
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate('EditarResponsavel', {
+                      this.props.navigation.navigate('EditaVeiculo', {
                         _id: item._id,
-                        nome: item.nome,
-                        cpf: item.cpf,
+                        modelo: item.modelo,
+                        placa: item.placa,
                       })
                     }>
                     <Image
@@ -147,7 +180,8 @@ export default class ListaResponsavel extends Component {
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity onPress={this.handleExcluir}>
+                  <TouchableOpacity
+                    onPress={() => this.handleExcluir(item._id)}>
                     <Image
                       style={{width: 30, height: 30, borderRadius: 30}}
                       source={require('../../../img/iconListar/excluir.png')}

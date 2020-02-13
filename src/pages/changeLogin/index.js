@@ -13,8 +13,7 @@ export default class ChangeLogin extends Component {
     this.handlePage = this.handlePage.bind(this);
   }
 
-  handlePage = (nameUsuario) => {
-      
+  handlePage = nameUsuario => {
     const {navigate} = this.props.navigation;
 
     let {usuario} = this.state;
@@ -30,7 +29,7 @@ export default class ChangeLogin extends Component {
         break;
 
       case 'funcionario':
-        navigate('LoginFuncionario');
+        navigate('LoginTransportador');
         break;
 
       default:
