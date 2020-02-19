@@ -1,5 +1,6 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+// import {TouchableOpacity, Image, View} from 'react-native';
+// import {Icon, Button} from 'react-native-material-ui';
 
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -85,10 +86,11 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: '#fff',
-      headerShown: true,
+      headerTintColor: '#000',
+      // headerShown: true,
+      headerBackTitle: ' ',
       headerStyle: {
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
       },
     },
   },
