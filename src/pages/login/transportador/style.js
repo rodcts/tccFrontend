@@ -18,7 +18,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   loginFormView: {
-    flex: 1,
+    // flex: 1,
+    // backgroundColor: 'blue',
+    paddingTop: 30,
+    paddingBottom: 30,
   },
   loginFormTextInput: {
     height: 43,
@@ -26,18 +29,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#eaeaea',
-    backgroundColor: '#fafafa',
-    paddingLeft: 10,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 5,
-    marginBottom: 5,
+    // backgroundColor: '#fafafa',
+    margin: 15,
+    padding: 5,
+  },
+  loginViewButton: {
+    // backgroundColor: 'red',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingTop: 30,
+    paddingBottom: 30,
   },
   loginButton: {
     backgroundColor: '#3897f1',
     borderRadius: 5,
     height: 45,
-    marginTop: 10,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+    // color: '#000',
   },
   fbLoginButton: {
     height: 45,
@@ -53,9 +62,28 @@ const styles = StyleSheet.create({
       marginTop: 150,
       marginBottom: 30,  
       marginLeft: 180,  
-      resizeMode: 'contain'
 
   },
+  containerChangeUser: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 30,
+  },
+  containerChangeUserbtn: {
+    padding: 10,
+    margin: 10,
+    flexDirection: 'row',
+    backgroundColor: '#3897f1',
+    borderRadius: 5,
+
+  },
+  logoTextUser: {
+    color: '#FFF',
+    fontSize: 8
+    
+  },
+
+
 });
 
 

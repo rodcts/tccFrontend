@@ -86,10 +86,10 @@ const AppNavigator = createStackNavigator(
   {
     defaultNavigationOptions: {
       headerTintColor: '#fff',
-      headerShown: false,
-      // headerStyle: {
-      //   backgroundColor: '#000',
-      // },
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: '#000',
+      },
     },
   },
 );

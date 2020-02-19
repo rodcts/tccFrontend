@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, Image, TextInput, KeyboardAvoidingView} from 'react-native';
-import {Button} from 'react-native-elements';
+import { View, Image, TextInput, KeyboardAvoidingView} from 'react-native';
+import {Block, Button, Text, theme} from 'galio-framework';
 import styles from './style';
 import logo from '../../../img/iconLogin/iconLogin1.png';
 import api from '../../../services/api';
@@ -11,7 +11,7 @@ export default class Resp extends Component {
     this.state = {
       email: '',
       cpf: '',
-    }
+    };
   }
 
   componentDidMount() {}
@@ -59,7 +59,6 @@ export default class Resp extends Component {
     } catch (err) {
       console.info(err);
     }
-      
   }
 
   render() {
@@ -75,20 +74,24 @@ export default class Resp extends Component {
               style={styles.loginFormTextInput}
               autoCapitalize="none"
               onChangeText={email => this.setState({email})}
-              value={this.state.email}            />
+              value={this.state.email}
+            />
             <TextInput
               placeholder="CPF"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
               onChangeText={cpf => this.setState({cpf})}
-              value={this.state.cpf}  
+              value={this.state.cpf}
             />
+          </View>
+          <View style={styles.loginViewButton}>
             <Button
-              buttonStyle={styles.loginButton}
+              style={styles.loginButton}
               onPress={() => this.onLoginPress()}
-              title="Login"
-            />
+              title="Login">
+              Login
+            </Button>
           </View>
         </View>
       </KeyboardAvoidingView>
