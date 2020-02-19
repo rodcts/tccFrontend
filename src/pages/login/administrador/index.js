@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {
   View,
-  Button,
   KeyboardAvoidingView,
   TextInput,
   Image,
 } from 'react-native';
+import {Block, Button, Text, theme} from 'galio-framework';
+
+import {
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native-gesture-handler';
 import styles from './style';
 import logo from '../../../img/iconLogin/login-admin.jpeg';
 import api from '../../../services/api';
@@ -24,28 +29,28 @@ export default class Resp extends Component {
   componentWillUnmount() {}
 
   async onLoginPress() {
-    //  await this.props.navigation.navigate('ListaResponsavel');
+    await this.props.navigation.navigate('ListaResponsavel');
 
-    try {
-      let data = {
-        email: this.state.email,
-        cpf: this.state.cpf,
-      };
+    // try {
+    //   let data = {
+    //     email: this.state.email,
+    //     cpf: this.state.cpf,
+    //   };
 
-      console.info('====>', data);
+    //   console.info('====>', data);
 
-      let res = await api.authAdmin(data);
+    //   let res = await api.authAdmin(data);
 
-      console.info('====> ', res);
+    //   console.info('====> ', res);
 
-      if (res.data.autenticacao.cargo === 'administrador') {
-        await handleLogin(res);
-      } else {
-        alert(`Você não é um administrador!`);
-      }
-    } catch (err) {
-      console.info(err);
-    }
+    //   if (res.data.autenticacao.cargo === 'administrador') {
+    //     await handleLogin(res);
+    //   } else {
+    //     alert(`Você não é um administrador!`);
+    //   }
+    // } catch (err) {
+    //   console.info(err);
+    // }
   }
 
   async handleLogin(res) {
@@ -103,11 +108,14 @@ export default class Resp extends Component {
               onChangeText={cpf => this.setState({cpf})}
               value={this.state.cpf}
             />
+          </View>
+          <View style={styles.loginViewButton}>
             <Button
-              buttonStyle={styles.loginButton}
+              style={styles.loginButton}
               onPress={() => this.onLoginPress()}
-              title="Login"
-            />
+              title="Login">
+              Login
+            </Button>
           </View>
         </View>
       </KeyboardAvoidingView>
