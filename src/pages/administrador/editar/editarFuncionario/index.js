@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TouchableOpacity, FlatList} from 'react-native-gesture-handler';
-import api from '../../../services/api';
+import api from '../../../../services/api';
 import styles from './style';
 
 export default class EditarResponsavel extends Component {
@@ -220,9 +220,10 @@ export default class EditarResponsavel extends Component {
                 marginRight: 20,
               }}>
               <TouchableOpacity>
-                <Image
+                {/* <Image
                   style={{width: 30, height: 30, borderRadius: 30}}
-                  source={require('../../../img/iconSalvar/salvar.png')}></Image>
+                  source={require('../../../img/iconSalvar/salvar.png')}></Image> */}
+                <Icon name="users" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
 
@@ -231,9 +232,10 @@ export default class EditarResponsavel extends Component {
                 marginLeft: 20,
               }}>
               <TouchableOpacity>
-                <Image
+                {/* <Image
                   style={{width: 30, height: 30, borderRadius: 30}}
-                  source={require('../../../img/iconCancelar/cancelar.png')}></Image>
+                  source={require('../../../img/iconCancelar/cancelar.png')}></Image> */}
+                <Icon name="users" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
           </View>

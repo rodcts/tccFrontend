@@ -7,6 +7,9 @@ import styles from './style';
 import iconResponsavel from '../../img/iconResponsavel/minhaFoto.png';
 import iconVeiculo from '../../img/iconVeiculo/iconVeiculo.png';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import {Header} from 'react-native/Libraries/NewAppScreen';
+import Icon from 'react-native-ionicons';
+import {Button} from 'react-native-paper';
 
 export default class App extends Component {
   constructor(props) {
@@ -115,6 +118,15 @@ export default class App extends Component {
     return dtFim;
   }
 
+  static navigationOptions = ({navigation}) => {
+    const {params} = navigation.state;
+    return {
+      headerRight: (
+        <Button title="Test" onPress={() => console.info('works!')} />
+      ),
+    };
+  };
+
   render() {
     EdgePadding = {
       top: 30,
@@ -149,7 +161,6 @@ export default class App extends Component {
             latitudeDelta: 0.551,
             longitudeDelta: 0.555,
           }}>
-       
           <Marker
             // style={styles.iconMarker}
             coordinate={{

@@ -1,16 +1,8 @@
 import React, {Component} from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  Image,
-} from 'react-native';
-import {Block, Button, Text, theme} from 'galio-framework';
+import {View, KeyboardAvoidingView, TextInput, Image} from 'react-native';
+import {Button} from 'galio-framework';
+import {Avatar} from 'react-native-elements';
 
-import {
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native-gesture-handler';
 import styles from './style';
 import logo from '../../../img/iconLogin/login-admin.jpeg';
 import api from '../../../services/api';
@@ -22,42 +14,36 @@ export default class Resp extends Component {
     this.state = {
       email: '',
       cpf: '',
+      nome: '',
     };
   }
   componentDidMount() {}
 
   componentWillUnmount() {}
 
-  async onLoginPress() {
-    await this.props.navigation.navigate('ListaResponsavel');
-
-    // try {
-    //   let data = {
-    //     email: this.state.email,
-    //     cpf: this.state.cpf,
-    //   };
-
-    //   console.info('====>', data);
-
-    //   let res = await api.authAdmin(data);
-
-    //   console.info('====> ', res);
-
-    //   if (res.data.autenticacao.cargo === 'administrador') {
-    //     await handleLogin(res);
-    //   } else {
-    //     alert(`Você não é um administrador!`);
-    //   }
-    // } catch (err) {
-    //   console.info(err);
-    // }
-  }
-
   async handleLogin(res) {
     try {
+      // TODO tirar comentario quando tiver tudo OK
+
+      // await this.props.navigation.navigate('Administrador', {nome: 'TESTE'});
+
+      let data = {
+        email: this.state.email,
+        cpf: this.state.cpf,
+        nome: '',
+      };
+
+      const res = await api.authAdmin(data);
+
+      this.setState({nome: res.data.autenticacao.nome});
+
+      console.info('passagem de parametro ===>',this.state.nome);
+
       switch (res.status) {
         case 200:
-          await this.props.navigation.navigate('ListaResponsavel');
+          await this.props.navigation.navigate('Administrador', {
+            nome: this.state.nome,
+          });
           break;
 
         case 400:
@@ -112,7 +98,7 @@ export default class Resp extends Component {
           <View style={styles.loginViewButton}>
             <Button
               style={styles.loginButton}
-              onPress={() => this.onLoginPress()}
+              onPress={() => this.handleLogin()}
               title="Login">
               Login
             </Button>

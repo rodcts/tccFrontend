@@ -8,8 +8,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TouchableOpacity, FlatList} from 'react-native-gesture-handler';
-import api from '../../../services/api';
+import api from '../../../../services/api';
 import styles from './style';
+import {Icon} from 'react-native-elements';
 
 export default class EditarResponsavel extends Component {
   constructor(props) {
@@ -17,9 +18,18 @@ export default class EditarResponsavel extends Component {
 
     this.state = {
       data: [],
+      body: [],
       id: this.props.navigation.state.params._id, // passagem do parametro _id
-      cpf: this.props.navigation.state.params.cpf, // passagem do parametro _id
-      nome: this.props.navigation.state.params.nome,
+      cpf: this.props.navigation.state.params.cpf, // passagem do parametro cpf
+      nome: this.props.navigation.state.params.nome, // passagem do parametro nome
+      rua: '',
+      numero: 0,
+      bairro: '',
+      cidade: '',
+      estado: '',
+      email: '',
+      telefone: '',
+      celular: '',
       loading: true,
     };
 
@@ -48,12 +58,10 @@ export default class EditarResponsavel extends Component {
     try {
       const {cpf} = this.state;
       let response = await api.buscarResponsavel(this.state.cpf);
-      responseJson = JSON.stringify(response);
-      responseObj = JSON.parse(responseJson);
 
       this.setState(
         {
-          data: responseObj,
+          data: response,
           loading: false,
         },
         function() {},
@@ -63,14 +71,47 @@ export default class EditarResponsavel extends Component {
     }
   }
 
+  componentDidMount() {
+    this.findResponsavel();
+    const {data} = this.state;
+  }
+
   //TODO criar componente que mostre todo os dados do usuario
-  dataResponsavel() {
-    //
+
+  // _handleChangeText = (
+  //   nome,
+  //   cpf,
+  //   email,
+  //   telefone,
+  //   celular,
+  //   rua,
+  //   numero,
+  //   bairro,
+  //   cidade,
+  //   estado,
+  // ) => {
+  //   (this.state.nome = nome),
+  //     (this.state.cpf = cpf),
+  //     (this.state.email = email),
+  //     (this.state.telefone = telefone),
+  //     (this.state.celular = celular),
+  //     (this.state.rua = rua),
+  //     (this.state.numero = numero),
+  //     (this.state.bairro = bairro),
+  //     (this.state.cidade = cidade),
+  //     (this.state.estado = estado);
+  // };
+
+  async handleUpdate() {
+    try {
+      let resp = await api.atualizarResponsavel(this.state.id, body);
+      console.info('resp ===>', resp);
+    } catch (error) {}
   }
 
   render() {
-    this.findResponsavel();
-    const {data} = this.state;
+    // this.findResponsavel();
+    // const {data} = this.state;
 
     if (this.state.loading) {
       return (
@@ -115,28 +156,28 @@ export default class EditarResponsavel extends Component {
 
                       <TextInput
                         // style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item.nome}
+                        onChangeText={nome => this.setState({nome})}
+                        value={this.state.nome}
+                        placeholder={item.nome}
                       />
+                      <Text>{item.cpf}</Text>
                       <TextInput
-                        // style={{color: '#00'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item.cpf}
+                        //   style={{color: '#fff'}}
+                        onChangeText={email => this.setState({email})}
+                        value={this.state.email}
+                        placeholder={item.email}
                       />
                       <TextInput
                         //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item.email}
+                        onChangeText={telefone => this.setState({telefone})}
+                        value={this.state.telefone}
+                        placeholder={item.telefone}
                       />
                       <TextInput
                         //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item.telefone}
-                      />
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item.celular}
+                        onChangeText={celular => this.setState({celular})}
+                        value={this.state.celular}
+                        placeholder={item.celular}
                       />
                     </View>
                     <Text
@@ -151,30 +192,35 @@ export default class EditarResponsavel extends Component {
                       <View style={{flexDirection: 'row'}}>
                         <TextInput
                           // style={{color: '#fff'}}
-                          onChangeText={text => this._handleChangeText(text)}
-                          value={item.endereco.rua}
+                          onChangeText={rua => this.setState({rua})}
+                          value={this.state.rua}
+                          placeholder={item.endereco.rua}
                         />
                         <TextInput
                           style={{marginLeft: 10}}
-                          onChangeText={text => this._handleChangeText(text)}
-                          value={item.endereco.numero.toString()}
+                          onChangeText={numero => this.setState({numero})}
+                          value={this.state.numero}
+                          placeholder={item.endereco.numero.toString()}
                         />
                       </View>
                       <View>
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={text => this._handleChangeText(text)}
-                          value={item.endereco.bairro}
+                          onChangeText={bairro => this.setState({bairro})}
+                          value={this.state.bairro}
+                          placeholder={item.endereco.bairro}
                         />
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={text => this._handleChangeText(text)}
-                          value={item.endereco.cidade}
+                          onChangeText={cidade => this.setState({cidade})}
+                          value={this.state.cidade}
+                          placeholder={item.endereco.cidade}
                         />
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={text => this._handleChangeText(text)}
-                          value={item.endereco.estado}
+                          onChangeText={estado => this.setState({estado})}
+                          value={this.state.estado}
+                          placeholder={item.endereco.rua}
                         />
                       </View>
                     </View>
@@ -187,21 +233,8 @@ export default class EditarResponsavel extends Component {
                       DADOS DO ALUNO
                     </Text>
                     <View>
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item._aluno.nome}
-                      />
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item._aluno.matricula}
-                      />
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={text => this._handleChangeText(text)}
-                        value={item._aluno._cpfResponsavel}
-                      />
+                      <Text>{item._aluno[0].nome}</Text>
+                      <Text>{item._aluno[0].matricula}</Text>
                     </View>
                   </View>
                 )}
@@ -219,10 +252,8 @@ export default class EditarResponsavel extends Component {
               style={{
                 marginRight: 20,
               }}>
-              <TouchableOpacity>
-                <Image
-                  style={{width: 30, height: 30, borderRadius: 30}}
-                  source={require('../../../img/iconSalvar/salvar.png')}></Image>
+              <TouchableOpacity onPress={() => this.handleUpdate}>
+                <Icon name="check-circle" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
 
@@ -231,9 +262,7 @@ export default class EditarResponsavel extends Component {
                 marginLeft: 20,
               }}>
               <TouchableOpacity>
-                <Image
-                  style={{width: 30, height: 30, borderRadius: 30}}
-                  source={require('../../../img/iconCancelar/cancelar.png')}></Image>
+                <Icon name="user-times" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
           </View>

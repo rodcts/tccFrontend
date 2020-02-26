@@ -43,10 +43,28 @@ async function authFuncionario(req) {
     console.info('Falha no Login ')
   }
 }
-
+/**
+ * 
+ * 
+ * 
+ */
 async function listaResponsavel() {
   try {
     let res = await axios.get('http://localhost:3000/responsavel/list');
+
+    for (let key in res) {
+      if (res.hasOwnProperty(key)) {
+        let element = res[key];
+        return element;
+      }
+    }
+  } catch (error) {
+    return error;
+  }
+}
+async function listaAluno() {
+  try {
+    let res = await axios.get('http://localhost:3000/aluno/list');
 
     for (let key in res) {
       if (res.hasOwnProperty(key)) {
@@ -77,19 +95,17 @@ async function listaVeiculo() {
     let res = await axios.get('http://localhost:3000/veiculos/list', {
       headers: {Accept: 'application/json'},
     });
-
-    // for (let key in res) {
-    //   if (res.hasOwnProperty(key)) {
-    //     let element = res[key];
-    //     return element;
-    //   }
-    // }
     return res.data;
   } catch (error) {
     return error;
   }
 }
-
+/**
+ * 
+ * 
+ * 
+ * 
+ */
 async function buscarResponsavel(cpf) {
   try {
     let res = await axios.get(`http://localhost:3000/responsavel/find/${cpf}`);
@@ -106,16 +122,67 @@ async function buscarVeiculo(placa) {
     return e;
   }
 }
-
-async function atualizarResponsavel(id) {
+async function buscarFuncionario(cpf) {
   try {
-    let res = await axios.put(`http://localhost:3000/responsavel/update/${id}`);
+    let res = await axios.get(`http://localhost:3000/funcionario/find/${cpf}`);
     return res;
   } catch (e) {
     return e;
   }
 }
-
+async function buscarAluno(matricula) {
+  try {
+    let res = await axios.get(`http://localhost:3000/aluno/find/${matricula}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+async function atualizarResponsavel(id, body) {
+  try {
+    let res = await axios.put(`http://localhost:3000/responsavel/update/${id}`, body);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+async function atualizarAluno(id) {
+  try {
+    let res = await axios.put(`http://localhost:3000/aluno/update/${id}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+async function atualizarFuncionario(id) {
+  try {
+    let res = await axios.put(`http://localhost:3000/funcionario/update/${id}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+async function atualizarVeiculo(id) {
+  try {
+    let res = await axios.put(`http://localhost:3000/veiculo/update/${id}`);
+    return res;
+  } catch (e) {
+    return e;
+  }
+}
+/**
+ * 
+ * 
+ * 
+ * 
+ */
 async function deletaVeiculo(id) {
   try {
     let res = await axios.delete(`http://localhost:3000/veiculos/delete/${id}`);
@@ -145,19 +212,40 @@ async function deletaFuncionario(id) {
     console.log(err);
   }
 }
+async function deletaAluno(id) {
+  try {
+    let res = await axios.delete(
+      `http://localhost:3000/funcionario/delete/${id}`,
+    );
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default {
   api,
   authResponsavel,
   authAdmin,
   authFuncionario,
+  //
   listaResponsavel,
+  listaAluno,
   listaFuncionario,
   listaVeiculo,
+  //
   deletaVeiculo,
   deletaResponsavel,
   deletaFuncionario,
+  deletaAluno,
+  //
   atualizarResponsavel,
+  atualizarAluno,
+  atualizarFuncionario,
+  atualizarVeiculo,
+  //
   buscarResponsavel,
   buscarVeiculo,
+  buscarFuncionario,
+  buscarAluno,
 };
