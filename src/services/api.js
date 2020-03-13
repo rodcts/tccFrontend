@@ -57,29 +57,86 @@ async function authFuncionario(req) {
 
 async function adicionarResponsavel(req) {
   try {
-    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
-    let res = await axios.post('http://localhost:3000/responsavel/create');
-    return res
+    const {
+      nome,
+      cpf,
+      email,
+      endereco: { rua, numero, bairro, cidade, estado },
+      celular,
+      telefone,
+      senha,
+      tipoUsuario,
+    } = req;
+    let res = await axios.post('http://localhost:3000/responsavel/create', {
+      nome: nome,
+      cpf: cpf,
+      email: email,
+      endereco: {
+        rua: rua,
+        numero: numero,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
+      },
+      celular: celular,
+      telefone: telefone,
+      senha: senha,
+      tipoUsuario: tipoUsuario,
+    });
+    return res;
   } catch (erro) {}
 }
 
 async function adicionarAluno(req) {
   try {
-    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    const {
+      nome,
+      cpf,
+      email,
+      rua,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      celular,
+      telefone,
+    } = req;
     let res = await axios.post('http://localhost:3000/responsavel/create');
   } catch (erro) {}
 }
 
 async function adicionarFuncionario(req) {
   try {
-    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    const {
+      nome,
+      cpf,
+      email,
+      rua,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      celular,
+      telefone,
+    } = req;
     let res = await axios.post('http://localhost:3000/responsavel/create');
   } catch (erro) {}
 }
 
 async function adicionarVeiculo(req) {
   try {
-    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    const {
+      nome,
+      cpf,
+      email,
+      rua,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      celular,
+      telefone,
+    } = req;
     let res = await axios.post('http://localhost:3000/responsavel/create');
   } catch (erro) {}
 }
