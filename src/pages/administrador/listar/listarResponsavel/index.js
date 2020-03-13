@@ -116,6 +116,11 @@ export default class ListaResponsavel extends Component {
     }
   };
 
+
+  handleAdd =  () => {
+    this.props.navigation.navigate('AddResponsavel');
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -156,7 +161,7 @@ export default class ListaResponsavel extends Component {
                 name="plus-circle"
                 type="font-awesome"
                 size={30}
-                onPress={() => console.log('Works!!')}
+                onPress={() => this.handleAdd()} //TODO adicionar metodo para adicionar responsavel
               />
               <Text>ADD</Text>
             </Right>
