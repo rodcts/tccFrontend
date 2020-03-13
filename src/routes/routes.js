@@ -6,6 +6,7 @@ import ScreenAdministrador from './routes-tab';
 import ScreenListaResponsavel from '../pages/administrador/listar/listarResponsavel/index';
 import ScreenListaFuncionario from '../pages/administrador/listar/listarFuncionario/index';
 import ScreenListaVeiculo from '../pages/administrador/listar/listarVeiculo/index';
+import ScreenAddVeiculo from '../pages/administrador/adicionar/adicionarResponsavel/index';
 import ScreenResponsavel from '../pages/responsavel/index';
 import ScreenLoginResponsavel from '../pages/login/responsavel/index';
 import ScreenLoginAdministrador from '../pages/login/administrador/index';
@@ -49,7 +50,9 @@ const AppNavigator = createStackNavigator(
         title: `${navigation.state.params.nome}`,
       }),
     },
-
+    AddResponsavel: {
+      screen: ScreenAddVeiculo,
+    },
     // Mapa: {
     //   screen: ScreenResponsavel,
     //   // navigationOptions: {

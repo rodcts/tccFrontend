@@ -12,41 +12,82 @@ const api = axios.create({
 
 async function authResponsavel(req) {
   try {
-    const {email, cpf} = req
-    let res = await axios.post('http://localhost:3000/responsavel/auth', {email: email, cpf: cpf});
-    return res
-
+    const { email, cpf } = req;
+    let res = await axios.post('http://localhost:3000/responsavel/auth', {
+      email: email,
+      cpf: cpf,
+    });
+    return res;
   } catch (err) {
     alert(err);
-    console.info('Falha no Login ')
+    console.info('Falha no Login ');
   }
 }
 async function authAdmin(req) {
   try {
-    const {email, cpf} = req
-    let res = await axios.post('http://localhost:3000/funcionario/auth', {email: email, cpf: cpf});
-    return res
-
+    const { email, cpf } = req;
+    let res = await axios.post('http://localhost:3000/funcionario/auth', {
+      email: email,
+      cpf: cpf,
+    });
+    return res;
   } catch (err) {
     alert(err);
-    console.info('Falha no Login ')
+    console.info('Falha no Login ');
   }
 }
 async function authFuncionario(req) {
   try {
-    const {email, cpf} = req
-    let res = await axios.post('http://localhost:3000/funcionario/auth', {email: email, cpf: cpf});
-    return res
-
+    const { email, cpf } = req;
+    let res = await axios.post('http://localhost:3000/funcionario/auth', {
+      email: email,
+      cpf: cpf,
+    });
+    return res;
   } catch (err) {
     alert(err);
-    console.info('Falha no Login ')
+    console.info('Falha no Login ');
   }
 }
 /**
- * 
- * 
- * 
+ *
+ *
+ *
+ */
+
+async function adicionarResponsavel(req) {
+  try {
+    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    let res = await axios.post('http://localhost:3000/responsavel/create');
+    return res
+  } catch (erro) {}
+}
+
+async function adicionarAluno(req) {
+  try {
+    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    let res = await axios.post('http://localhost:3000/responsavel/create');
+  } catch (erro) {}
+}
+
+async function adicionarFuncionario(req) {
+  try {
+    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    let res = await axios.post('http://localhost:3000/responsavel/create');
+  } catch (erro) {}
+}
+
+async function adicionarVeiculo(req) {
+  try {
+    const {nome, cpf, email, rua, numero, bairro, cidade, estado, celular, telefone } = req
+    let res = await axios.post('http://localhost:3000/responsavel/create');
+  } catch (erro) {}
+}
+
+/**
+ *
+ *
+ *
  */
 async function listaResponsavel() {
   try {
@@ -93,7 +134,7 @@ async function listaFuncionario() {
 async function listaVeiculo() {
   try {
     let res = await axios.get('http://localhost:3000/veiculos/list', {
-      headers: {Accept: 'application/json'},
+      headers: { Accept: 'application/json' },
     });
     return res.data;
   } catch (error) {
@@ -101,10 +142,10 @@ async function listaVeiculo() {
   }
 }
 /**
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  */
 async function buscarResponsavel(cpf) {
   try {
@@ -139,15 +180,18 @@ async function buscarAluno(matricula) {
   }
 }
 /**
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
  */
 async function atualizarResponsavel(id, body) {
   try {
-    let res = await axios.put(`http://localhost:3000/responsavel/update/${id}`, body);
+    let res = await axios.put(
+      `http://localhost:3000/responsavel/update/${id}`,
+      body,
+    );
     return res;
   } catch (e) {
     return e;
@@ -178,10 +222,10 @@ async function atualizarVeiculo(id) {
   }
 }
 /**
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  */
 async function deletaVeiculo(id) {
   try {
@@ -228,6 +272,11 @@ export default {
   authResponsavel,
   authAdmin,
   authFuncionario,
+  //
+  adicionarResponsavel,
+  adicionarAluno,
+  adicionarFuncionario,
+  adicionarVeiculo,
   //
   listaResponsavel,
   listaAluno,

@@ -1,7 +1,8 @@
 package com.tccfrontend;
 
 import com.facebook.react.ReactActivity;
-
+import java.util.Arrays;
+import java.util.List;
 public class MainActivity extends ReactActivity {
 
   /**
@@ -12,4 +13,13 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "tccFrontend";
   }
+
+  // protected List<ReactPackage> getPackages() {
+  //         return Arrays.<ReactPackage>asList(
+  //             new MainReactPackage(),
+  //             new MapsPackage(),
+  //             new ModuleRegistryAdapter()
+  //         );
+  //     }
+
 }

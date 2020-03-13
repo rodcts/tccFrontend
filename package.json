@@ -9,6 +9,10 @@
     "test": "jest",
     "lint": "eslint ."
   },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "6.7.0"
+  },
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
     "@mapbox/polyline": "^1.1.0",
@@ -47,10 +51,12 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.0.0-beta.10",
     "react-native-tab-view": "^2.13.0",
+    "react-native-unimodules": "^0.7.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "4.0.10",
     "react-navigation-stack": "1.10.3",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-tabs": "^2.7.0",
+    "unimodules-font-interface": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.6.2",

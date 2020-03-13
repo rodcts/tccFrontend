@@ -31,6 +31,14 @@ const AppNavigator = createBottomTabNavigator(
     },
 
     defaultNavigationOptions: ({navigation}) => ({
+      tabBarOptions: {
+        style: {backgroundColor: ''},
+        tabStyle: {
+          padding: 0,
+          marginTop: 0, //Padding 0 here
+        },
+      },
+
       tabBarIcon: ({focused, tintColor}) => {
         const {routeName} = navigation.state;
 
@@ -39,13 +47,13 @@ const AppNavigator = createBottomTabNavigator(
         }
 
         if (focused && routeName === 'AlunoLista') {
-          return <Icon name="child" type="font-awesome"  />;
+          return <Icon name="child" type="font-awesome" />;
         }
         if (focused && routeName === 'FuncionarioLista') {
           return <Icon name="briefcase" type="font-awesome" />;
         }
         if (focused && routeName === 'VeiculoLista') {
-          return <Icon name="bus" type="font-awesome"  />;
+          return <Icon name="bus" type="font-awesome" />;
         }
       },
     }),

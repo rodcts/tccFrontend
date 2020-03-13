@@ -10,8 +10,22 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Arrays;
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactAdapterPackage;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+import org.unimodules.core.interfaces.Package;
+
+import com.facebook.react.ReactActivity;
+import com.airbnb.android.react.maps.MapsPackage; //<- this line is important
+import com.facebook.react.shell.MainReactPackage;
+
+
+// import com.doingmything.generated.BasePackageList;
+// import org.unimodules.core.interfaces.SingletonModule;
 
 public class MainApplication extends Application implements ReactApplication {
+  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), Arrays.<SingletonModule>asList());
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
@@ -46,7 +60,11 @@ public class MainApplication extends Application implements ReactApplication {
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
   }
-
+// Add unimodules
+  // List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+  //   new ModuleRegistryAdapter(mModuleRegistryProvider)
+  // ); 
+  // packages.addAll(unimodules);
   /**
    * Loads Flipper in React Native templates.
    *
@@ -72,4 +90,9 @@ public class MainApplication extends Application implements ReactApplication {
       }
     }
   }
+
+  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(Arrays.<Package>asList(new ReactAdapterPackage(), 
+  new ModuleRegistryAdapter(mModuleRegistryProvider)),
+  null);
+ 
 }

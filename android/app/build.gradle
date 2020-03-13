@@ -178,10 +178,17 @@ android {
     }
 }
 
+apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 dependencies {
-    implementation project(':react-native-linear-gradient')
+    addUnimodulesDependencies()
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':unimodules-react-native-adapter')
+    implementation project(':unimodules-core')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:23.0.1"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.airbnb.android:react-native-maps:0.6.0'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

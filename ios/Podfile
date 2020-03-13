@@ -44,7 +44,6 @@ target 'tccFrontend' do
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
 
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   target 'tccFrontendTests' do
     inherit! :search_paths
