@@ -29,6 +29,8 @@ export default class addResp extends Component {
         cidade: '',
         estado: '',
       },
+      tipoUsuario: 'responsavel',
+      senha: 123,
     };
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -50,6 +52,8 @@ export default class addResp extends Component {
         },
         telefone: this.state.telefone,
         celular: this.state.celular,
+        tipoUsuario: this.state.tipoUsuario,
+        senha: this.state.senha,
       };
 
       console.info('antes do req', this.state.data);
@@ -79,7 +83,7 @@ export default class addResp extends Component {
                 placeholder="Nome Completo"
                 placeholderColor="#c4c3cb"
                 autoCapitalize="characters"
-                autoFocus="true"
+                autoFocus={true}
                 onChangeText={nome => this.setState({ nome })}
                 value={this.state.nome}
               />
