@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
   SafeAreaView,
   SearchBar,
 } from 'react-native';
-import {ListItem, Icon, Avatar} from 'react-native-elements';
-import {Right} from 'native-base';
+import { ListItem, Icon, Avatar } from 'react-native-elements';
+import { Right } from 'native-base';
 
 import api from '../../../../services/api';
 import styles from './style';
@@ -36,6 +36,10 @@ export default class ListaResponsavel extends Component {
     this._handleLista();
   }
 
+  handleAdd = () => {
+    this.props.navigation.navigate('AddAluno');
+  };
+
   _handleLista = async () => {
     try {
       let response = await api.listaAluno();
@@ -54,19 +58,19 @@ export default class ListaResponsavel extends Component {
     }
   };
 
-  _insertResponsavel() {
-    try {
-      e = 'EditarResponsavel';
-      const {navigate} = this.props.navigation;
+  // _insertResponsavel() {
+  //   try {
+  //     e = 'EditarResponsavel';
+  //     const { navigate } = this.props.navigation;
 
-      navigate(e);
-    } catch (err) {
-      console.info('Erro handleNewResponsavel' + err);
-    }
-  }
+  //     navigate(e);
+  //   } catch (err) {
+  //     console.info('Erro handleNewResponsavel' + err);
+  //   }
+  // }
 
   _handleChangeText = text => {
-    this.setState({dtNome: text});
+    this.setState({ dtNome: text });
   };
 
   handleDeletando = async id => {
@@ -86,12 +90,11 @@ export default class ListaResponsavel extends Component {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'OK', onPress: () => this.handleDeletando(_id)},
+      { text: 'OK', onPress: () => this.handleDeletando(_id) },
     ]);
   };
 
   render() {
-  
     if (this.state.loading) {
       return (
         <View
@@ -105,7 +108,10 @@ export default class ListaResponsavel extends Component {
       );
     } else {
       return (
-        <View>
+        <View
+          style={{
+            flex: 1,
+          }}>
           {/* {<Header />} */}
           <View
             style={{
@@ -123,38 +129,43 @@ export default class ListaResponsavel extends Component {
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
             />
-            <View style={{paddingTop: 60, paddingLeft: 20, width: 150}}>
-          <Text>{this.state.nome}</Text>
+            <View style={{ paddingTop: 60, paddingLeft: 20, width: 150 }}>
+              <Text>{this.state.nome}</Text>
             </View>
-            <Right style={{paddingRight: 25}}>
+            <Right style={{ paddingRight: 25 }}>
               <Icon
                 name="plus-circle"
                 type="font-awesome"
                 size={30}
-                onPress={() => console.log('Works!')}
+                onPress={() => this.handleAdd()} //TODO adicionar metodo para adicionar funcionario
               />
-              <Text >ADD</Text>
+              <Text>ADD</Text>
             </Right>
           </View>
           <FlatList
             keyExtractor={item => item._id}
             data={this.state.data}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <ListItem
-                style={{height: 75, padding: 10, opacity: 0.7}}
+                style={{ height: 75, padding: 10, opacity: 0.7 }}
                 title={item.nome}
-                subtitle={item.email}
+                subtitle={item.matricula}
                 bottomDivider
                 // TODO criar metodo para navegar para a tela de editar
-                leftIcon={<Avatar rounded showEditButton={true} onPress={() => console.log('testando')} />}
+                leftIcon={
+                  <Avatar
+                    rounded
+                    showEditButton={true}
+                    onPress={() => console.log('testando')}
+                  />
+                }
                 rightIcon={
                   <Icon
                     name="trash"
                     type="font-awesome"
                     onPress={() => this.handleExcluir(item._id)}
                   />
-                }
-                ></ListItem>
+                }></ListItem>
             )}
           />
         </View>

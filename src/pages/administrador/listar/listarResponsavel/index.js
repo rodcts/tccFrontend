@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,13 +13,15 @@ import {
   SafeAreaView,
   SearchBar,
   Modal,
+  ScrollView,
+  ScrollViewComponent,
 } from 'react-native';
-import {ListItem, Icon, Avatar} from 'react-native-elements';
-import {List} from 'react-native-paper';
+import { List, ListItem, Icon, Avatar } from 'react-native-elements';
+// import { List } from 'react-native-paper';
 
 import api from '../../../../services/api';
 import styles from './style';
-import {Right} from 'native-base';
+import { Right } from 'native-base';
 
 export default class ListaResponsavel extends Component {
   constructor(props) {
@@ -58,7 +60,7 @@ export default class ListaResponsavel extends Component {
   _insertResponsavel() {
     try {
       e = 'EditarResponsavel';
-      const {navigate} = this.props.navigation;
+      const { navigate } = this.props.navigation;
 
       navigate(e);
     } catch (err) {
@@ -67,7 +69,7 @@ export default class ListaResponsavel extends Component {
   }
 
   _handleChangeText = text => {
-    this.setState({dtNome: text});
+    this.setState({ dtNome: text });
   };
 
   handleDeletando = async id => {
@@ -87,39 +89,55 @@ export default class ListaResponsavel extends Component {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'OK', onPress: () => this.handleDeletando(_id)},
+      { text: 'OK', onPress: () => this.handleDeletando(_id) },
     ]);
   };
 
-  handleEdit = async id => {
+  handleEdit = async cpf => {
     try {
-      let res = await api.atualizarResponsavel(id);
+      // let res = await api.atualizarResponsavel(id);
+      let res = await api.buscarResponsavel(cpf);
+      responseJson = JSON.stringify(res);
+      responseObj = JSON.parse(responseJson);
+
+      console.log('passando CPF OK', cpf);
 
       this.setState(
         {
-          dataEdit: res,
+          dataEdit: responseObj,
           loading: false,
         },
         function() {},
       );
 
+      const { dataEdit } = this.state;
+
+      let dataParse = Object.assign({}, dataEdit.data[0]);
+
       await this.props.navigation.navigate('EditaResponsavel', {
-        id: res.data._id,
-        cpf: res.data.cpf,
-        nome: res.data.nome,
-        nome: res.data._aluno,
+        id: dataParse._id,
+        cpf: dataParse.cpf,
+        nome: dataParse.nome,
+        nomeAluno: dataParse._aluno,
+        celular: dataParse.celular,
+        email: dataParse.email,
+        bairro: dataParse.endereco.bairro,
+        cidade: dataParse.endereco.cidade,
+        estado: dataParse.endereco.estado,
+        numero: dataParse.endereco.numero,
+        rua: dataParse.endereco.rua,
+        telefone: dataParse.telefone,
       });
 
-      console.info('res dataEdit  ===>  ', this.state.dataEdit);
+      console.info('res dataEdit  ===>  ', dataParse);
     } catch (error) {
       console.info('handleEdit  ====>', error);
     }
   };
 
-
-  handleAdd =  () => {
+  handleAdd = () => {
     this.props.navigation.navigate('AddResponsavel');
-  }
+  };
 
   render() {
     if (this.state.loading) {
@@ -135,7 +153,12 @@ export default class ListaResponsavel extends Component {
       );
     } else {
       return (
-        <View>
+        <View
+          style={{
+            // flexDirection: 'row',
+            flex: 1,
+            // paddingBottom: 250
+          }}>
           {/* {<Header />} */}
           <View
             style={{
@@ -145,7 +168,8 @@ export default class ListaResponsavel extends Component {
               flexDirection: 'row',
               borderBottomWidth: 1,
               borderBottomColor: '#A9A9A9',
-            }}>
+            }}
+            >
             <Avatar
               size="xlarge"
               rounded
@@ -153,10 +177,10 @@ export default class ListaResponsavel extends Component {
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
             />
-            <View style={{paddingTop: 60, paddingLeft: 20, width: 150}}>
+            <View style={{ paddingTop: 60, paddingLeft: 20, width: 150 }}>
               <Text>{this.state.nome}</Text>
             </View>
-            <Right style={{paddingRight: 25}}>
+            <Right style={{ paddingRight: 25 }}>
               <Icon
                 name="plus-circle"
                 type="font-awesome"
@@ -166,14 +190,12 @@ export default class ListaResponsavel extends Component {
               <Text>ADD</Text>
             </Right>
           </View>
-
-          <SafeAreaView>
             <FlatList
               keyExtractor={item => item._id}
               data={this.state.data}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <ListItem
-                  style={{height: 75, padding: 10, opacity: 0.7}}
+                  style={{ height: 75, padding: 10, opacity: 0.7 }}
                   title={item.nome}
                   subtitle={item.email}
                   bottomDivider
@@ -182,7 +204,7 @@ export default class ListaResponsavel extends Component {
                     <Avatar
                       rounded
                       showEditButton={true}
-                      onPress={() => this.handleEdit(item._id)}
+                      onPress={() => this.handleEdit(item.cpf)}
                     />
                   }
                   rightIcon={
@@ -195,7 +217,6 @@ export default class ListaResponsavel extends Component {
                 />
               )}
             />
-          </SafeAreaView>
         </View>
       );
     }

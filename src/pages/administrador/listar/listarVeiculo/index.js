@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
   SafeAreaView,
   SearchBar,
 } from 'react-native';
-import {ListItem, Icon, Avatar} from 'react-native-elements';
-import {Right} from 'native-base';
+import { ListItem, Icon, Avatar } from 'react-native-elements';
+import { Right } from 'native-base';
 
 import api from '../../../../services/api';
 import styles from './style';
@@ -58,7 +58,7 @@ export default class ListaResponsavel extends Component {
   _insertResponsavel() {
     try {
       e = 'EditarResponsavel';
-      const {navigate} = this.props.navigation;
+      const { navigate } = this.props.navigation;
 
       navigate(e);
     } catch (err) {
@@ -67,7 +67,7 @@ export default class ListaResponsavel extends Component {
   }
 
   _handleChangeText = text => {
-    this.setState({dtNome: text});
+    this.setState({ dtNome: text });
   };
 
   handleDeletando = async id => {
@@ -87,7 +87,7 @@ export default class ListaResponsavel extends Component {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'OK', onPress: () => this.handleDeletando(_id)},
+      { text: 'OK', onPress: () => this.handleDeletando(_id) },
     ]);
   };
 
@@ -105,7 +105,10 @@ export default class ListaResponsavel extends Component {
       );
     } else {
       return (
-        <View>
+        <View
+          style={{
+            flex: 1,
+          }}>
           <View
             style={{
               margin: 20,
@@ -122,10 +125,10 @@ export default class ListaResponsavel extends Component {
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
             />
-            <View style={{paddingTop: 60, paddingLeft: 20, width: 150}}>
+            <View style={{ paddingTop: 60, paddingLeft: 20, width: 150 }}>
               <Text>{this.state.nome}</Text>
             </View>
-            <Right style={{paddingRight: 25}}>
+            <Right style={{ paddingRight: 25 }}>
               <Icon
                 name="plus-circle"
                 type="font-awesome"
@@ -138,9 +141,9 @@ export default class ListaResponsavel extends Component {
           <FlatList
             keyExtractor={item => item._id}
             data={this.state.data}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <ListItem
-                style={{height: 75, padding: 10, opacity: 0.7}}
+                style={{ height: 75, padding: 10, opacity: 0.7 }}
                 title={item.modelo}
                 subtitle={(item.categoria, item.placa)}
                 bottomDivider
