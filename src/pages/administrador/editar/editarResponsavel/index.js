@@ -1,16 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   Button,
   TextInput,
   Image,
+  Alert,
   ActivityIndicator,
+  TouchableNativeFeedbackBase,
 } from 'react-native';
-import {TouchableOpacity, FlatList} from 'react-native-gesture-handler';
+import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 export default class EditarResponsavel extends Component {
   constructor(props) {
@@ -18,25 +20,25 @@ export default class EditarResponsavel extends Component {
 
     this.state = {
       data: [],
-      body: [],
-      id: this.props.navigation.state.params._id, // passagem do parametro _id
+      id: this.props.navigation.state.params.id, // passagem do parametro _id
       cpf: this.props.navigation.state.params.cpf, // passagem do parametro cpf
       nome: this.props.navigation.state.params.nome, // passagem do parametro nome
-      rua: '',
-      numero: 0,
-      bairro: '',
-      cidade: '',
-      estado: '',
-      email: '',
-      telefone: '',
-      celular: '',
+      nomeAluno: this.props.navigation.state.params.nomeAluno, // passagem do parametro nome
+      rua: this.props.navigation.state.params.rua,
+      numero: this.props.navigation.state.params.numero,
+      bairro: this.props.navigation.state.params.bairro,
+      cidade: this.props.navigation.state.params.cidade,
+      estado: this.props.navigation.state.params.estado,
+      email: this.props.navigation.state.params.email,
+      telefone: this.props.navigation.state.params.telefone,
+      celular: this.props.navigation.state.params.celular,
       loading: true,
     };
 
     console.info('ID ===>>' + this.state.id);
     console.info('CPF ===>>' + this.state.cpf);
     console.info('NOME ===>>' + this.state.nome);
-    console.info('DATA ===>>' + this.state.data);
+    console.info('NOME ALUNO ===>>' + this.state.nomeAluno);
     this.findResponsavel = this.findResponsavel.bind(this);
   }
 
@@ -53,10 +55,10 @@ export default class EditarResponsavel extends Component {
     };
   };
 
-  //TODO criar metodo que vai chamar a rota de atualização
+  // //TODO criar metodo que vai chamar a rota de atualização
   async findResponsavel() {
     try {
-      const {cpf} = this.state;
+      const { cpf } = this.state;
       let response = await api.buscarResponsavel(this.state.cpf);
 
       this.setState(
@@ -73,39 +75,72 @@ export default class EditarResponsavel extends Component {
 
   componentDidMount() {
     this.findResponsavel();
-    const {data} = this.state;
+    const { data } = this.state;
   }
 
-  //TODO criar componente que mostre todo os dados do usuario
+  async handleDeletar() {
+    try {
+      // const { id } = this.state;
+      Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        { text: 'OK', onPress: () => this.handleDeletando(this.state.id) },
+      ]);
+    } catch (error) {
+      console.info('Erro na exlusao!');
+    }
+  }
 
-  // _handleChangeText = (
-  //   nome,
-  //   cpf,
-  //   email,
-  //   telefone,
-  //   celular,
-  //   rua,
-  //   numero,
-  //   bairro,
-  //   cidade,
-  //   estado,
-  // ) => {
-  //   (this.state.nome = nome),
-  //     (this.state.cpf = cpf),
-  //     (this.state.email = email),
-  //     (this.state.telefone = telefone),
-  //     (this.state.celular = celular),
-  //     (this.state.rua = rua),
-  //     (this.state.numero = numero),
-  //     (this.state.bairro = bairro),
-  //     (this.state.cidade = cidade),
-  //     (this.state.estado = estado);
-  // };
+  async handleDeletando(id) {
+    try {
+      let response = await api.deletaResponsavel(id);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async handleUpdate() {
     try {
-      let resp = await api.atualizarResponsavel(this.state.id, body);
-      console.info('resp ===>', resp);
+      const {
+        id,
+        nome,
+        cpf,
+        email,
+        rua,
+        numero,
+        bairro,
+        cidade,
+        estado,
+        telefone,
+        celular,
+      } = this.state;
+
+      console.log('handleUpdate id', id);
+      console.log('handleUpdate nome ', nome);
+      console.log('handleUpdate cpf', cpf);
+      console.log('handleUpdate email', email);
+
+      let resp = await api.atualizarResponsavel(id, {
+        nome: nome,
+        cpf: cpf,
+        email: email,
+        'endereco.rua': rua,
+        'endereco.numero': parseInt(numero),
+        'endereco.bairro': bairro,
+        'endereco.cidade': cidade,
+        'endereco.estado': estado,
+        telefone: telefone,
+        celular: celular,
+      });
+
+      if (resp.status === 200) {
+        alert('Atualizado com sucesso');
+      } else console.info('Erro na atualização');
+
+      // console.info('resp ===>', resp.data);
     } catch (error) {}
   }
 
@@ -143,8 +178,8 @@ export default class EditarResponsavel extends Component {
               <FlatList
                 keyExtractor={item => item._id}
                 data={this.state.data.data}
-                renderItem={({item}) => (
-                  <View style={{marginLeft: 10}}>
+                renderItem={({ item }) => (
+                  <View style={{ marginLeft: 10 }}>
                     <View>
                       <Text
                         style={{
@@ -156,28 +191,33 @@ export default class EditarResponsavel extends Component {
 
                       <TextInput
                         // style={{color: '#fff'}}
-                        onChangeText={nome => this.setState({nome})}
+                        onChangeText={nome => this.setState({ nome })}
                         value={this.state.nome}
-                        placeholder={item.nome}
+                        // placeholder={item.nome}
+                        defaultValue={item.nome}
+                        showSoftInputOnFocus={true}
                       />
                       <Text>{item.cpf}</Text>
                       <TextInput
                         //   style={{color: '#fff'}}
-                        onChangeText={email => this.setState({email})}
+                        onChangeText={email => this.setState({ email })}
                         value={this.state.email}
-                        placeholder={item.email}
+                        // placeholder={item.email}
+                        defaultValue={item.email}
                       />
                       <TextInput
                         //   style={{color: '#fff'}}
-                        onChangeText={telefone => this.setState({telefone})}
+                        onChangeText={telefone => this.setState({ telefone })}
                         value={this.state.telefone}
-                        placeholder={item.telefone}
+                        // placeholder={item.telefone}
+                        defaultValue={item.telefone}
                       />
                       <TextInput
                         //   style={{color: '#fff'}}
-                        onChangeText={celular => this.setState({celular})}
+                        onChangeText={celular => this.setState({ celular })}
                         value={this.state.celular}
-                        placeholder={item.celular}
+                        // placeholder={item.celular}
+                        defaultValue={item.celular}
                       />
                     </View>
                     <Text
@@ -189,38 +229,43 @@ export default class EditarResponsavel extends Component {
                       ENDEREÇO
                     </Text>
                     <View>
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={{ flexDirection: 'row' }}>
                         <TextInput
                           // style={{color: '#fff'}}
-                          onChangeText={rua => this.setState({rua})}
+                          onChangeText={rua => this.setState({ rua })}
                           value={this.state.rua}
-                          placeholder={item.endereco.rua}
+                          // placeholder={item.endereco.rua}
+                          defaultValue={item.endereco.rua}
                         />
                         <TextInput
-                          style={{marginLeft: 10}}
-                          onChangeText={numero => this.setState({numero})}
+                          style={{ marginLeft: 10 }}
+                          onChangeText={numero => this.setState({ numero })}
                           value={this.state.numero}
-                          placeholder={item.endereco.numero.toString()}
+                          // placeholder={item.endereco.numero.toString()}
+                          defaultValue={item.endereco.numero.toString()}
                         />
                       </View>
                       <View>
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={bairro => this.setState({bairro})}
+                          onChangeText={bairro => this.setState({ bairro })}
                           value={this.state.bairro}
-                          placeholder={item.endereco.bairro}
+                          // placeholder={item.endereco.bairro}
+                          defaultValue={item.endereco.bairro}
                         />
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={cidade => this.setState({cidade})}
+                          onChangeText={cidade => this.setState({ cidade })}
                           value={this.state.cidade}
-                          placeholder={item.endereco.cidade}
+                          // placeholder={item.endereco.cidade}
+                          defaultValue={item.endereco.cidade}
                         />
                         <TextInput
                           //   style={{color: '#fff'}}
-                          onChangeText={estado => this.setState({estado})}
+                          onChangeText={estado => this.setState({ estado })}
                           value={this.state.estado}
-                          placeholder={item.endereco.rua}
+                          // placeholder={item.endereco.rua}
+                          defaultValue={item.endereco.rua}
                         />
                       </View>
                     </View>
@@ -233,8 +278,11 @@ export default class EditarResponsavel extends Component {
                       DADOS DO ALUNO
                     </Text>
                     <View>
-                      <Text>{item._aluno[0].nome}</Text>
-                      <Text>{item._aluno[0].matricula}</Text>
+                      <Text>Nome: {item._aluno[0].nome}</Text>
+                      <Text>Matricula: {item._aluno[0].matricula}</Text>
+                      <Text>
+                        CPF Responsavel: {item._aluno[0]._cpfResponsavel}
+                      </Text>
                     </View>
                   </View>
                 )}
@@ -252,7 +300,7 @@ export default class EditarResponsavel extends Component {
               style={{
                 marginRight: 20,
               }}>
-              <TouchableOpacity onPress={() => this.handleUpdate}>
+              <TouchableOpacity onPress={() => this.handleUpdate()}>
                 <Icon name="check-circle" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
@@ -261,7 +309,7 @@ export default class EditarResponsavel extends Component {
               style={{
                 marginLeft: 20,
               }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.handleDeletar()}>
                 <Icon name="user-times" type="font-awesome" color="#000000" />
               </TouchableOpacity>
             </View>
