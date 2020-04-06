@@ -1,12 +1,15 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import ScreenAdministrador from './routes-tab';
 import ScreenListaResponsavel from '../pages/administrador/listar/listarResponsavel/index';
 import ScreenListaFuncionario from '../pages/administrador/listar/listarFuncionario/index';
 import ScreenListaVeiculo from '../pages/administrador/listar/listarVeiculo/index';
-import ScreenAddVeiculo from '../pages/administrador/adicionar/adicionarResponsavel/index';
+import ScreenAddResponsavel from '../pages/administrador/adicionar/adicionarResponsavel/index';
+import ScreenAddFuncionario from '../pages/administrador/adicionar/adicionarFuncionario/index';
+import ScreenAddAluno from '../pages/administrador/adicionar/adicionarAluno/index';
+import ScreenAddVeiculo from '../pages/administrador/adicionar/adicionarVeiculo/index';
 import ScreenResponsavel from '../pages/responsavel/index';
 import ScreenLoginResponsavel from '../pages/login/responsavel/index';
 import ScreenLoginAdministrador from '../pages/login/administrador/index';
@@ -25,13 +28,13 @@ const AppNavigator = createStackNavigator(
     },
     Administrador: {
       screen: ScreenAdministrador,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
       }),
     },
     ListaResponsavel: {
       screen: ScreenListaResponsavel,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
       }),
     },
@@ -46,11 +49,20 @@ const AppNavigator = createStackNavigator(
 
     Mapa: {
       screen: ScreenResponsavel,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
       }),
     },
     AddResponsavel: {
+      screen: ScreenAddResponsavel,
+    },
+    AddFuncionario: {
+      screen: ScreenAddFuncionario,
+    },
+    AddAluno: {
+      screen: ScreenAddAluno,
+    },
+    AddVeiculo: {
       screen: ScreenAddVeiculo,
     },
     // Mapa: {
