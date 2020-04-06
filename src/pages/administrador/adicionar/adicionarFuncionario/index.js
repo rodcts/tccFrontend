@@ -19,20 +19,13 @@ export default class addResp extends Component {
       data: [],
       nome: '',
       cpf: '',
+      cnh: '',
       email: '',
-      telefone: '',
-      celular: '',
-      endereco: {
-        rua: '',
-        numero: '',
-        bairro: '',
-        cidade: '',
-        estado: '',
-      },
-      tipoUsuario: 'responsavel',
-      senha: 123,
-      nomeAluno: '',
-      matricula: '',
+      cargo: '',
+      placa: '',
+      ano: '',
+      modelo: '',
+      categoria: '',
     };
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -40,29 +33,25 @@ export default class addResp extends Component {
 
   handleAdd = async () => {
     try {
-      let ano = new Date().getFullYear();
-
-      this.state.data = {
+      this.state.dataFuncionario = {
         nome: this.state.nome,
         cpf: this.state.cpf,
+        cnh: this.state.cnh,
+        cargo: this.state.cargo,
         email: this.state.email,
-        endereco: {
-          rua: this.state.rua,
-          numero: this.state.numero,
-          bairro: this.state.bairro,
-          cidade: this.state.cidade,
-          estado: this.state.estado,
-        },
-        telefone: this.state.telefone,
         celular: this.state.celular,
-        tipoUsuario: this.state.tipoUsuario,
-        senha: this.state.senha,
-        nomeAluno: this.state.nomeAluno,
-        matricula: `${ano}` + Date.now(),
+        telefone: this.state.telefone,
       };
-      
-      await api.adicionarResponsavel(this.state.data);
-      await api.adicionarAluno(this.state.data);
+      this.state.dataVeiculo = {
+        cpf: this.state.cpf,
+        placa: this.state.placa,
+        ano: this.state.ano,
+        modelo: this.state.modelo,
+        categoria: this.state.categoria,
+      };
+      console.info('request para api ', this.state.data)
+      await api.adicionarFuncionario(this.state.dataFuncionario);
+      await api.adicionarVeiculo(this.state.dataVeiculo);
       alert('Gravado com sucesso!');
     } catch (error) {
       console.log('Erro gravar responsavel ', error);
@@ -74,7 +63,7 @@ export default class addResp extends Component {
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={{ margin: 10, padding: 10, flex: 1 }}>
           <View>
-            <Text>Dados Responsavel</Text>
+            <Text>Dados Funcionario</Text>
             <View>
               <TextInput
                 style={{
@@ -122,6 +111,23 @@ export default class addResp extends Component {
                   margin: 15,
                   padding: 5,
                 }}
+                placeholder="Carteira Nacional de Habilitação"
+                placeholderColor="#c4c3cb"
+                maxLength={11}
+                onChangeText={cnh => this.setState({ cnh })}
+                value={this.state.cnh}
+              />
+              <TextInput
+                style={{
+                  height: 43,
+                  fontSize: 20,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#eaeaea',
+                  backgroundColor: '#fafafa',
+                  margin: 15,
+                  padding: 5,
+                }}
                 placeholder="EMAIL"
                 placeholderColor="#c4c3cb"
                 autoCapitalize="none"
@@ -131,7 +137,7 @@ export default class addResp extends Component {
             </View>
           </View>
           <View>
-            <Text>Dados Endereço</Text>
+            <Text>Dados Cargo</Text>
             <View>
               <TextInput
                 style={{
@@ -144,80 +150,86 @@ export default class addResp extends Component {
                   margin: 15,
                   padding: 5,
                 }}
-                placeholder="Rua"
+                placeholder="Cargo"
                 placeholderColor="#c4c3cb"
                 autoCapitalize="characters"
-                onChangeText={rua => this.setState({ rua })}
-                value={this.state.rua}
+                onChangeText={cargo => this.setState({ cargo })}
+                value={this.state.cargo}
               />
-              <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Numero"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={numero => this.setState({ numero })}
-                value={this.state.numero}
-              />
-              <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Bairro"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={bairro => this.setState({ bairro })}
-                value={this.state.bairro}
-              />
-              <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Cidade"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={cidade => this.setState({ cidade })}
-                value={this.state.cidade}
-              />
-              <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Estado"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={estado => this.setState({ estado })}
-                value={this.state.estado}
-              />
+              {this.state.cargo == 'motorista' ||
+              this.state.cargo == 'MOTORISTA' ? (
+                <View>
+                  <Text>Dados Veiculo</Text>
+                  <TextInput
+                    style={{
+                      height: 43,
+                      fontSize: 20,
+                      borderRadius: 5,
+                      borderWidth: 1,
+                      borderColor: '#eaeaea',
+                      backgroundColor: '#fafafa',
+                      margin: 15,
+                      padding: 5,
+                    }}
+                    placeholder="Placa"
+                    placeholderColor="#c4c3cb"
+                    autoCapitalize="characters"
+                    onChangeText={placa => this.setState({ placa })}
+                    value={this.state.placa}
+                  />
+                  <TextInput
+                    style={{
+                      height: 43,
+                      fontSize: 20,
+                      borderRadius: 5,
+                      borderWidth: 1,
+                      borderColor: '#eaeaea',
+                      backgroundColor: '#fafafa',
+                      margin: 15,
+                      padding: 5,
+                    }}
+                    placeholder="Ano"
+                    placeholderColor="#c4c3cb"
+                    autoCapitalize="characters"
+                    onChangeText={ano => this.setState({ ano })}
+                    value={this.state.ano}
+                  />
+                  <TextInput
+                    style={{
+                      height: 43,
+                      fontSize: 20,
+                      borderRadius: 5,
+                      borderWidth: 1,
+                      borderColor: '#eaeaea',
+                      backgroundColor: '#fafafa',
+                      margin: 15,
+                      padding: 5,
+                    }}
+                    placeholder="Modelo"
+                    placeholderColor="#c4c3cb"
+                    autoCapitalize="characters"
+                    onChangeText={modelo => this.setState({ modelo })}
+                    value={this.state.modelo}
+                  />
+                  <TextInput
+                    style={{
+                      height: 43,
+                      fontSize: 20,
+                      borderRadius: 5,
+                      borderWidth: 1,
+                      borderColor: '#eaeaea',
+                      backgroundColor: '#fafafa',
+                      margin: 15,
+                      padding: 5,
+                    }}
+                    placeholder="Categoria"
+                    placeholderColor="#c4c3cb"
+                    autoCapitalize="characters"
+                    onChangeText={categoria => this.setState({ categoria })}
+                    value={this.state.categoria}
+                  />
+                </View>
+              ) : null}
             </View>
           </View>
           <View>
@@ -257,45 +269,6 @@ export default class addResp extends Component {
                 onChangeText={telefone => this.setState({ telefone })}
                 value={this.state.telefone}
               />
-            </View>
-          </View>
-          <View>
-            <Text>Dados Aluno</Text>
-            <View>
-              <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Nome Completo"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={nomeAluno => this.setState({ nomeAluno })}
-                value={this.state.nomeAluno}
-              />
-              {/* <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Matricula"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={matricula => this.setState({ matricula })}
-                value={this.state.matricula}
-              /> */}
             </View>
           </View>
           <View
