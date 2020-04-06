@@ -84,61 +84,62 @@ async function adicionarResponsavel(req) {
       tipoUsuario: tipoUsuario,
     });
     return res;
-  } catch (erro) {}
+  } catch (erro) {
+    console.info(erro);
+  }
 }
 
 async function adicionarAluno(req) {
   try {
-    const {
-      nome,
-      cpf,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      celular,
-      telefone,
-    } = req;
-    let res = await axios.post('http://localhost:3000/responsavel/create');
-  } catch (erro) {}
+    const { nomeAluno, cpf } = req;
+    let res = await axios.post('http://localhost:3000/aluno/create', {
+      nome: nomeAluno,
+      _cpfResponsavel: cpf,
+      // matricula: matricula,
+    });
+    return res.status(200);
+  } catch (erro) {
+    console.info(erro);
+  }
 }
 
 async function adicionarFuncionario(req) {
   try {
-    const {
-      nome,
-      cpf,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      celular,
-      telefone,
-    } = req;
-    let res = await axios.post('http://localhost:3000/responsavel/create');
-  } catch (erro) {}
+    console.info('adicionar funcionario', req);
+
+    const { nome, cpf, cnh, cargo, email, celular, telefone } = req;
+    let res = await axios.post('http://localhost:3000/funcionario/create', {
+      nome: nome,
+      cpf: cpf,
+      cnh: cnh,
+      cargo: cargo,
+      email: email,
+      celular: celular,
+      telefone: telefone,
+    });
+    // return res;
+  } catch (erro) {
+    console.info(erro);
+  }
 }
 
 async function adicionarVeiculo(req) {
   try {
-    const {
-      nome,
-      cpf,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      celular,
-      telefone,
-    } = req;
-    let res = await axios.post('http://localhost:3000/responsavel/create');
-  } catch (erro) {}
+    console.info('adicionar veiculo', req);
+    const { placa, ano, modelo, categoria, cpf, cnh, nome } = req;
+    let res = await axios.post('http://localhost:3000/veiculos/create', {
+      placa: placa,
+      ano: ano,
+      modelo: modelo,
+      categoria: categoria,
+      _cpfFuncionario: cpf,
+      _cnhFuncionario: cnh,
+      _nomeFuncionario: nome,
+    });
+    // return res;
+  } catch (erro) {
+    console.info(erro);
+  }
 }
 
 /**
