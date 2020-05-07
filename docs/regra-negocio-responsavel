@@ -1,0 +1,10 @@
+
+CA01: Login será com EMAIL e CPF
+CA02: Valida credencial de login
+CA03: Monitora se:
+    é horario comercial;
+    é dia util;
+    a matricula do aluno esta associado há algum veicculo ativo;
+
+
+

@@ -1,11 +1,11 @@
 ## install important package
 npm i react-native-gesture-handler && npm i react-native-maps && npm i react-navigation && npm i react-navigation-stack
 
+##
 enter file ios/ and run command pod install for install all dependences
 
 
 ## insert no podfile
-
 pod 'RNGestureHandler', :podspec => '../node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
 
   # React Native Maps dependencies
@@ -14,20 +14,23 @@ pod 'RNGestureHandler', :podspec => '../node_modules/react-native-gesture-handle
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
 
+##
 run in file ios/ command pod install
 
 ## reset cache metro
 npm start --reset-cache
 
-
+##
 use api geolocalization
 npm install react-native-geolocation-service
 pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
 execute pod install in file ios/
 
-
+##
 watchman watch-del-all 
 rm -rf node_modules/ 
-npm cache verify
+npm cache verify 
 npm install 
 npm start -- --reset-cache
+
+##

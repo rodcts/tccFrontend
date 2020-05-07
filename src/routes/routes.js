@@ -3,9 +3,10 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import ScreenAdministrador from './routes-tab';
+import ScreenTransporte from './routes-tab-transporte';
 import ScreenListaResponsavel from '../pages/administrador/listar/listarResponsavel/index';
 import ScreenListaFuncionario from '../pages/administrador/listar/listarFuncionario/index';
-import ScreenListaTransportador from '../pages/transportador/index';
+// import ScreenListaAlunosAddTransporte from '../pages/transportador/index';
 import ScreenListaVeiculo from '../pages/administrador/listar/listarVeiculo/index';
 import ScreenAddResponsavel from '../pages/administrador/adicionar/adicionarResponsavel/index';
 import ScreenAddFuncionario from '../pages/administrador/adicionar/adicionarFuncionario/index';
@@ -33,8 +34,9 @@ const AppNavigator = createStackNavigator(
         title: `${navigation.state.params.nome}`,
       }),
     },
-    ListaTransportador: {
-      screen: ScreenListaTransportador,
+
+    Transporte: {
+      screen: ScreenTransporte,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
       }),

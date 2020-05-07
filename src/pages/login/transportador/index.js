@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import { View, Image, TextInput, KeyboardAvoidingView} from 'react-native';
-import {Block, Button, Text, theme} from 'galio-framework';
+import React, { Component } from 'react';
+import { View, Image, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Block, Button, Text, theme } from 'galio-framework';
 import styles from './style';
 import logo from '../../../img/iconLogin/iconLogin1.png';
 import api from '../../../services/api';
 
-export default class Resp extends Component {
+export default class Transportador extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,17 +23,26 @@ export default class Resp extends Component {
       let data = {
         email: this.state.email,
         cpf: this.state.cpf,
+        nome: '',
       };
 
       console.info('====>', data);
 
+      //TODO metodo para validar o transportador
       let res = await api.authFuncionario(data);
 
-      console.info('====> ', res);
+      this.setState({ nome: res.data.autenticacao.nome });
+      console.info('passagem de parametro ===>', this.state.nome);
 
       switch (res.status) {
         case 200:
-          await this.props.navigation.navigate('');
+          if (res.data.autenticacao.cargo === 'Transportador') {
+            await this.props.navigation.navigate('Transporte', {
+              nome: this.state.nome,
+            });
+          } else {
+            alert('Você não está apto a logar aqui!');
+          }
           break;
 
         case 400:
@@ -73,7 +82,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               autoCapitalize="none"
-              onChangeText={email => this.setState({email})}
+              onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -81,7 +90,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({cpf})}
+              onChangeText={cpf => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>
@@ -89,6 +98,7 @@ export default class Resp extends Component {
             <Button
               style={styles.loginButton}
               onPress={() => this.onLoginPress()}
+              // onPress={() => this.props.navigation.navigate('ListaAlunosAddTransporte')}
               title="Login">
               Login
             </Button>

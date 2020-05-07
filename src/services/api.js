@@ -232,6 +232,7 @@ async function buscarFuncionario(cpf) {
 async function buscarAluno(matricula) {
   try {
     let res = await axios.get(`http://localhost:3000/aluno/find/${matricula}`);
+
     return res;
   } catch (e) {
     return e;
@@ -255,25 +256,32 @@ async function atualizarResponsavel(id, body) {
     return e;
   }
 }
-async function atualizarAluno(id) {
+async function atualizarAluno(id, body) {
   try {
-    let res = await axios.put(`http://localhost:3000/aluno/update/${id}`);
+    let res = await axios.put(`http://localhost:3000/aluno/update/${id}`, body);
     return res;
   } catch (e) {
     return e;
   }
 }
-async function atualizarFuncionario(id) {
+async function atualizarFuncionario(id, body) {
   try {
-    let res = await axios.put(`http://localhost:3000/funcionario/update/${id}`);
+    let res = await axios.put(
+      `http://localhost:3000/funcionario/update/${id}`,
+      body,
+    );
     return res;
   } catch (e) {
     return e;
   }
 }
-async function atualizarVeiculo(id) {
+async function atualizarVeiculo(id, body) {
   try {
-    let res = await axios.put(`http://localhost:3000/veiculo/update/${id}`);
+    let res = await axios.put(
+      `http://localhost:3000/veiculos/update/${id}`,
+      body,
+    );
+
     return res;
   } catch (e) {
     return e;

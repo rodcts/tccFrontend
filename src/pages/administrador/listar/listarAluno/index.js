@@ -19,7 +19,7 @@ import { Right } from 'native-base';
 
 import api from '../../../../services/api';
 import styles from './style';
-import Header from '../../../../components/header/admin';
+// import Header from '../../../../components/header/admin';
 
 export default class ListaResponsavel extends Component {
   constructor(props) {
@@ -112,7 +112,6 @@ export default class ListaResponsavel extends Component {
           style={{
             flex: 1,
           }}>
-          {/* {<Header />} */}
           <View
             style={{
               margin: 20,
@@ -165,7 +164,8 @@ export default class ListaResponsavel extends Component {
                     type="font-awesome"
                     onPress={() => this.handleExcluir(item._id)}
                   />
-                }></ListItem>
+                }
+              />
             )}
           />
         </View>

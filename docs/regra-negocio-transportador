@@ -1,0 +1,7 @@
+CA01: Login será com EMAIL e CPF
+CA02: Deverá cadastrar veiculo como ativo
+CA03: Deverá associar motorista ao veiculo ativo
+CA04: Devera inserir os aluno pela matricula na rota do dia
+CA05: Gravar as info de veiculos ativos no BD para ser 
+consumido pelo caso de uso do responsavel que deverá 
+mostrar no mapa o veiculo com o aluno respectivo.

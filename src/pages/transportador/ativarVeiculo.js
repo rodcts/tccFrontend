@@ -15,83 +15,50 @@ import styles from './style';
 import { TextInput, Button } from 'react-native-paper';
 import { Right } from 'native-base';
 
-export default class CadastrarRotaTransporte extends Component {
+export default class AtivarVeiculo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       objData: [],
-      arrayAluno: [],
       load: false,
       loading: false,
       nome: this.props.navigation.state.params.nome,
-      matricula: '',
+      novoStatus: false,
+      objVeiculo: [],
     };
   }
 
-  // TODO
-  handleLista = async matricula => {
+  // TODO listar somente veiculos disponiveis para ativar a rota
+  handleLista = async () => {
     try {
-      const { arrayAluno, objData } = this.state;
-      let response = await api.buscarAluno(matricula);
-      console.log('RESPONSE', response);
+      const { objData, objVeiculo } = this.state;
 
-      if (response.data == []) {
-        Alert.alert('Matricula nao encontrada', {
-          text: 'OK',
-          onPress: () => console.log('Pressionando o botao OK'),
-        });
-      }
+      this.setState({ objVeiculo: [] }); // Reseta a variavel
+      let response = await api.listaVeiculo();
 
-      let resp = response.data[0];
+      response.map(e => {
+        if (e.status == 'false') {
+          objVeiculo.push(e);
+          this.setState({ objData: objVeiculo });
 
-      if (resp) {
-        arrayAluno.push(resp);
-        console.log(arrayAluno);
-        this.setState(
-          {
-            arrayAluno,
-          },
-          function() {
-            if (objData != null || objData != [] || objData != '') {
-              let value = objData.push(resp);
-              console.log('FAZENDO PUSH', value);
-            }
-          },
-        );
-      }
-
-      // console.log('DATA >>>> ', this.state.data);
-      // arrayAluno.push(this.state.data);
-      // console.log('ARRAYALUNO', arrayAluno);
+        }
+      });
     } catch (error) {
-      console.log(error);
+      console.log('ERROR handleLista :: ', error);
     }
   };
 
   //TODO tirar aluno da lista de transporte atual
-  handleApagar = params => {
-    Alert.alert('ATENÇÃO! ', 'Você está tirando o aluno da lista de viagem', [
-      {
-        text: 'Cancelar',
-        onPress: () => console.log('Pressionando o botao cancelar'),
-      },
-      {
-        text: 'OK',
-        onPress: () => {
-          const { arrayAluno, load } = this.state;
+  handleAtivarVeiculo = async id => {
+    try {
+      const updateStatus = await api.atualizarVeiculo(id, {
+        status: true,
+      });
 
-          arrayAluno.map(e => {
-            let index = e.matricula.indexOf(params);
-
-            if (index > -1) {
-              arrayAluno.splice(index, 1);
-
-              this.setState({ load: true });
-            }
-          });
-        },
-      },
-    ]);
+      console.log('updateStatus :: ', updateStatus);
+    } catch (err) {
+      console.error('handleAtivarVeiculo', err);
+    }
   };
 
   render() {
@@ -133,20 +100,11 @@ export default class CadastrarRotaTransporte extends Component {
             </View>
           </View>
           <View>
-            <TextInput
-              placeholder="MATRICULA"
-              placeholderColor="#c4c3cb"
-              // style={styles.loginFormTextInput}
-              onChangeText={matricula => this.setState({ matricula })}
-              value={this.state.matricula}
-            />
-            <View>
-              <Button
-                onPress={() => this.handleLista(this.state.matricula)}
-                title="ADD Aluno">
-                Add Aluno
-              </Button>
-            </View>
+            <Button
+              onPress={() => this.handleLista(this.state.placa)}
+              title="ADD Veiculo">
+              Listar Veiculos Disponiveis
+            </Button>
           </View>
           <FlatList
             keyExtractor={item => item._id}
@@ -159,20 +117,21 @@ export default class CadastrarRotaTransporte extends Component {
                   opacity: 0.7,
                 }}
                 title={item.nome}
-                subtitle={item.matricula}
+                subtitle={item.placa}
                 bottomDivider
                 leftIcon={
                   <Avatar
                     rounded
                     showEditButton={true}
+                    // TODO criar metodo para mostrar descricao do veiculo e o motorista associado.
                     onPress={() => console.log('testando')}
                   />
                 }
                 rightIcon={
                   <Icon
-                    name="trash"
+                    name="podcast"
                     type="font-awesome"
-                    onPress={() => this.handleApagar(item.matricula)}
+                    onPress={() => this.handleAtivarVeiculo(item._id)}
                   />
                 }
               />

@@ -1,0 +1,9 @@
+CA01: Login será com EMAIL e CPF
+CA02: Cadastrar:
+    responsavel;
+    aluno,
+    funcionario (motorista, transportador e administrador),
+    veiculo.
+CA03: Excluir todas as entidades cadastradas no BD
+CA04: Atualizar todas as entidades cadastradas no BD
+CA05: Buscar todas as entidades cadastradas no BD
