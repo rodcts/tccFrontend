@@ -29,6 +29,7 @@ export default class ListaResponsavel extends Component {
     this.state = {
       data: [],
       loading: true,
+      fetching: true,
       nome: this.props.navigation.state.params.nome,
       dataEdit: [],
     };
@@ -36,6 +37,11 @@ export default class ListaResponsavel extends Component {
   }
 
   componentDidMount() {
+    this._handleLista();
+  }
+
+  onRefresh() {
+    this.setState({ fetching: true });
     this._handleLista();
   }
 
@@ -49,6 +55,7 @@ export default class ListaResponsavel extends Component {
         {
           data: responseObj,
           loading: false,
+          fetching: false,
         },
         function() {},
       );
@@ -155,11 +162,8 @@ export default class ListaResponsavel extends Component {
       return (
         <View
           style={{
-            // flexDirection: 'row',
             flex: 1,
-            // paddingBottom: 250
           }}>
-          {/* {<Header />} */}
           <View
             style={{
               margin: 20,
@@ -168,8 +172,7 @@ export default class ListaResponsavel extends Component {
               flexDirection: 'row',
               borderBottomWidth: 1,
               borderBottomColor: '#A9A9A9',
-            }}
-            >
+            }}>
             <Avatar
               size="xlarge"
               rounded
@@ -190,33 +193,35 @@ export default class ListaResponsavel extends Component {
               <Text>ADD</Text>
             </Right>
           </View>
-            <FlatList
-              keyExtractor={item => item._id}
-              data={this.state.data}
-              renderItem={({ item }) => (
-                <ListItem
-                  style={{ height: 75, padding: 10, opacity: 0.7 }}
-                  title={item.nome}
-                  subtitle={item.email}
-                  bottomDivider
-                  // TODO criar metodo para navegar para a tela de editar
-                  leftIcon={
-                    <Avatar
-                      rounded
-                      showEditButton={true}
-                      onPress={() => this.handleEdit(item.cpf)}
-                    />
-                  }
-                  rightIcon={
-                    <Icon
-                      name="trash"
-                      type="font-awesome"
-                      onPress={() => this.handleExcluir(item._id)}
-                    />
-                  }
-                />
-              )}
-            />
+          <FlatList
+            onRefresh={() => this.onRefresh()}
+            refreshing={this.state.fetching}
+            keyExtractor={item => item._id}
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <ListItem
+                style={{ height: 75, padding: 10, opacity: 0.7 }}
+                title={item.nome}
+                subtitle={item.email}
+                bottomDivider
+                // TODO criar metodo para navegar para a tela de editar
+                leftIcon={
+                  <Avatar
+                    rounded
+                    showEditButton={true}
+                    onPress={() => this.handleEdit(item.cpf)}
+                  />
+                }
+                rightIcon={
+                  <Icon
+                    name="trash"
+                    type="font-awesome"
+                    onPress={() => this.handleExcluir(item._id)}
+                  />
+                }
+              />
+            )}
+          />
         </View>
       );
     }

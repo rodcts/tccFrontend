@@ -28,9 +28,15 @@ export default class ListaResponsavel extends Component {
     this.state = {
       data: [],
       loading: true,
+      fetching: true,
       nome: this.props.navigation.state.params.nome,
     };
     this._handleLista = this._handleLista.bind(this);
+  }
+
+  onRefresh() {
+    this.setState({ fetching: true });
+    this._handleLista();
   }
 
   componentDidMount() {
@@ -47,6 +53,7 @@ export default class ListaResponsavel extends Component {
         {
           data: responseObj,
           loading: false,
+          fetching: false,
         },
         function() {},
       );
@@ -139,6 +146,8 @@ export default class ListaResponsavel extends Component {
             </Right>
           </View>
           <FlatList
+            onRefresh={() => this.onRefresh()}
+            refreshing={this.state.fetching}
             keyExtractor={item => item._id}
             data={this.state.data}
             renderItem={({ item }) => (
@@ -161,7 +170,8 @@ export default class ListaResponsavel extends Component {
                     type="font-awesome"
                     onPress={() => this.handleExcluir(item._id)}
                   />
-                }></ListItem>
+                }
+              />
             )}
           />
         </View>
