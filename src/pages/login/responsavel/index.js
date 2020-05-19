@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   TextInput,
@@ -9,8 +9,8 @@ import {
   // Dimensions,
   // Platform,
 } from 'react-native';
-import {Images, materialTheme} from '../../../constants/';
-import {Block, Button, Text, theme} from 'galio-framework';
+import { Images, materialTheme } from '../../../constants/';
+import { Block, Button, Text, theme } from 'galio-framework';
 // import {Button} from 'react-native-elements';
 import styles from './style';
 import logo from '../../../img/iconLogin/login-responsavel.png';
@@ -48,12 +48,14 @@ export default class Resp extends Component {
 
       console.info('====> ', res.data.autenticacao.nome);
 
-      this.setState({nome: res.data.autenticacao.nome})
-      console.info('===>', this.state.nome)
+      this.setState({ nome: res.data.autenticacao.nome });
+      console.info('===>', this.state.nome);
 
       switch (res.status) {
         case 200:
-          await this.props.navigation.navigate('Mapa', {nome: this.state.nome});
+          await this.props.navigation.navigate('Mapa', {
+            nome: this.state.nome,
+          });
           break;
 
         case 400:
@@ -108,7 +110,9 @@ export default class Resp extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.containerView} behavior="padding" enabled>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={styles.containerView}>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Image style={styles.logo} source={logo} />
@@ -118,7 +122,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               autoCapitalize="none"
               style={styles.loginFormTextInput}
-              onChangeText={email => this.setState({email})}
+              onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -126,7 +130,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({cpf})}
+              onChangeText={cpf => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>
@@ -141,7 +145,7 @@ export default class Resp extends Component {
 
           <View style={styles.containerChangeUser}>
             <Text>Você é um? </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 style={styles.containerChangeUserbtn}
                 onPress={() => this.handleChangeUser('administrador')}>
@@ -154,7 +158,7 @@ export default class Resp extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        </View>        
+        </View>
       </KeyboardAvoidingView>
     );
   }

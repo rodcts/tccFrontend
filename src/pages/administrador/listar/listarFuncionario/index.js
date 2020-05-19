@@ -158,7 +158,7 @@ export default class ListaResponsavel extends Component {
               <ListItem
                 style={{ height: 75, padding: 10, opacity: 0.7 }}
                 title={item.nome}
-                subtitle={item.email}
+                subtitle={item.cargo}
                 bottomDivider
                 // TODO criar metodo para navegar para a tela de editar
                 leftIcon={

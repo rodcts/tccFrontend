@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
+import { View, Alert } from 'react-native';
 import {
-  View,
-  Text,
-  Button,
   TextInput,
-  Image,
-  Alert,
+  Subheading,
+  IconButton,
+  Colors,
   ActivityIndicator,
-  TouchableNativeFeedbackBase,
-} from 'react-native';
-import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
+} from 'react-native-paper';
+
+import { FlatList } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
-import { Icon } from 'react-native-elements';
 
 export default class EditarResponsavel extends Component {
   constructor(props) {
@@ -20,25 +18,21 @@ export default class EditarResponsavel extends Component {
 
     this.state = {
       data: [],
-      id: this.props.navigation.state.params.id, // passagem do parametro _id
-      cpf: this.props.navigation.state.params.cpf, // passagem do parametro cpf
-      nome: this.props.navigation.state.params.nome, // passagem do parametro nome
-      nomeAluno: this.props.navigation.state.params.nomeAluno, // passagem do parametro nome
-      rua: this.props.navigation.state.params.rua,
-      numero: this.props.navigation.state.params.numero,
-      bairro: this.props.navigation.state.params.bairro,
-      cidade: this.props.navigation.state.params.cidade,
-      estado: this.props.navigation.state.params.estado,
-      email: this.props.navigation.state.params.email,
-      telefone: this.props.navigation.state.params.telefone,
-      celular: this.props.navigation.state.params.celular,
+      id: this.props.navigation.state.params.dataParse._id,
+      cpf: this.props.navigation.state.params.dataParse.cpf, // passagem do parametro cpf
+      nome: this.props.navigation.state.params.dataParse.nome,
+      nomeAluno: this.props.navigation.state.params.dataParse.nomeAluno,
+      rua: this.props.navigation.state.params.dataParse.endereco.rua,
+      numero: this.props.navigation.state.params.dataParse.endereco.numero,
+      bairro: this.props.navigation.state.params.dataParse.endereco.bairro,
+      cidade: this.props.navigation.state.params.dataParse.endereco.cidade,
+      estado: this.props.navigation.state.params.dataParse.endereco.estado,
+      email: this.props.navigation.state.params.dataParse.email,
+      telefone: this.props.navigation.state.params.dataParse.telefone,
+      celular: this.props.navigation.state.params.dataParse.celular,
       loading: true,
     };
 
-    console.info('ID ===>>' + this.state.id);
-    console.info('CPF ===>>' + this.state.cpf);
-    console.info('NOME ===>>' + this.state.nome);
-    console.info('NOME ALUNO ===>>' + this.state.nomeAluno);
     this.findResponsavel = this.findResponsavel.bind(this);
   }
 
@@ -59,7 +53,7 @@ export default class EditarResponsavel extends Component {
   async findResponsavel() {
     try {
       const { cpf } = this.state;
-      let response = await api.buscarResponsavel(this.state.cpf);
+      let response = await api.buscarResponsavel(cpf);
 
       this.setState(
         {
@@ -75,12 +69,10 @@ export default class EditarResponsavel extends Component {
 
   componentDidMount() {
     this.findResponsavel();
-    const { data } = this.state;
   }
 
   async handleDeletar() {
     try {
-      // const { id } = this.state;
       Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
         {
           text: 'Cancel',
@@ -105,7 +97,7 @@ export default class EditarResponsavel extends Component {
   async handleUpdate() {
     try {
       const {
-        id,
+        data,
         nome,
         cpf,
         email,
@@ -118,10 +110,7 @@ export default class EditarResponsavel extends Component {
         celular,
       } = this.state;
 
-      console.log('handleUpdate id', id);
-      console.log('handleUpdate nome ', nome);
-      console.log('handleUpdate cpf', cpf);
-      console.log('handleUpdate email', email);
+      let id = data.data[0]._id;
 
       let resp = await api.atualizarResponsavel(id, {
         nome: nome,
@@ -140,179 +129,154 @@ export default class EditarResponsavel extends Component {
         alert('Atualizado com sucesso');
       } else console.info('Erro na atualização');
 
-      // console.info('resp ===>', resp.data);
     } catch (error) {}
   }
 
   render() {
-    // this.findResponsavel();
-    // const {data} = this.state;
-
     if (this.state.loading) {
       return (
-        <View
-          style={{
-            marginTop: 150,
-            alignItem: 'center',
-            justifyContent: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#5DBCD2" />
+        <View style={styles.load}>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={Colors.red800}
+          />
         </View>
       );
     } else {
       return (
-        <View>
-          <View
-            style={{
-              marginLeft: 20,
-              marginRight: 20,
-              marginTop: 30,
-              paddingTop: 20,
-              paddingBottom: 40,
-              backgroundColor: '#F0F8FF',
-              borderRadius: 15,
-            }}>
-            <View>
-              {/* <Text>{JSON.stringify(this.state.data.data)}</Text> */}
+        <View style={styles.container}>
+          <View style={styles.flatlist}>
+            <FlatList
+              keyExtractor={item => item._id}
+              data={this.state.data.data}
+              renderItem={({ item }) => (
+                <View>
+                  <View style={styles.fatlistcontainer}>
+                    <Subheading style={styles.listtitle}>
+                      DADOS RESPONSAVEL
+                    </Subheading>
 
-              <FlatList
-                keyExtractor={item => item._id}
-                data={this.state.data.data}
-                renderItem={({ item }) => (
-                  <View style={{ marginLeft: 10 }}>
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={nome => this.setState({ nome })}
+                      value={this.state.data.nome}
+                      defaultValue={item.nome}
+                      showSoftInputOnFocus={true}
+                      label="Nome Completo"
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="CPF"
+                      defaultValue={item.cpf}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={email => this.setState({ email })}
+                      value={this.state.data.email}
+                      label="Email"
+                      defaultValue={item.email}
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={telefone => this.setState({ telefone })}
+                      value={this.state.data.telefone}
+                      label="Telefone Residencial"
+                      defaultValue={item.telefone}
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={celular => this.setState({ celular })}
+                      value={this.state.data.celular}
+                      label="Telefone Celular"
+                      defaultValue={item.celular}
+                    />
+                  </View>
+                  <Subheading style={styles.listtitle}>ENDEREÇO</Subheading>
+
+                  <View>
                     <View>
-                      <Text
-                        style={{
-                          paddingBottom: 5,
-                          borderBottomWidth: 1,
-                        }}>
-                        DADOS RESPONSAVEL
-                      </Text>
-
                       <TextInput
-                        // style={{color: '#fff'}}
-                        onChangeText={nome => this.setState({ nome })}
-                        value={this.state.nome}
-                        // placeholder={item.nome}
-                        defaultValue={item.nome}
-                        showSoftInputOnFocus={true}
-                      />
-                      <Text>{item.cpf}</Text>
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={email => this.setState({ email })}
-                        value={this.state.email}
-                        // placeholder={item.email}
-                        defaultValue={item.email}
+                        style={styles.listinputtext}
+                        onChangeText={rua => this.setState({ rua })}
+                        value={this.state.data.rua}
+                        label="Logradouro"
+                        defaultValue={item.endereco.rua}
                       />
                       <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={telefone => this.setState({ telefone })}
-                        value={this.state.telefone}
-                        // placeholder={item.telefone}
-                        defaultValue={item.telefone}
-                      />
-                      <TextInput
-                        //   style={{color: '#fff'}}
-                        onChangeText={celular => this.setState({ celular })}
-                        value={this.state.celular}
-                        // placeholder={item.celular}
-                        defaultValue={item.celular}
+                        style={styles.listinputtext}
+                        onChangeText={numero => this.setState({ numero })}
+                        value={this.state.data.numero}
+                        label="Numero"
+                        defaultValue={item.endereco.numero.toString()}
                       />
                     </View>
-                    <Text
-                      style={{
-                        marginTop: 30,
-                        paddingBottom: 5,
-                        borderBottomWidth: 1,
-                      }}>
-                      ENDEREÇO
-                    </Text>
                     <View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <TextInput
-                          // style={{color: '#fff'}}
-                          onChangeText={rua => this.setState({ rua })}
-                          value={this.state.rua}
-                          // placeholder={item.endereco.rua}
-                          defaultValue={item.endereco.rua}
-                        />
-                        <TextInput
-                          style={{ marginLeft: 10 }}
-                          onChangeText={numero => this.setState({ numero })}
-                          value={this.state.numero}
-                          // placeholder={item.endereco.numero.toString()}
-                          defaultValue={item.endereco.numero.toString()}
-                        />
-                      </View>
-                      <View>
-                        <TextInput
-                          //   style={{color: '#fff'}}
-                          onChangeText={bairro => this.setState({ bairro })}
-                          value={this.state.bairro}
-                          // placeholder={item.endereco.bairro}
-                          defaultValue={item.endereco.bairro}
-                        />
-                        <TextInput
-                          //   style={{color: '#fff'}}
-                          onChangeText={cidade => this.setState({ cidade })}
-                          value={this.state.cidade}
-                          // placeholder={item.endereco.cidade}
-                          defaultValue={item.endereco.cidade}
-                        />
-                        <TextInput
-                          //   style={{color: '#fff'}}
-                          onChangeText={estado => this.setState({ estado })}
-                          value={this.state.estado}
-                          // placeholder={item.endereco.rua}
-                          defaultValue={item.endereco.rua}
-                        />
-                      </View>
-                    </View>
-                    <Text
-                      style={{
-                        marginTop: 30,
-                        paddingBottom: 5,
-                        borderBottomWidth: 1,
-                      }}>
-                      DADOS DO ALUNO
-                    </Text>
-                    <View>
-                      <Text>Nome: {item._aluno[0].nome}</Text>
-                      <Text>Matricula: {item._aluno[0].matricula}</Text>
-                      <Text>
-                        CPF Responsavel: {item._aluno[0]._cpfResponsavel}
-                      </Text>
+                      <TextInput
+                        style={styles.listinputtext}
+                        onChangeText={bairro => this.setState({ bairro })}
+                        value={this.state.data.bairro}
+                        label="Bairro"
+                        defaultValue={item.endereco.bairro}
+                      />
+                      <TextInput
+                        style={styles.listinputtext}
+                        onChangeText={cidade => this.setState({ cidade })}
+                        value={this.state.data.cidade}
+                        label="Cidade"
+                        defaultValue={item.endereco.cidade}
+                        disabled
+                      />
+                      <TextInput
+                        style={styles.listinputtext}
+                        onChangeText={estado => this.setState({ estado })}
+                        value={this.state.data.estado}
+                        defaultValue={item.endereco.estado}
+                        label="Estado"
+                        disabled
+                      />
                     </View>
                   </View>
-                )}
-              />
-            </View>
+                  <Subheading style={styles.listtitle}>DADOS ALUNO</Subheading>
+                  <View>
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="Nome Completo"
+                      value={item._aluno[0].nome}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="Matricula"
+                      value={item._aluno[0].matricula}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      value={item._aluno[0]._cpfResponsavel}
+                      label="CPF Associado (Responsavel)"
+                      disabled
+                    />
+                  </View>
+                </View>
+              )}
+            />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignContent: 'center',
-              marginTop: 20,
-            }}>
-            <View
-              style={{
-                marginRight: 20,
-              }}>
-              <TouchableOpacity onPress={() => this.handleUpdate()}>
-                <Icon name="check-circle" type="font-awesome" color="#000000" />
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                marginLeft: 20,
-              }}>
-              <TouchableOpacity onPress={() => this.handleDeletar()}>
-                <Icon name="user-times" type="font-awesome" color="#000000" />
-              </TouchableOpacity>
-            </View>
+          <View style={styles.btnfooter}>
+            <IconButton
+              icon="account-check"
+              // color={Colors.red500}
+              size={50}
+              onPress={() => this.handleUpdate()}
+            />
+            <IconButton
+              icon="delete-sweep"
+              // color={Colors.red500}
+              size={50}
+              onPress={() => this.handleDeletar()}
+            />
           </View>
         </View>
       );

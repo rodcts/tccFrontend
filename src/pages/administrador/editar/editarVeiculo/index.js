@@ -1,49 +1,60 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { View, Alert } from 'react-native';
 import {
-  View,
-  Text,
-  FlatList,
   TextInput,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert,
-  Image,
-  List,
+  Subheading,
+  IconButton,
+  Colors,
   ActivityIndicator,
-  SafeAreaView,
-  SearchBar,
-} from 'react-native';
-import {ListItem, Icon, Avatar} from 'react-native-elements';
+} from 'react-native-paper';
 
+import { FlatList } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
-// import iconUpdate from '../../../img/iconPlus/iconPlus2.png';
-import Header from '../../../../components/header/admin';
 
-export default class ListaResponsavel extends Component {
+export default class EditarResponsavel extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       data: [],
+      id: this.props.navigation.state.params.dataParse._id,
+      placa: this.props.navigation.state.params.dataParse.placa,
+      ano: this.props.navigation.state.params.dataParse.ano,
+      modelo: this.props.navigation.state.params.dataParse.modelo,
+      categoria: this.props.navigation.state.params.dataParse.categoria,
+      cpfFuncionario: this.props.navigation.state.params.dataParse
+        ._cpfFuncionario,
+      funcionario: this.props.navigation.state.params.dataParse._funcionario,
+      status: this.props.navigation.state.params.dataParse.status,
       loading: true,
     };
-    this._handleLista = this._handleLista.bind(this);
+
+    this.findVeiculo = this.findVeiculo.bind(this);
   }
 
-  componentDidMount() {
-    this._handleLista();
-  }
+  static navigationOptions = () => {
+    return {
+      headerStyle: {
+        backgroundColor: '#FFFFFF',
+      },
+      headerBackTitle: null,
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    };
+  };
 
-  _handleLista = async () => {
+  // //TODO criar metodo que vai chamar a rota de atualização
+  async findVeiculo() {
     try {
-      let response = await api.listaVeiculo();
-      responseJson = JSON.stringify(response);
-      responseObj = JSON.parse(responseJson);
+      const { placa } = this.state;
+      let response = await api.buscarVeiculo(placa);
 
       this.setState(
         {
-          data: responseObj,
+          data: response,
           loading: false,
         },
         function() {},
@@ -51,87 +62,144 @@ export default class ListaResponsavel extends Component {
     } catch (error) {
       return error;
     }
-  };
+  }
 
-  _insertResponsavel() {
+  componentDidMount() {
+    this.findVeiculo();
+  }
+
+  async handleDeletar() {
     try {
-      e = 'EditarResponsavel';
-      const {navigate} = this.props.navigation;
-
-      navigate(e);
-    } catch (err) {
-      console.info('Erro handleNewResponsavel' + err);
+      Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        { text: 'OK', onPress: () => this.handleDeletando(this.state.id) },
+      ]);
+    } catch (error) {
+      console.info('Erro na exlusao!');
     }
   }
 
-  _handleChangeText = text => {
-    this.setState({dtNome: text});
-  };
-
-  handleDeletando = async id => {
+  async handleDeletando(id) {
     try {
-      let response = await api.deletaResponsavel(id);
+      let response = await api.deletaVeiculo(id);
       return response;
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
-  handleExcluir = _id => {
-    console.log('deleta responsavel  ', _id);
+  async handleUpdate() {
+    try {
+      const {
+        data,
+        cpfFuncionario,
+        funcionario,
+        status,
+        modelo,
+        ano,
+        categoria,
+        placa,
+      } = this.state;
 
-    Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-      },
-      {text: 'OK', onPress: () => this.handleDeletando(_id)},
-    ]);
-  };
+      let id = data.data[0]._id;
+
+      let resp = await api.atualizarResponsavel(id, {
+        funcionario: funcionario,
+        cpfFuncionario: cpfFuncionario,
+        status: status,
+        modelo: modelo,
+        ano: ano,
+        categoria: categoria,
+        placa: placa,      
+      });
+
+      if (resp.status === 200) {
+        alert('Atualizado com sucesso');
+      } else console.info('Erro na atualização');
+    } catch (error) {}
+  }
 
   render() {
     if (this.state.loading) {
       return (
-        <View
-          style={{
-            marginTop: 150,
-            alignItem: 'center',
-            justifyContent: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#5DBCD2" />
+        <View style={styles.load}>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={Colors.red800}
+          />
         </View>
       );
     } else {
       return (
-        <View style={{backgroundColor: '#fff'}}>
-          {<Header />}
-          <FlatList
-            keyExtractor={item => item._id}
-            data={this.state.data}
-            renderItem={({item}) => (
-              <ListItem
-                style={{height: 75, padding: 10, opacity: 0.7}}
-                leftAvatar={{showEditButton: true}}
-                title={item.modelo}
-                subtitle={item.categoria}
-                bottomDivider
-                // TODO criar metodo para navegar para a tela de editar
-                leftIcon={
-                  <Avatar
-                    rounded
-                    showEditButton={true}
-                    onPress={() => console.log('testando')}
-                  />
-                }
-                rightIcon={
-                  <Icon
-                    name="trash"
-                    type="font-awesome"
-                    onPress={() => this.handleExcluir(item._id)}
-                  />
-                }></ListItem>
-            )}
-          />
+        <View style={styles.container}>
+          <View style={styles.flatlist}>
+            <FlatList
+              keyExtractor={item => item._id}
+              data={this.state.data.data}
+              renderItem={({ item }) => (
+                <View>
+                  <View style={styles.fatlistcontainer}>
+                    <Subheading style={styles.listtitle}>
+                      DADOS FUNCIONARIO
+                    </Subheading>
+
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={funcionario => this.setState({ funcionario })}
+                      value={this.state.data.funcionario}
+                      defaultValue={item.funcionario}
+                      showSoftInputOnFocus={true}
+                      label="Nome Completo"
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="CPF"
+                      defaultValue={item.cpfFuncionario}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                   
+                  </View>
+                  <Subheading style={styles.listtitle}>ENDEREÇO</Subheading>
+
+                  <View>
+                    <View>
+                      {/* <TextInput
+                        style={styles.listinputtext}
+                        onChangeText={rua => this.setState({ rua })}
+                        value={this.state.data.rua}
+                        label="Logradouro"
+                        defaultValue={item.endereco.rua}
+                      /> */}
+                     
+                    </View>
+                  </View>
+                  <Subheading style={styles.listtitle}>DADOS ALUNO</Subheading>
+                  <View>
+                    
+                  </View>
+                </View>
+              )}
+            />
+          </View>
+          <View style={styles.btnfooter}>
+            <IconButton
+              icon="account-check"
+              // color={Colors.red500}
+              size={50}
+              onPress={() => this.handleUpdate()}
+            />
+            <IconButton
+              icon="delete-sweep"
+              // color={Colors.red500}
+              size={50}
+              onPress={() => this.handleDeletar()}
+            />
+          </View>
         </View>
       );
     }

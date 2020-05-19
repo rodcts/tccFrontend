@@ -28,6 +28,7 @@ export default class ListaResponsavel extends Component {
       data: [],
       loading: true,
       fetching: true,
+      dataEdit: [],
       nome: this.props.navigation.state.params.nome,
     };
     this._handleLista = this._handleLista.bind(this);
@@ -49,12 +50,10 @@ export default class ListaResponsavel extends Component {
   _handleLista = async () => {
     try {
       let response = await api.listaAluno();
-      responseJson = JSON.stringify(response);
-      responseObj = JSON.parse(responseJson);
 
       this.setState(
         {
-          data: responseObj,
+          data: response,
           loading: false,
           fetching: false,
         },
@@ -65,23 +64,13 @@ export default class ListaResponsavel extends Component {
     }
   };
 
-  // _insertResponsavel() {
-  //   try {
-  //     e = 'EditarResponsavel';
-  //     const { navigate } = this.props.navigation;
-
-  //     navigate(e);
-  //   } catch (err) {
-  //     console.info('Erro handleNewResponsavel' + err);
-  //   }
-  // }
-
   _handleChangeText = text => {
     this.setState({ dtNome: text });
   };
 
   handleDeletando = async id => {
     try {
+      console.log('=============>>> ',id)
       let response = await api.deletaAluno(id);
       return response;
     } catch (error) {
@@ -90,15 +79,24 @@ export default class ListaResponsavel extends Component {
   };
 
   handleExcluir = _id => {
-    console.log('deleta aluno  ', _id);
 
-    Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
+    Alert.alert('ATENÇÃO! ', `A Exclusão do será permanente`, [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
       },
       { text: 'OK', onPress: () => this.handleDeletando(_id) },
     ]);
+  };
+
+  handleEdit() {
+    try {
+      Alert.alert('ATENÇÃO! ', `Não é possivel editar o aluno`,
+        { text: 'OK' },
+      );
+    } catch (error) {
+      console.info('handleEdit  ====>', error);
+    }
   };
 
   render() {
@@ -164,7 +162,7 @@ export default class ListaResponsavel extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
-                    onPress={() => console.log('testando')}
+                    onPress={() => this.handleEdit() }
                   />
                 }
                 rightIcon={

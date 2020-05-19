@@ -103,15 +103,11 @@ export default class ListaResponsavel extends Component {
   handleEdit = async cpf => {
     try {
       // let res = await api.atualizarResponsavel(id);
-      let res = await api.buscarResponsavel(cpf);
-      responseJson = JSON.stringify(res);
-      responseObj = JSON.parse(responseJson);
-
-      console.log('passando CPF OK', cpf);
+      let response = await api.buscarResponsavel(cpf);
 
       this.setState(
         {
-          dataEdit: responseObj,
+          dataEdit: response,
           loading: false,
         },
         function() {},
@@ -119,24 +115,13 @@ export default class ListaResponsavel extends Component {
 
       const { dataEdit } = this.state;
 
-      let dataParse = Object.assign({}, dataEdit.data[0]);
+      // let dataParse = Object.assign({}, dataEdit.data[0]);
+      let dataParse = { ...dataEdit.data[0] }; // substituindo o Object.assign pelo three dots
 
+      console.log('dataParse', dataParse);
       await this.props.navigation.navigate('EditaResponsavel', {
-        id: dataParse._id,
-        cpf: dataParse.cpf,
-        nome: dataParse.nome,
-        nomeAluno: dataParse._aluno,
-        celular: dataParse.celular,
-        email: dataParse.email,
-        bairro: dataParse.endereco.bairro,
-        cidade: dataParse.endereco.cidade,
-        estado: dataParse.endereco.estado,
-        numero: dataParse.endereco.numero,
-        rua: dataParse.endereco.rua,
-        telefone: dataParse.telefone,
+        dataParse,
       });
-
-      console.info('res dataEdit  ===>  ', dataParse);
     } catch (error) {
       console.info('handleEdit  ====>', error);
     }

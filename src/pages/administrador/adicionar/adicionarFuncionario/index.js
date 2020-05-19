@@ -156,7 +156,7 @@ export default class addResp extends Component {
                 onChangeText={cargo => this.setState({ cargo })}
                 value={this.state.cargo}
               />
-              {this.state.cargo == 'motorista' ||
+              {/* {this.state.cargo == 'motorista' ||
               this.state.cargo == 'MOTORISTA' ? (
                 <View>
                   <Text>Dados Veiculo</Text>
@@ -229,7 +229,7 @@ export default class addResp extends Component {
                     value={this.state.categoria}
                   />
                 </View>
-              ) : null}
+              ) : null} */}
             </View>
           </View>
           <View>

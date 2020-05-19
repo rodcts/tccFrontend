@@ -98,6 +98,32 @@ export default class ListaResponsavel extends Component {
     ]);
   };
 
+  handleEdit = async placa => {
+    try {
+      let response = await api.buscarVeiculo(placa);
+      console.log(response);
+      this.setState(
+        {
+          dataEdit: response,
+          loading: false,
+        },
+        function() {},
+      );
+
+      const { dataEdit } = this.state;
+
+      // let dataParse = Object.assign({}, dataEdit.data[0]);
+      let dataParse = { ...dataEdit.data[0] }; // substituindo o Object.assign pelo three dots
+
+      console.log('dataParse', dataParse);
+      await this.props.navigation.navigate('EditaVeiculo', {
+        dataParse,
+      });
+    } catch (error) {
+      console.info('handleEdit  ====>', error);
+    }
+  };
+
   render() {
     if (this.state.loading) {
       return (
@@ -161,7 +187,7 @@ export default class ListaResponsavel extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
-                    onPress={() => console.log('testando')}
+                    onPress={() => this.handleEdit(item.placa)}
                   />
                 }
                 rightIcon={

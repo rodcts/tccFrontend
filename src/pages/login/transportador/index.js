@@ -72,7 +72,9 @@ export default class Transportador extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={styles.containerView} enabled>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Image style={styles.logo} source={logo} />

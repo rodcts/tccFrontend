@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {View, KeyboardAvoidingView, TextInput, Image} from 'react-native';
-import {Button} from 'galio-framework';
-import {Avatar} from 'react-native-elements';
+import React, { Component } from 'react';
+import { View, KeyboardAvoidingView, TextInput, Image } from 'react-native';
+import { Button } from 'galio-framework';
+import { Avatar } from 'react-native-elements';
 
 import styles from './style';
 import logo from '../../../img/iconLogin/login-admin.jpeg';
@@ -35,9 +35,9 @@ export default class Resp extends Component {
 
       const res = await api.authAdmin(data);
 
-      this.setState({nome: res.data.autenticacao.nome});
+      this.setState({ nome: res.data.autenticacao.nome });
 
-      console.info('passagem de parametro ===>',this.state.nome);
+      console.info('passagem de parametro ===>', this.state.nome);
 
       switch (res.status) {
         case 200:
@@ -73,7 +73,9 @@ export default class Resp extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={styles.containerView}>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Image style={styles.logo} source={logo} />
@@ -83,7 +85,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               autoCapitalize="none"
               style={styles.loginFormTextInput}
-              onChangeText={email => this.setState({email})}
+              onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -91,7 +93,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({cpf})}
+              onChangeText={cpf => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>

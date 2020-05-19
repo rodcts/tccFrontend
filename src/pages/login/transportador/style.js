@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   //   container: {
@@ -54,15 +54,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   logo: {
-      width: 50,
-      height: 50,
-      alignContent: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 150,
-      marginBottom: 30,  
-      marginLeft: 180,  
-
+    width: 50,
+    height: 50,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 150,
+    marginBottom: 30,
+    marginLeft: 180,
   },
   containerChangeUser: {
     justifyContent: 'center',
@@ -75,16 +74,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#3897f1',
     borderRadius: 5,
-
   },
   logoTextUser: {
     color: '#FFF',
-    fontSize: 8
-    
+    fontSize: 8,
   },
-
-
 });
-
 
 export default styles;
