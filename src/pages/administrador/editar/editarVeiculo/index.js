@@ -6,6 +6,7 @@ import {
   IconButton,
   Colors,
   ActivityIndicator,
+  Switch,
 } from 'react-native-paper';
 
 import { FlatList } from 'react-native-gesture-handler';
@@ -59,6 +60,8 @@ export default class EditarResponsavel extends Component {
         },
         function() {},
       );
+
+      // console.log('data dATA ', this.state.data.data[0]);
     } catch (error) {
       return error;
     }
@@ -93,28 +96,22 @@ export default class EditarResponsavel extends Component {
 
   async handleUpdate() {
     try {
-      const {
-        data,
-        cpfFuncionario,
-        funcionario,
-        status,
-        modelo,
-        ano,
-        categoria,
-        placa,
-      } = this.state;
+      const { data, cpfFuncionario, funcionario, status } = this.state;
 
-      let id = data.data[0]._id;
+      // console.log('dataaaaa', data.data[0]._id);
 
-      let resp = await api.atualizarResponsavel(id, {
-        funcionario: funcionario,
-        cpfFuncionario: cpfFuncionario,
+      let respFunc = await api.buscarFuncionario(cpfFuncionario);
+
+      // console.log('respFunc', respFunc.data[0]._id);
+
+      // atualizando
+      let resp = await api.atualizarVeiculo(respFunc.data[0]._id, {
+        _funcionario: respFunc.data[0],
+        _cpfFuncionario: cpfFuncionario,
+        id: data.data[0]._id,
         status: status,
-        modelo: modelo,
-        ano: ano,
-        categoria: categoria,
-        placa: placa,      
       });
+      // console.log('Status atualizado', resp);
 
       if (resp.status === 200) {
         alert('Atualizado com sucesso');
@@ -144,43 +141,133 @@ export default class EditarResponsavel extends Component {
                 <View>
                   <View style={styles.fatlistcontainer}>
                     <Subheading style={styles.listtitle}>
-                      DADOS FUNCIONARIO
+                      DADOS VEICULO
+                    </Subheading>
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="PLACA"
+                      defaultValue={item.placa}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="FABRICANTE"
+                      defaultValue={item.modelo}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="MODELO"
+                      defaultValue={item.categoria}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="ANO FABRICAÇÃO"
+                      defaultValue={item.ano}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <Subheading style={styles.listtitle}>
+                      STATUS VEICULO
+                    </Subheading>
+                    <TextInput
+                      style={styles.listinputtext}
+                      label="Status"
+                      value={this.state.status}
+                      onChangeText={status => this.setState({ status })}
+                      showSoftInputOnFocus={true}
+                      autoCapitalize="none"
+                    />
+
+                    <Subheading style={styles.listtitle}>
+                      DADOS FUNCIONARIO RESPONSAVEL
                     </Subheading>
 
                     <TextInput
                       style={styles.listinputtext}
-                      onChangeText={funcionario => this.setState({ funcionario })}
-                      value={this.state.data.funcionario}
-                      defaultValue={item.funcionario}
+                      onChangeText={funcionario =>
+                        this.setState({ 'funcionario.matricula': funcionario })
+                      }
+                      value={
+                        this.state.data.data[0]._funcionario[0]
+                          ? this.state.data.data[0]._funcionario[0].matricula
+                          : null
+                      }
                       showSoftInputOnFocus={true}
-                      label="Nome Completo"
+                      label="MATRICULA"
+                      disabled
+                    />
+
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={funcionario =>
+                        this.setState({ 'funcionario.nome': funcionario })
+                      }
+                      value={
+                        this.state.data.data[0]._funcionario[0]
+                          ? this.state.data.data[0]._funcionario[0].nome
+                          : null
+                      }
+                      showSoftInputOnFocus={true}
+                      label="NOME COMPLETO"
+                      disabled
                     />
                     <TextInput
                       style={styles.listinputtext}
-                      label="CPF"
-                      defaultValue={item.cpfFuncionario}
+                      onChangeText={cpfFuncionario =>
+                        this.setState({ cpfFuncionario })
+                      }
+                      value={this.state.cpfFuncionario}
                       showSoftInputOnFocus={true}
+                      label="CPF"
+                    />
+
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={funcionario =>
+                        this.setState({ 'funcionario.cnh': funcionario })
+                      }
+                      value={
+                        this.state.data.data[0]._funcionario[0]
+                          ? this.state.data.data[0]._funcionario[0].cnh
+                          : null
+                      }
+                      showSoftInputOnFocus={true}
+                      label="Carteira Nacional de Habilitação"
                       disabled
                     />
-                   
-                  </View>
-                  <Subheading style={styles.listtitle}>ENDEREÇO</Subheading>
-
-                  <View>
-                    <View>
-                      {/* <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={rua => this.setState({ rua })}
-                        value={this.state.data.rua}
-                        label="Logradouro"
-                        defaultValue={item.endereco.rua}
-                      /> */}
-                     
-                    </View>
-                  </View>
-                  <Subheading style={styles.listtitle}>DADOS ALUNO</Subheading>
-                  <View>
-                    
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={funcionario =>
+                        this.setState({ 'funcionario.telefone': funcionario })
+                      }
+                      value={
+                        this.state.data.data[0]._funcionario[0]
+                          ? this.state.data.data[0]._funcionario[0].telefone
+                          : null
+                      }
+                      showSoftInputOnFocus={true}
+                      label="Telefone Residencial"
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={funcionario =>
+                        this.setState({ 'funcionario.celular': funcionario })
+                      }
+                      value={
+                        this.state.data.data[0]._funcionario[0]
+                          ? this.state.data.data[0]._funcionario[0].celular
+                          : null
+                      }
+                      showSoftInputOnFocus={true}
+                      label="Celular"
+                      disabled
+                    />
                   </View>
                 </View>
               )}
