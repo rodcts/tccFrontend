@@ -28,9 +28,10 @@ execute pod install in file ios/
 
 ##
 watchman watch-del-all 
-rm -rf node_modules/ 
+rm -rf node_modules/  package-lock.json
 npm cache verify 
+npm cache clean --force
 npm install 
-npm start -- --reset-cache
-
+npm cache clean --force
+npx react-native start --reset-cache
 ##
