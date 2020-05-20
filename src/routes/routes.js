@@ -6,7 +6,6 @@ import ScreenAdministrador from './routes-tab';
 import ScreenTransporte from './routes-tab-transporte';
 import ScreenListaResponsavel from '../pages/administrador/listar/listarResponsavel/index';
 import ScreenListaFuncionario from '../pages/administrador/listar/listarFuncionario/index';
-// import ScreenListaAlunosAddTransporte from '../pages/transportador/index';
 import ScreenListaVeiculo from '../pages/administrador/listar/listarVeiculo/index';
 import ScreenAddResponsavel from '../pages/administrador/adicionar/adicionarResponsavel/index';
 import ScreenAddFuncionario from '../pages/administrador/adicionar/adicionarFuncionario/index';
@@ -27,12 +26,20 @@ const AppNavigator = createStackNavigator(
       screen: ScreenLoginResponsavel,
       navigationOptions: {
         title: 'Responsavel',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
     Administrador: {
       screen: ScreenAdministrador,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       }),
     },
 
@@ -46,6 +53,10 @@ const AppNavigator = createStackNavigator(
       screen: ScreenListaResponsavel,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       }),
     },
 
@@ -61,6 +72,10 @@ const AppNavigator = createStackNavigator(
       screen: ScreenResponsavel,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       }),
     },
     AddResponsavel: {
@@ -75,29 +90,36 @@ const AppNavigator = createStackNavigator(
     AddVeiculo: {
       screen: ScreenAddVeiculo,
     },
-    // Mapa: {
-    //   screen: ScreenResponsavel,
-    //   // navigationOptions: {
-    //   //   title: 'Mapa',
-    //   // },
-    // },
+  
 
     LoginAdministrador: {
       screen: ScreenLoginAdministrador,
       navigationOptions: {
         title: 'Administrador',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
     LoginTransportador: {
       screen: ScreenLoginTransportador,
       navigationOptions: {
         title: 'Transportador',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
     EditaResponsavel: {
       screen: ScreenEditarResponsavel,
       navigationOptions: {
         title: 'Editar Responsavel',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
 
@@ -105,12 +127,20 @@ const AppNavigator = createStackNavigator(
       screen: ScreenEditarFuncionario,
       navigationOptions: {
         title: 'Editar Funcionario',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
     EditaVeiculo: {
       screen: ScreenEditarVeiculo,
       navigationOptions: {
         title: 'Editar Veiculo',
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
       },
     },
 
@@ -118,11 +148,11 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: '#000',
+      headerTintColor: '#FFFF',
       headerShown: true,
       headerBackTitle: ' ',
       headerStyle: {
-        backgroundColor: '#fff',
+        backgroundColor: '#2c6d6a',
       },
     },
   },

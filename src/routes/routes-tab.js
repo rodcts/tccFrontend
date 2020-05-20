@@ -39,8 +39,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
         activeColor: '#ffffff',
-        inactiveColor: '#a3c2fa',
-        barStyle: { backgroundColor: '#2163f6' },
+        inactiveColor: '#92c5c2',
+        barStyle: { backgroundColor: '#2c6d6a' },
       },
     },
     Funcionario: {
@@ -69,16 +69,16 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
         activeColor: '#ffffff',
-        inactiveColor: '#ebaabd',
-        barStyle: { backgroundColor: '#d13560' },
+        inactiveColor: '#92c5c2',
+        barStyle: { backgroundColor: '#2c6d6a' },
       },
     },
   },
   {
     initialRouteName: 'Responsavel',
     activeColor: '#ffffff',
-    inactiveColor: '#bda1f7',
-    barStyle: { backgroundColor: '#6948f4' },
+    inactiveColor: '#92c5c2',
+    barStyle: { backgroundColor: '#2c6d6a' },
   },
 );
 
