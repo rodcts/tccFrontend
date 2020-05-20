@@ -21,19 +21,13 @@ export default class EditarResponsavel extends Component {
       id: this.props.navigation.state.params.dataParse._id,
       cpf: this.props.navigation.state.params.dataParse.cpf, // passagem do parametro cpf
       nome: this.props.navigation.state.params.dataParse.nome,
-      nomeAluno: this.props.navigation.state.params.dataParse.nomeAluno,
-      rua: this.props.navigation.state.params.dataParse.endereco.rua,
-      numero: this.props.navigation.state.params.dataParse.endereco.numero,
-      bairro: this.props.navigation.state.params.dataParse.endereco.bairro,
-      cidade: this.props.navigation.state.params.dataParse.endereco.cidade,
-      estado: this.props.navigation.state.params.dataParse.endereco.estado,
       email: this.props.navigation.state.params.dataParse.email,
       telefone: this.props.navigation.state.params.dataParse.telefone,
       celular: this.props.navigation.state.params.dataParse.celular,
       loading: true,
     };
 
-    this.findResponsavel = this.findResponsavel.bind(this);
+    this.findFuncionario = this.findFuncionario.bind(this);
   }
 
   static navigationOptions = () => {
@@ -50,11 +44,11 @@ export default class EditarResponsavel extends Component {
   };
 
   // //TODO criar metodo que vai chamar a rota de atualização
-  async findResponsavel() {
+  async findFuncionario() {
     try {
       const { cpf } = this.state;
-      let response = await api.buscarResponsavel(cpf);
-
+      let response = await api.buscarFuncionario(cpf);
+      console.log('RESPONSE FUNC', response);
       this.setState(
         {
           data: response,
@@ -68,7 +62,7 @@ export default class EditarResponsavel extends Component {
   }
 
   componentDidMount() {
-    this.findResponsavel();
+    this.findFuncionario();
   }
 
   async handleDeletar() {
@@ -87,7 +81,7 @@ export default class EditarResponsavel extends Component {
 
   async handleDeletando(id) {
     try {
-      let response = await api.deletaResponsavel(id);
+      let response = await api.deletaFuncionario(id);
       return response;
     } catch (error) {
       console.log(error);
@@ -96,31 +90,16 @@ export default class EditarResponsavel extends Component {
 
   async handleUpdate() {
     try {
-      const {
-        data,
-        nome,
-        cpf,
-        email,
-        rua,
-        numero,
-        bairro,
-        cidade,
-        estado,
-        telefone,
-        celular,
-      } = this.state;
+      const { data, nome, cpf, email, cnh, telefone, celular } = this.state;
 
+      console.log('DATA.DATA update', data.data[0]._id);
       let id = data.data[0]._id;
 
-      let resp = await api.atualizarResponsavel(id, {
+      let resp = await api.atualizarFuncionario(id, {
         nome: nome,
         cpf: cpf,
         email: email,
-        'endereco.rua': rua,
-        'endereco.numero': parseInt(numero),
-        'endereco.bairro': bairro,
-        'endereco.cidade': cidade,
-        'endereco.estado': estado,
+        cnh: cnh,
         telefone: telefone,
         celular: celular,
       });
@@ -128,7 +107,6 @@ export default class EditarResponsavel extends Component {
       if (resp.status === 200) {
         alert('Atualizado com sucesso');
       } else console.info('Erro na atualização');
-
     } catch (error) {}
   }
 
@@ -167,10 +145,24 @@ export default class EditarResponsavel extends Component {
                     />
                     <TextInput
                       style={styles.listinputtext}
+                      label="MATRICULA"
+                      defaultValue={item.matricula}
+                      showSoftInputOnFocus={true}
+                      disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
                       label="CPF"
                       defaultValue={item.cpf}
                       showSoftInputOnFocus={true}
                       disabled
+                    />
+                    <TextInput
+                      style={styles.listinputtext}
+                      onChangeText={cargo => this.setState({ cargo })}
+                      value={this.state.data.cargo}
+                      label="CARGO"
+                      defaultValue={item.cargo}
                     />
                     <TextInput
                       style={styles.listinputtext}
@@ -194,72 +186,6 @@ export default class EditarResponsavel extends Component {
                       defaultValue={item.celular}
                     />
                   </View>
-                  <Subheading style={styles.listtitle}>ENDEREÇO</Subheading>
-
-                  <View>
-                    <View>
-                      <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={rua => this.setState({ rua })}
-                        value={this.state.data.rua}
-                        label="Logradouro"
-                        defaultValue={item.endereco.rua}
-                      />
-                      <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={numero => this.setState({ numero })}
-                        value={this.state.data.numero}
-                        label="Numero"
-                        defaultValue={item.endereco.numero.toString()}
-                      />
-                    </View>
-                    <View>
-                      <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={bairro => this.setState({ bairro })}
-                        value={this.state.data.bairro}
-                        label="Bairro"
-                        defaultValue={item.endereco.bairro}
-                      />
-                      <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={cidade => this.setState({ cidade })}
-                        value={this.state.data.cidade}
-                        label="Cidade"
-                        defaultValue={item.endereco.cidade}
-                        disabled
-                      />
-                      <TextInput
-                        style={styles.listinputtext}
-                        onChangeText={estado => this.setState({ estado })}
-                        value={this.state.data.estado}
-                        defaultValue={item.endereco.estado}
-                        label="Estado"
-                        disabled
-                      />
-                    </View>
-                  </View>
-                  <Subheading style={styles.listtitle}>DADOS ALUNO</Subheading>
-                  <View>
-                    <TextInput
-                      style={styles.listinputtext}
-                      label="Nome Completo"
-                      value={item._aluno[0].nome}
-                      disabled
-                    />
-                    <TextInput
-                      style={styles.listinputtext}
-                      label="Matricula"
-                      value={item._aluno[0].matricula}
-                      disabled
-                    />
-                    <TextInput
-                      style={styles.listinputtext}
-                      value={item._aluno[0]._cpfResponsavel}
-                      label="CPF Associado (Responsavel)"
-                      disabled
-                    />
-                  </View>
                 </View>
               )}
             />
@@ -267,13 +193,11 @@ export default class EditarResponsavel extends Component {
           <View style={styles.btnfooter}>
             <IconButton
               icon="account-check"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleUpdate()}
             />
             <IconButton
               icon="delete-sweep"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleDeletar()}
             />

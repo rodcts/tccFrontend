@@ -6,7 +6,6 @@ import {
   IconButton,
   Colors,
   ActivityIndicator,
-  Switch,
 } from 'react-native-paper';
 
 import { FlatList } from 'react-native-gesture-handler';
@@ -60,8 +59,6 @@ export default class EditarResponsavel extends Component {
         },
         function() {},
       );
-
-      // console.log('data dATA ', this.state.data.data[0]);
     } catch (error) {
       return error;
     }
@@ -98,13 +95,8 @@ export default class EditarResponsavel extends Component {
     try {
       const { data, cpfFuncionario, funcionario, status } = this.state;
 
-      // console.log('dataaaaa', data.data[0]._id);
-
       let respFunc = await api.buscarFuncionario(cpfFuncionario);
 
-      // console.log('respFunc', respFunc.data[0]._id);
-
-      // atualizando
       let resp = await api.atualizarVeiculo(respFunc.data[0]._id, {
         _funcionario: respFunc.data[0],
         _cpfFuncionario: cpfFuncionario,
@@ -276,13 +268,11 @@ export default class EditarResponsavel extends Component {
           <View style={styles.btnfooter}>
             <IconButton
               icon="account-check"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleUpdate()}
             />
             <IconButton
               icon="delete-sweep"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleDeletar()}
             />

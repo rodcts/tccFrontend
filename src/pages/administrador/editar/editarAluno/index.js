@@ -267,13 +267,11 @@ export default class EditarResponsavel extends Component {
           <View style={styles.btnfooter}>
             <IconButton
               icon="account-check"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleUpdate()}
             />
             <IconButton
               icon="delete-sweep"
-              // color={Colors.red500}
               size={50}
               onPress={() => this.handleDeletar()}
             />
