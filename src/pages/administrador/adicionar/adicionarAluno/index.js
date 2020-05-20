@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { View, Text, Button, SafeAreaView, ScrollView } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
 
@@ -19,7 +12,6 @@ export default class addResp extends Component {
       data: [],
       nome: '',
       cpf: '',
-      // matricula: '',
     };
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -30,7 +22,6 @@ export default class addResp extends Component {
       this.state.data = {
         nome: this.state.nome,
         cpf: this.state.cpf,
-        // matricula: this.state.matricula,
       };
 
       console.info('request para api ', this.state.data);

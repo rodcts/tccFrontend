@@ -3,11 +3,10 @@ import {
   View,
   Text,
   Button,
-  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import {  TextInput } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
 
@@ -155,81 +154,7 @@ export default class addResp extends Component {
                 autoCapitalize="characters"
                 onChangeText={cargo => this.setState({ cargo })}
                 value={this.state.cargo}
-              />
-              {/* {this.state.cargo == 'motorista' ||
-              this.state.cargo == 'MOTORISTA' ? (
-                <View>
-                  <Text>Dados Veiculo</Text>
-                  <TextInput
-                    style={{
-                      height: 43,
-                      fontSize: 20,
-                      borderRadius: 5,
-                      borderWidth: 1,
-                      borderColor: '#eaeaea',
-                      backgroundColor: '#fafafa',
-                      margin: 15,
-                      padding: 5,
-                    }}
-                    placeholder="Placa"
-                    placeholderColor="#c4c3cb"
-                    autoCapitalize="characters"
-                    onChangeText={placa => this.setState({ placa })}
-                    value={this.state.placa}
-                  />
-                  <TextInput
-                    style={{
-                      height: 43,
-                      fontSize: 20,
-                      borderRadius: 5,
-                      borderWidth: 1,
-                      borderColor: '#eaeaea',
-                      backgroundColor: '#fafafa',
-                      margin: 15,
-                      padding: 5,
-                    }}
-                    placeholder="Ano"
-                    placeholderColor="#c4c3cb"
-                    autoCapitalize="characters"
-                    onChangeText={ano => this.setState({ ano })}
-                    value={this.state.ano}
-                  />
-                  <TextInput
-                    style={{
-                      height: 43,
-                      fontSize: 20,
-                      borderRadius: 5,
-                      borderWidth: 1,
-                      borderColor: '#eaeaea',
-                      backgroundColor: '#fafafa',
-                      margin: 15,
-                      padding: 5,
-                    }}
-                    placeholder="Modelo"
-                    placeholderColor="#c4c3cb"
-                    autoCapitalize="characters"
-                    onChangeText={modelo => this.setState({ modelo })}
-                    value={this.state.modelo}
-                  />
-                  <TextInput
-                    style={{
-                      height: 43,
-                      fontSize: 20,
-                      borderRadius: 5,
-                      borderWidth: 1,
-                      borderColor: '#eaeaea',
-                      backgroundColor: '#fafafa',
-                      margin: 15,
-                      padding: 5,
-                    }}
-                    placeholder="Categoria"
-                    placeholderColor="#c4c3cb"
-                    autoCapitalize="characters"
-                    onChangeText={categoria => this.setState({ categoria })}
-                    value={this.state.categoria}
-                  />
-                </View>
-              ) : null} */}
+              />             
             </View>
           </View>
           <View>

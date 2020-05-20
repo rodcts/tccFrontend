@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { View, Text, Button, SafeAreaView, ScrollView } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import api from '../../../../services/api';
 import styles from './style';
 
@@ -60,7 +53,7 @@ export default class addResp extends Component {
         nomeAluno: this.state.nomeAluno,
         matricula: `${ano}` + Date.now(),
       };
-      
+
       await api.adicionarResponsavel(this.state.data);
       await api.adicionarAluno(this.state.data);
       alert('Gravado com sucesso!');
@@ -279,23 +272,6 @@ export default class addResp extends Component {
                 onChangeText={nomeAluno => this.setState({ nomeAluno })}
                 value={this.state.nomeAluno}
               />
-              {/* <TextInput
-                style={{
-                  height: 43,
-                  fontSize: 20,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  borderColor: '#eaeaea',
-                  backgroundColor: '#fafafa',
-                  margin: 15,
-                  padding: 5,
-                }}
-                placeholder="Matricula"
-                placeholderColor="#c4c3cb"
-                autoCapitalize="characters"
-                onChangeText={matricula => this.setState({ matricula })}
-                value={this.state.matricula}
-              /> */}
             </View>
           </View>
           <View
