@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, TextInput, Image } from 'react-native';
-import { Button } from 'galio-framework';
+import { View, KeyboardAvoidingView, Image } from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
 
 import styles from './style';
-import logo from '../../../img/iconLogin/login-admin.jpeg';
+import logo from '../../../img/iconLogin/login-admin.jpg';
 import api from '../../../services/api';
 
 export default class Resp extends Component {
@@ -95,6 +95,8 @@ export default class Resp extends Component {
           <View style={styles.loginViewButton}>
             <Button
               style={styles.loginButton}
+              icon="login"
+              mode="contained"
               onPress={() => this.handleLogin()}
               title="Login">
               Login

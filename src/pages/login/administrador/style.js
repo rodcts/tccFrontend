@@ -12,53 +12,46 @@ const styles = StyleSheet.create({
   },
  
   loginFormView: {
-    // flex: 1,
-    // backgroundColor: 'green',
     paddingTop: 30,
     paddingBottom: 30,
-
   },
+
   loginFormTextInput: {
     height: 43,
     fontSize: 14,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#eaeaea',
-    // backgroundColor: '#fafafa',
+    backgroundColor: '#fafafa',
     margin: 15,
     padding: 5,
-
   },
   loginViewButton: {
-    // backgroundColor: 'red',
     alignContent: 'center',
     alignItems: 'center',
     paddingTop: 30,
     paddingBottom: 30,
   },
   loginButton: {
-    backgroundColor: '#3897f1',
+    backgroundColor: '#2c6d6a',
     borderRadius: 5,
-    height: 45,
+    height: 50,
+    width: 250,
     shadowRadius: 0,
     shadowOpacity: 0,
-    // color: '#000',
-    
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  // fbLoginButton: {
-  //   height: 45,
-  //   marginTop: 10,
-  //   backgroundColor: 'transparent',
-  // },
+ 
   logo: {
-    // width: 50,
-    height: 40,
+    width: 110,
+    height: 70,
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 150,
+    marginTop: 130,
     marginBottom: 30,
-    marginLeft: 40,
+    marginLeft: 140,
     resizeMode: 'contain',
   },
 });

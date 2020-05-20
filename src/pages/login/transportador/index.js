@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, TextInput, KeyboardAvoidingView } from 'react-native';
-import { Button } from 'galio-framework';
+import { View, Image, KeyboardAvoidingView } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import styles from './style';
 import logo from '../../../img/iconLogin/iconLogin1.png';
 import api from '../../../services/api';
@@ -85,7 +85,7 @@ export default class Transportador extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               autoCapitalize="none"
-              onChangeText={email => this.setState({ email })}
+              onChangeText={(email) => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -93,12 +93,14 @@ export default class Transportador extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({ cpf })}
+              onChangeText={(cpf) => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>
           <View style={styles.loginViewButton}>
             <Button
+              icon="login"
+              mode="contained"
               style={styles.loginButton}
               onPress={() => this.onLoginPress()}
               title="Login">

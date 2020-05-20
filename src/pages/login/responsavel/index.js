@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, KeyboardAvoidingView, Image } from 'react-native';
-import { Button, Text } from 'galio-framework';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, KeyboardAvoidingView, Image } from 'react-native';
+// import { Text } from 'galio-framework';
+import { Button, Text, TextInput } from 'react-native-paper';
 
 import api from '../../../services/api';
 import styles from './style';
@@ -76,14 +76,10 @@ export default class Resp extends Component {
 
       switch (user) {
         case 'administrador':
-          // direcionar para a pagina de administrador
-          // alert('administrador');
           await this.props.navigation.navigate('LoginAdministrador');
 
           break;
         case 'funcionario':
-          // direcionar para a pagina de funccionario
-          // alert('funcionario');
           await this.props.navigation.navigate('LoginTransportador');
 
           break;
@@ -109,7 +105,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               autoCapitalize="none"
               style={styles.loginFormTextInput}
-              onChangeText={email => this.setState({ email })}
+              onChangeText={(email) => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -117,12 +113,14 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({ cpf })}
+              onChangeText={(cpf) => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>
           <View style={styles.loginViewButton}>
             <Button
+              icon="login"
+              mode="contained"
               style={styles.loginButton}
               onPress={() => this.onLoginPress()}
               title="Login">
@@ -131,18 +129,21 @@ export default class Resp extends Component {
           </View>
 
           <View style={styles.containerChangeUser}>
-            <Text>Você é um? </Text>
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
+              <Button
+                icon="account-tie"
+                mode="text"
                 style={styles.containerChangeUserbtn}
                 onPress={() => this.handleChangeUser('administrador')}>
                 <Text style={styles.logoTextUser}>ADMINISTRADOR</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </Button>
+              <Button
+                icon="bus"
+                mode="text"
                 style={styles.containerChangeUserbtn}
                 onPress={() => this.handleChangeUser('funcionario')}>
-                <Text style={styles.logoTextUser}>FUNCIONARIO</Text>
-              </TouchableOpacity>
+                <Text style={styles.logoTextUser}>TRANSPORTADOR</Text>
+              </Button>
             </View>
           </View>
         </View>
