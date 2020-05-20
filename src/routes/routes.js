@@ -16,6 +16,7 @@ import ScreenResponsavel from '../pages/responsavel/index';
 import ScreenLoginResponsavel from '../pages/login/responsavel/index';
 import ScreenLoginAdministrador from '../pages/login/administrador/index';
 import ScreenLoginTransportador from '../pages/login/transportador/index';
+//
 import ScreenEditarResponsavel from '../pages/administrador/editar/editarResponsavel/index';
 import ScreenEditarFuncionario from '../pages/administrador/editar/editarFuncionario/index';
 import ScreenEditarVeiculo from '../pages/administrador/editar/editarVeiculo/index';
@@ -100,7 +101,7 @@ const AppNavigator = createStackNavigator(
       },
     },
 
-    Editafuncionario: {
+    EditaFuncionario: {
       screen: ScreenEditarFuncionario,
       navigationOptions: {
         title: 'Editar Funcionario',
