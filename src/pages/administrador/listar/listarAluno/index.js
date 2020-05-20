@@ -1,27 +1,11 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert,
-  Image,
-  List,
-  ActivityIndicator,
-  SafeAreaView,
-  SearchBar,
-} from 'react-native';
+import { View, Text, FlatList, Alert, ActivityIndicator } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import { Right } from 'native-base';
 
 import api from '../../../../services/api';
-import styles from './style';
-// import Header from '../../../../components/header/admin';
 
-export default class ListaResponsavel extends Component {
+export default class ListaAluno extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +54,7 @@ export default class ListaResponsavel extends Component {
 
   handleDeletando = async id => {
     try {
-      console.log('=============>>> ',id)
+      console.log('=============>>> ', id);
       let response = await api.deletaAluno(id);
       return response;
     } catch (error) {
@@ -79,7 +63,6 @@ export default class ListaResponsavel extends Component {
   };
 
   handleExcluir = _id => {
-
     Alert.alert('ATENÇÃO! ', `A Exclusão do será permanente`, [
       {
         text: 'Cancel',
@@ -91,13 +74,11 @@ export default class ListaResponsavel extends Component {
 
   handleEdit() {
     try {
-      Alert.alert('ATENÇÃO! ', `Não é possivel editar o aluno`,
-        { text: 'OK' },
-      );
+      Alert.alert('ATENÇÃO! ', `Não é possivel editar o aluno`, { text: 'OK' });
     } catch (error) {
       console.info('handleEdit  ====>', error);
     }
-  };
+  }
 
   render() {
     if (this.state.loading) {
@@ -162,7 +143,7 @@ export default class ListaResponsavel extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
-                    onPress={() => this.handleEdit() }
+                    onPress={() => this.handleEdit()}
                   />
                 }
                 rightIcon={
@@ -180,3 +161,4 @@ export default class ListaResponsavel extends Component {
     }
   }
 }
+export { ListaAluno };

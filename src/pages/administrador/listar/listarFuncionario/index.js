@@ -1,28 +1,11 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert,
-  Image,
-  List,
-  ActivityIndicator,
-  SafeAreaView,
-  SearchBar,
-} from 'react-native';
+import { View, Text, FlatList, Alert, ActivityIndicator } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import { Right } from 'native-base';
 
 import api from '../../../../services/api';
-import styles from './style';
-// import iconUpdate from '../../../img/iconPlus/iconPlus2.png';
-import Header from '../../../../components/header/admin';
 
-export default class ListaResponsavel extends Component {
+export default class ListaFuncionario extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,6 +85,31 @@ export default class ListaResponsavel extends Component {
     ]);
   };
 
+  handleEdit = async cpf => {
+    try {
+      let response = await api.buscarFuncionario(cpf);
+      console.log(response);
+      this.setState(
+        {
+          dataEdit: response,
+          loading: false,
+        },
+        function() {},
+      );
+
+      const { dataEdit } = this.state;
+
+      let dataParse = { ...dataEdit.data[0] }; // substituindo o Object.assign pelo three dots
+
+      console.log('dataParse', dataParse);
+      await this.props.navigation.navigate('EditaFuncionario', {
+        dataParse,
+      });
+    } catch (error) {
+      console.info('handleEdit  ====>', error);
+    }
+  };
+
   render() {
     if (this.state.loading) {
       return (
@@ -165,7 +173,7 @@ export default class ListaResponsavel extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
-                    onPress={() => console.log('testando')}
+                    onPress={() => this.handleEdit(item.cpf)}
                   />
                 }
                 rightIcon={
@@ -183,3 +191,4 @@ export default class ListaResponsavel extends Component {
     }
   }
 }
+export { ListaFuncionario };

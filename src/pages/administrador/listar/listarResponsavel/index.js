@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert,
-  Image,
-  ActivityIndicator,
-  SafeAreaView,
-  SearchBar,
-  Modal,
-  ScrollView,
-  ScrollViewComponent,
-} from 'react-native';
-import { List, ListItem, Icon, Avatar } from 'react-native-elements';
-// import { List } from 'react-native-paper';
+import { View, Text, FlatList, Alert, ActivityIndicator } from 'react-native';
+import { ListItem, Icon, Avatar } from 'react-native-elements';
 
 import api from '../../../../services/api';
 import styles from './style';
@@ -102,7 +85,6 @@ export default class ListaResponsavel extends Component {
 
   handleEdit = async cpf => {
     try {
-      // let res = await api.atualizarResponsavel(id);
       let response = await api.buscarResponsavel(cpf);
 
       this.setState(
@@ -115,7 +97,6 @@ export default class ListaResponsavel extends Component {
 
       const { dataEdit } = this.state;
 
-      // let dataParse = Object.assign({}, dataEdit.data[0]);
       let dataParse = { ...dataEdit.data[0] }; // substituindo o Object.assign pelo three dots
 
       console.log('dataParse', dataParse);
@@ -173,7 +154,7 @@ export default class ListaResponsavel extends Component {
                 name="plus-circle"
                 type="font-awesome"
                 size={30}
-                onPress={() => this.handleAdd()} //TODO adicionar metodo para adicionar responsavel
+                onPress={() => this.handleAdd()}
               />
               <Text>ADD</Text>
             </Right>
@@ -189,7 +170,6 @@ export default class ListaResponsavel extends Component {
                 title={item.nome}
                 subtitle={item.email}
                 bottomDivider
-                // TODO criar metodo para navegar para a tela de editar
                 leftIcon={
                   <Avatar
                     rounded
@@ -212,3 +192,4 @@ export default class ListaResponsavel extends Component {
     }
   }
 }
+export { ListaResponsavel };
