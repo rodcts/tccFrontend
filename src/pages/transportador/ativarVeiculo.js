@@ -1,14 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Alert,
-  ActivityIndicator,
-  TouchableOpacity,
-  Item,
-  RefreshControl,
-} from 'react-native';
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, Icon, Avatar } from 'react-native-elements';
 import api from '../../services/api';
 import styles from './style';
@@ -40,7 +31,6 @@ export default class AtivarVeiculo extends Component {
         if (e.status == 'false') {
           objVeiculo.push(e);
           this.setState({ objData: objVeiculo });
-
         }
       });
     } catch (error) {

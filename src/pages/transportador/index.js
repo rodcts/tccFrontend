@@ -59,10 +59,6 @@ export default class CadastrarRotaTransporte extends Component {
           },
         );
       }
-
-      // console.log('DATA >>>> ', this.state.data);
-      // arrayAluno.push(this.state.data);
-      // console.log('ARRAYALUNO', arrayAluno);
     } catch (error) {
       console.log(error);
     }
