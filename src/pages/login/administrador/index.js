@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, TextInput, Image } from 'react-native';
 import { Button } from 'galio-framework';
-import { Avatar } from 'react-native-elements';
 
 import styles from './style';
 import logo from '../../../img/iconLogin/login-admin.jpeg';
@@ -23,10 +22,6 @@ export default class Resp extends Component {
 
   async handleLogin(res) {
     try {
-      // TODO tirar comentario quando tiver tudo OK
-
-      // await this.props.navigation.navigate('Administrador', {nome: 'TESTE'});
-
       let data = {
         email: this.state.email,
         cpf: this.state.cpf,

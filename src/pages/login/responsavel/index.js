@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  Image,
-  // StyleSheet,
-  // StatusBar,
-  // Dimensions,
-  // Platform,
-} from 'react-native';
-import { Images, materialTheme } from '../../../constants/';
-import { Block, Button, Text, theme } from 'galio-framework';
-// import {Button} from 'react-native-elements';
+import { View, TextInput, KeyboardAvoidingView, Image } from 'react-native';
+import { Button, Text } from 'galio-framework';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import api from '../../../services/api';
 import styles from './style';
 import logo from '../../../img/iconLogin/login-responsavel.png';
-import {
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native-gesture-handler';
-import api from '../../../services/api';
 
 export default class Resp extends Component {
   constructor(props) {

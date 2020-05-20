@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, TextInput, KeyboardAvoidingView } from 'react-native';
-import { Block, Button, Text, theme } from 'galio-framework';
+import { Button } from 'galio-framework';
 import styles from './style';
 import logo from '../../../img/iconLogin/iconLogin1.png';
 import api from '../../../services/api';
@@ -74,7 +74,8 @@ export default class Transportador extends Component {
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={styles.containerView} enabled>
+        style={styles.containerView}
+        enabled>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Image style={styles.logo} source={logo} />
@@ -100,7 +101,6 @@ export default class Transportador extends Component {
             <Button
               style={styles.loginButton}
               onPress={() => this.onLoginPress()}
-              // onPress={() => this.props.navigation.navigate('ListaAlunosAddTransporte')}
               title="Login">
               Login
             </Button>
