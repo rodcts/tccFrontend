@@ -325,7 +325,7 @@ async function deletaFuncionario(id) {
 async function deletaAluno(id) {
   try {
     let res = await axios.delete(
-      `http://localhost:3000/funcionario/delete/${id}`,
+      `http://localhost:3000/aluno/delete/${id}`,
     );
     return res;
   } catch (err) {
