@@ -42,7 +42,7 @@ export default class ListaFuncionario extends Component {
           loading: false,
           fetching: false,
         },
-        function() {},
+        function () {},
       );
     } catch (error) {
       return error;
@@ -60,11 +60,11 @@ export default class ListaFuncionario extends Component {
     }
   }
 
-  _handleChangeText = text => {
+  _handleChangeText = (text) => {
     this.setState({ dtNome: text });
   };
 
-  handleDeletando = async id => {
+  handleDeletando = async (id) => {
     try {
       let response = await api.deletaFuncionario(id);
       return response;
@@ -73,7 +73,7 @@ export default class ListaFuncionario extends Component {
     }
   };
 
-  handleExcluir = _id => {
+  handleExcluir = (_id) => {
     console.log('deleta funcionario  ', _id);
 
     Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
@@ -85,7 +85,7 @@ export default class ListaFuncionario extends Component {
     ]);
   };
 
-  handleEdit = async cpf => {
+  handleEdit = async (cpf) => {
     try {
       let response = await api.buscarFuncionario(cpf);
       console.log(response);
@@ -94,7 +94,7 @@ export default class ListaFuncionario extends Component {
           dataEdit: response,
           loading: false,
         },
-        function() {},
+        function () {},
       );
 
       const { dataEdit } = this.state;
@@ -160,7 +160,7 @@ export default class ListaFuncionario extends Component {
           <FlatList
             onRefresh={() => this.onRefresh()}
             refreshing={this.state.fetching}
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             data={this.state.data}
             renderItem={({ item }) => (
               <ListItem
@@ -173,6 +173,11 @@ export default class ListaFuncionario extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
+                    icon={{
+                      name: 'edit',
+                      type: 'font-awesome',
+                      color: '#aaaaaa',
+                    }}
                     onPress={() => this.handleEdit(item.cpf)}
                   />
                 }

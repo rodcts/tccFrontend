@@ -174,6 +174,7 @@ export default class ListaResponsavel extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
+                    icon={{name: 'edit', type: 'font-awesome', color:'#aaaaaa'}}
                     onPress={() => this.handleEdit(item.cpf)}
                   />
                 }

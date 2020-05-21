@@ -41,18 +41,18 @@ export default class ListaAluno extends Component {
           loading: false,
           fetching: false,
         },
-        function() {},
+        function () {},
       );
     } catch (error) {
       return error;
     }
   };
 
-  _handleChangeText = text => {
+  _handleChangeText = (text) => {
     this.setState({ dtNome: text });
   };
 
-  handleDeletando = async id => {
+  handleDeletando = async (id) => {
     try {
       console.log('=============>>> ', id);
       let response = await api.deletaAluno(id);
@@ -62,7 +62,7 @@ export default class ListaAluno extends Component {
     }
   };
 
-  handleExcluir = _id => {
+  handleExcluir = (_id) => {
     Alert.alert('ATENÇÃO! ', `A Exclusão do será permanente`, [
       {
         text: 'Cancel',
@@ -130,7 +130,7 @@ export default class ListaAluno extends Component {
           <FlatList
             onRefresh={() => this.onRefresh()}
             refreshing={this.state.fetching}
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             data={this.state.data}
             renderItem={({ item }) => (
               <ListItem
@@ -142,6 +142,11 @@ export default class ListaAluno extends Component {
                 leftIcon={
                   <Avatar
                     rounded
+                    icon={{
+                      name: 'edit',
+                      type: 'font-awesome',
+                      color: '#aaaaaa',
+                    }}
                     showEditButton={true}
                     onPress={() => this.handleEdit()}
                   />

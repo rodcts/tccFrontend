@@ -38,7 +38,7 @@ export default class ListaVeiculo extends Component {
           loading: false,
           fetching: false,
         },
-        function() {},
+        function () {},
       );
     } catch (error) {
       return error;
@@ -56,11 +56,11 @@ export default class ListaVeiculo extends Component {
     }
   }
 
-  _handleChangeText = text => {
+  _handleChangeText = (text) => {
     this.setState({ dtNome: text });
   };
 
-  handleDeletando = async id => {
+  handleDeletando = async (id) => {
     try {
       let response = await api.deletaVeiculo(id);
       return response;
@@ -69,7 +69,7 @@ export default class ListaVeiculo extends Component {
     }
   };
 
-  handleExcluir = _id => {
+  handleExcluir = (_id) => {
     console.log('deleta responsavel  ', _id);
 
     Alert.alert('ATENÇÃO! ', 'A Exclusão será permanente', [
@@ -81,7 +81,7 @@ export default class ListaVeiculo extends Component {
     ]);
   };
 
-  handleEdit = async placa => {
+  handleEdit = async (placa) => {
     try {
       let response = await api.buscarVeiculo(placa);
       console.log(response);
@@ -90,7 +90,7 @@ export default class ListaVeiculo extends Component {
           dataEdit: response,
           loading: false,
         },
-        function() {},
+        function () {},
       );
 
       const { dataEdit } = this.state;
@@ -156,7 +156,7 @@ export default class ListaVeiculo extends Component {
           <FlatList
             onRefresh={() => this.onRefresh()}
             refreshing={this.state.fetching}
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             data={this.state.data}
             renderItem={({ item }) => (
               <ListItem
@@ -169,6 +169,11 @@ export default class ListaVeiculo extends Component {
                   <Avatar
                     rounded
                     showEditButton={true}
+                    icon={{
+                      name: 'edit',
+                      type: 'font-awesome',
+                      color: '#aaaaaa',
+                    }}
                     onPress={() => this.handleEdit(item.placa)}
                   />
                 }
