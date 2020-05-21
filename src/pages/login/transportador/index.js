@@ -24,6 +24,7 @@ export default class Transportador extends Component {
         email: this.state.email,
         cpf: this.state.cpf,
         nome: '',
+        matriculaTransportador: '',
       };
 
       console.info('====>', data);
@@ -31,7 +32,10 @@ export default class Transportador extends Component {
       //TODO metodo para validar o transportador
       let res = await api.authFuncionario(data);
 
-      this.setState({ nome: res.data.autenticacao.nome });
+      this.setState({
+        nome: res.data.autenticacao.nome,
+        matriculaTransportador: res.data.autenticacao.matricula,
+      });
       console.info('passagem de parametro ===>', this.state.nome);
 
       switch (res.status) {
@@ -39,6 +43,7 @@ export default class Transportador extends Component {
           if (res.data.autenticacao.cargo === 'Transportador') {
             await this.props.navigation.navigate('Transporte', {
               nome: this.state.nome,
+              matriculaTransportador: this.state.matriculaTransportador,
             });
           } else {
             alert('Você não está apto a logar aqui!');

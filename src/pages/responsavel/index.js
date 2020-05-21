@@ -5,14 +5,14 @@ import Geolocation from '@react-native-community/geolocation';
 
 import styles from './style';
 import iconResponsavel from '../../img/iconResponsavel/minhaFoto.png';
-import { Button } from 'react-native-paper';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Button, Text } from 'react-native-paper';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      nome: this.props.navigation.state.params.nome,
       locAluno: {
         coords: {
           latitude: 0,
@@ -42,13 +42,13 @@ export default class App extends Component {
 
   watchLocation() {
     Geolocation.watchPosition(
-      position => {
+      (position) => {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
       },
-      error => Alert.alert('Error', JSON.stringify(error)),
+      (error) => Alert.alert('Error', JSON.stringify(error)),
       {
         enableHighAccuracy: true,
         timeout: 20000,
@@ -60,8 +60,8 @@ export default class App extends Component {
 
   getPrimaryLocation() {
     Geolocation.getCurrentPosition(
-      position => {
-        const initialPosition = JSON.stringify(position); 
+      (position) => {
+        const initialPosition = JSON.stringify(position);
         const initialPosition2 = JSON.parse(initialPosition);
 
         const locationFirst = {
@@ -73,21 +73,21 @@ export default class App extends Component {
 
         this.setState({ locResponsavel: locationFirst });
       },
-      error => Alert.alert('Error', JSON.stringify(error)),
+      (error) => Alert.alert('Error', JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
   getSecondLocation() {
     Geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         const secondPosition = JSON.stringify(position);
         const secondPosition2 = JSON.parse(secondPosition);
 
         this.setState({ locAluno: secondPosition2 });
         // this.setState({locAluno: loc2});
       },
-      error => Alert.alert('Error', JSON.stringify(error)),
+      (error) => Alert.alert('Error', JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
@@ -119,9 +119,6 @@ export default class App extends Component {
     };
     return (
       <View>
-        <Text>
-          Latitude {this.state.latitude} Longitude {this.state.longitude}
-        </Text>
         <MapView
           style={styles.mapStyle}
           showsMyLocationButton={true}
@@ -149,7 +146,7 @@ export default class App extends Component {
               longitude: this.state.locResponsavel.coords.longitude,
             }}
             // TODO title deverá receber  como parametro o nome de quem esta logado
-            title={'Responsavel'}
+            title={this.state.nome}
             description={this.convertTime(this.state.locAluno.timestamp)}
             // TODO image deverá receber a imagem do responsavel atual logado
           >

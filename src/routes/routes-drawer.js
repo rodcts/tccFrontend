@@ -3,15 +3,20 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import ScreenMapa from '../pages/responsavel/index';
 
-const AppNavigator = createDrawerNavigator({
-  Maaapa: {
-    screen: ScreenMapa,
-    navigationOptions: {
-      title: 'Responsavel',
-    },
-    initialRouter: 'Maaapa',
-  },
-});
-const AppContainer = createAppContainer(AppNavigator);
+// const AppNavigator = createDrawerNavigator({
+//   MapaTransporte: {
+//     screen: ScreenMapa,
+//     navigationOptions: {
+//       title: 'Responsavel',
+//     },
+//   },
+// });
+const Routes = createAppContainer(
+  createDrawerNavigator({
+    MapaTransporte: {screen: ScreenMapa}
+  },{
+    initialRouteName: 'ScreenMapa'
+  })
+)
 
-export default AppContainer;
+export default Routes;

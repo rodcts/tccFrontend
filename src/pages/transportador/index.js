@@ -24,22 +24,24 @@ export default class CadastrarRotaTransporte extends Component {
       load: false,
       loading: false,
       nome: this.props.navigation.state.params.nome,
+      matriculaTransportador: this.props.navigation.state.params
+        .matriculaTransportador,
       matricula: '',
     };
   }
 
   // TODO
-  handleLista = async matricula => {
+  
+
+  handleLista = async (matricula) => {
     try {
       const { arrayAluno, objData } = this.state;
       let response = await api.buscarAluno(matricula);
-      console.log('RESPONSE', response);
+      console.log('RESPONSE', response.data._id);
 
-      if (response.data == []) {
-        Alert.alert('Matricula nao encontrada', {
-          text: 'OK',
-          onPress: () => console.log('Pressionando o botao OK'),
-        });
+      if (response.data._id == undefined) {
+        alert('Matricula Não Encontrada!!');
+
       }
 
       let resp = response.data[0];
@@ -51,7 +53,7 @@ export default class CadastrarRotaTransporte extends Component {
           {
             arrayAluno,
           },
-          function() {
+          function () {
             if (objData != null || objData != [] || objData != '') {
               let value = objData.push(resp);
               console.log('FAZENDO PUSH', value);
@@ -65,7 +67,7 @@ export default class CadastrarRotaTransporte extends Component {
   };
 
   //TODO tirar aluno da lista de transporte atual
-  handleApagar = params => {
+  handleApagar = (params) => {
     Alert.alert('ATENÇÃO! ', 'Você está tirando o aluno da lista de viagem', [
       {
         text: 'Cancelar',
@@ -76,7 +78,7 @@ export default class CadastrarRotaTransporte extends Component {
         onPress: () => {
           const { arrayAluno, load } = this.state;
 
-          arrayAluno.map(e => {
+          arrayAluno.map((e) => {
             let index = e.matricula.indexOf(params);
 
             if (index > -1) {
@@ -126,26 +128,37 @@ export default class CadastrarRotaTransporte extends Component {
             />
             <View style={{ paddingTop: 60, paddingLeft: 20, width: 150 }}>
               <Text>{this.state.nome}</Text>
+              <Text>{this.state.matriculaTransportador}</Text>
             </View>
           </View>
           <View>
             <TextInput
-              placeholder="MATRICULA"
+              placeholder="Digite Matricula"
               placeholderColor="#c4c3cb"
-              // style={styles.loginFormTextInput}
-              onChangeText={matricula => this.setState({ matricula })}
+              style={{
+                height: 30,
+                fontSize: 14,
+                borderRadius: 5,
+                borderWidth: 1,
+                borderColor: '#eaeaea',
+                backgroundColor: '#fafafa',
+                margin: 15,
+                padding: 5,
+              }}
+              onChangeText={(matricula) => this.setState({ matricula })}
               value={this.state.matricula}
             />
             <View>
               <Button
                 onPress={() => this.handleLista(this.state.matricula)}
-                title="ADD Aluno">
-                Add Aluno
+                icon="account-arrow-right-outline"
+                mode="text">
+                Inserir Aluno
               </Button>
             </View>
           </View>
           <FlatList
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             data={this.state.objData}
             renderItem={({ item }) => (
               <ListItem

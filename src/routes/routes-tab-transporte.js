@@ -19,7 +19,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={25}
-              name={'ios-contacts'}
+              name={'ios-contact'}
             />
           </View>
         ),
@@ -33,7 +33,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={25}
-              name={'ios-contact'}
+              name={'ios-bus'}
             />
           </View>
         ),

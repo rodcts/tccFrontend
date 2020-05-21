@@ -40,7 +40,7 @@ export default class Resp extends Component {
 
       switch (res.status) {
         case 200:
-          await this.props.navigation.navigate('Mapa', {
+          await this.props.navigation.navigate('MapaTransporte', {
             nome: this.state.nome,
           });
           break;

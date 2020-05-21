@@ -14,8 +14,11 @@ export default class AtivarVeiculo extends Component {
       load: false,
       loading: false,
       nome: this.props.navigation.state.params.nome,
-      novoStatus: false,
+      matriculaTransportador: this.props.navigation.state.params
+        .matriculaTransportador,
+      novoStatus: true,
       objVeiculo: [],
+      id: '',
     };
   }
 
@@ -27,10 +30,10 @@ export default class AtivarVeiculo extends Component {
       this.setState({ objVeiculo: [] }); // Reseta a variavel
       let response = await api.listaVeiculo();
 
-      response.map(e => {
+      response.map((e) => {
         if (e.status == 'false') {
           objVeiculo.push(e);
-          this.setState({ objData: objVeiculo });
+          this.setState({ objData: objVeiculo, id: objVeiculo[0]._id });
         }
       });
     } catch (error) {
@@ -39,10 +42,11 @@ export default class AtivarVeiculo extends Component {
   };
 
   //TODO tirar aluno da lista de transporte atual
-  handleAtivarVeiculo = async id => {
+  handleAtivarVeiculo = async (id) => {
     try {
       const updateStatus = await api.atualizarVeiculo(id, {
         status: true,
+        id: this.state.id,
       });
 
       console.log('updateStatus :: ', updateStatus);
@@ -87,17 +91,19 @@ export default class AtivarVeiculo extends Component {
             />
             <View style={{ paddingTop: 60, paddingLeft: 20, width: 150 }}>
               <Text>{this.state.nome}</Text>
+              <Text>{this.state.matriculaTransportador}</Text>
             </View>
           </View>
           <View>
             <Button
               onPress={() => this.handleLista(this.state.placa)}
-              title="ADD Veiculo">
-              Listar Veiculos Disponiveis
+              icon="bus"
+              mode="text">
+              Veiculos Disponiveis
             </Button>
           </View>
           <FlatList
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             data={this.state.objData}
             renderItem={({ item }) => (
               <ListItem
@@ -106,22 +112,27 @@ export default class AtivarVeiculo extends Component {
                   padding: 10,
                   opacity: 0.7,
                 }}
-                title={item.nome}
+                title={item.modelo}
                 subtitle={item.placa}
                 bottomDivider
                 leftIcon={
                   <Avatar
                     rounded
                     showEditButton={true}
+                    icon={{
+                      name: 'bus',
+                      type: 'font-awesome',
+                      color: '#aaaaaa',
+                    }}
                     // TODO criar metodo para mostrar descricao do veiculo e o motorista associado.
-                    onPress={() => console.log('testando')}
+                    // onPress={() => console.log('testando')}
                   />
                 }
                 rightIcon={
                   <Icon
                     name="podcast"
                     type="font-awesome"
-                    onPress={() => this.handleAtivarVeiculo(item._id)}
+                    onPress={() => this.handleAtivarVeiculo(this.state.id)}
                   />
                 }
               />
