@@ -22,4 +22,4 @@
 
 
 Tela Principal do App
-![ScreenLogin](https://raw.githubusercontent.com/Diguix/mobilidadeEscolar/master/Image/ScreenLogin.png)
+![ScreenLogin](https://github.com/Diguix/tccFrontend/blob/master/src/img/print/loginAdmin.png)
