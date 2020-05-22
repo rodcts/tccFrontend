@@ -4,6 +4,7 @@
 > Aplicação é *mobile* e foi desenvolvida com o conceito de *API REST* 
 >
 > Backend foi desenvolvido usando *NodeJs*
+
 > Frontend foi desenvolvido usando *React Native*
 >
 
