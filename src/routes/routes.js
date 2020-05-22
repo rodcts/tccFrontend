@@ -25,11 +25,10 @@ const AppNavigator = createStackNavigator(
     LoginResponsavel: {
       screen: ScreenLoginResponsavel,
       navigationOptions: {
-        title: 'Responsavel',
+        title: ' ',
         headerTintColor: '#FFFF',
-        headerStyle: {
-          backgroundColor: '#2c6d6a',
-        },
+        headerShown: false,
+       
       },
     },
     Administrador: {
@@ -95,6 +94,7 @@ const AppNavigator = createStackNavigator(
     LoginAdministrador: {
       screen: ScreenLoginAdministrador,
       navigationOptions: {
+        headerShown: false,
         title: 'Administrador',
         headerTintColor: '#FFFF',
         headerStyle: {
@@ -105,6 +105,7 @@ const AppNavigator = createStackNavigator(
     LoginTransportador: {
       screen: ScreenLoginTransportador,
       navigationOptions: {
+        headerShown: false,
         title: 'Transportador',
         headerTintColor: '#FFFF',
         headerStyle: {
