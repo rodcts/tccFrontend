@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Image, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import styles from './style';
 import logo from '../../../img/iconLogin/iconLogin1.png';
@@ -111,6 +111,9 @@ export default class Transportador extends Component {
               title="Login">
               Login
             </Button>
+            <ImageBackground
+              source={require('../../../img/template/bg2.png')}
+              style={styles.backgroundImage}></ImageBackground>
           </View>
         </View>
       </KeyboardAvoidingView>

@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     margin: 15,
     padding: 5,
+    opacity: 0.5,
+
   },
   loginViewButton: {
     alignContent: 'center',
@@ -53,6 +55,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 140,
     resizeMode: 'contain',
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 220,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    height: 220,
+    opacity: 0.2
   },
 });
 

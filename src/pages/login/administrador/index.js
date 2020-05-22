@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Image } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 
 import styles from './style';
@@ -80,7 +85,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               autoCapitalize="none"
               style={styles.loginFormTextInput}
-              onChangeText={email => this.setState({ email })}
+              onChangeText={(email) => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
@@ -88,7 +93,7 @@ export default class Resp extends Component {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-              onChangeText={cpf => this.setState({ cpf })}
+              onChangeText={(cpf) => this.setState({ cpf })}
               value={this.state.cpf}
             />
           </View>
@@ -101,6 +106,9 @@ export default class Resp extends Component {
               title="Login">
               Login
             </Button>
+            <ImageBackground
+              source={require('../../../img/template/bg2.png')}
+              style={styles.backgroundImage}></ImageBackground>
           </View>
         </View>
       </KeyboardAvoidingView>

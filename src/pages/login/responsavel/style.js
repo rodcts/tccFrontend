@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   //   container: {
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     margin: 15,
     padding: 5,
+    opacity: 0.5,
   },
 
   loginViewButton: {
@@ -46,9 +47,9 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     shadowOpacity: 0,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
- 
+
   logo: {
     width: 50,
     height: 50,
@@ -59,6 +60,16 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 180,
   },
+  backgroundImage: {
+    position: 'absolute',
+    top: 110,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    height: 220,
+    opacity: 0.2
+  },
+
   containerChangeUser: {
     justifyContent: 'center',
     alignItems: 'center',

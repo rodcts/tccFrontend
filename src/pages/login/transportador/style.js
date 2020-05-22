@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     margin: 15,
     padding: 5,
+    opacity: 0.5,
+
   },
   loginViewButton: {
     // backgroundColor: 'red',
@@ -80,6 +82,15 @@ const styles = StyleSheet.create({
   logoTextUser: {
     color: '#FFF',
     fontSize: 8,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 220,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    height: 220,
+    opacity: 0.2
   },
 });
 

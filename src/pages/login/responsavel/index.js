@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Image } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Image,
+  ImageBackground,
+} from 'react-native';
 // import { Text } from 'galio-framework';
 import { Button, Text, TextInput } from 'react-native-paper';
 
@@ -145,6 +150,9 @@ export default class Resp extends Component {
                 <Text style={styles.logoTextUser}>TRANSPORTADOR</Text>
               </Button>
             </View>
+        <ImageBackground
+          source={require('../../../img/template/bg2.png')}
+          style={styles.backgroundImage}></ImageBackground>
           </View>
         </View>
       </KeyboardAvoidingView>
