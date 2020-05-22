@@ -22,4 +22,4 @@
 
 
 Tela Principal do App
-![ScreenLogin](https://github.com/Diguix/tccFrontend/blob/master/src/img/print/loginAdmin.png)
+![ScreenLogin](https://github.com/Diguix/tccFrontend/blob/master/src/img/print/logindefault.png)
