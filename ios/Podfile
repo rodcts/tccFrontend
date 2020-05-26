@@ -36,7 +36,6 @@ target 'tccFrontend' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
 
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
@@ -45,7 +44,6 @@ target 'tccFrontend' do
   pod 'Google-Maps-iOS-Utils'
 
 
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   target 'tccFrontendTests' do
     inherit! :search_paths

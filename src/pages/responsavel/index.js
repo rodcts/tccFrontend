@@ -42,13 +42,13 @@ export default class App extends Component {
 
   watchLocation() {
     Geolocation.watchPosition(
-      (position) => {
+      position => {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
       },
-      (error) => Alert.alert('Error', JSON.stringify(error)),
+      error => Alert.alert('Error', JSON.stringify(error)),
       {
         enableHighAccuracy: true,
         timeout: 20000,
@@ -60,7 +60,7 @@ export default class App extends Component {
 
   getPrimaryLocation() {
     Geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         const initialPosition = JSON.stringify(position);
         const initialPosition2 = JSON.parse(initialPosition);
 
@@ -73,21 +73,21 @@ export default class App extends Component {
 
         this.setState({ locResponsavel: locationFirst });
       },
-      (error) => Alert.alert('Error', JSON.stringify(error)),
+      error => Alert.alert('Error', JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
   getSecondLocation() {
     Geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         const secondPosition = JSON.stringify(position);
         const secondPosition2 = JSON.parse(secondPosition);
 
         this.setState({ locAluno: secondPosition2 });
         // this.setState({locAluno: loc2});
       },
-      (error) => Alert.alert('Error', JSON.stringify(error)),
+      error => Alert.alert('Error', JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
@@ -101,28 +101,14 @@ export default class App extends Component {
     return dtFim;
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const { params } = navigation.state;
-    return {
-      headerRight: (
-        <Button title="Test" onPress={() => console.info('works!')} />
-      ),
-    };
-  };
-
   render() {
-    EdgePadding = {
-      top: 30,
-      right: 30,
-      bottom: 30,
-      left: 30,
-    };
     return (
-      <View>
+      <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
           showsMyLocationButton={true}
           showsUserLocation={true}
+          title={this.state.nome}
           userLocationAnnotationTitle={this.convertTime(
             this.state.locAluno.timestamp,
           )} // O título da anotação para a localização atual do usuário. Isso só funciona se showsUserLocationfor verdade.
@@ -145,11 +131,8 @@ export default class App extends Component {
               latitude: this.state.locResponsavel.coords.latitude,
               longitude: this.state.locResponsavel.coords.longitude,
             }}
-            // TODO title deverá receber  como parametro o nome de quem esta logado
             title={this.state.nome}
-            description={this.convertTime(this.state.locAluno.timestamp)}
-            // TODO image deverá receber a imagem do responsavel atual logado
-          >
+            description={this.convertTime(this.state.locAluno.timestamp)}>
             <View>
               <Image
                 style={{ borderRadius: 50, width: 30, height: 30 }}
@@ -158,6 +141,13 @@ export default class App extends Component {
             </View>
           </Marker>
         </MapView>
+        <View style={styles.btnView}>
+          <Button
+            icon="bus"
+            style={styles.btn}
+            onPress={() => this.props.navigation.navigate('LoginResponsavel')}
+          />
+        </View>
       </View>
     );
   }
