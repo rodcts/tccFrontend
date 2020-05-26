@@ -1,9 +1,16 @@
 import React from 'react';
+import { View, Text } from 'react-native';
+import { IconButton, Button } from 'react-native-paper';
+// import { DrawerActions } from '@react-navigation/native';
+
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import {DrawerActions} from 'react-navigation-drawer'
 
 import ScreenAdministrador from './routes-tab';
 import ScreenTransporte from './routes-tab-transporte';
+import ScreenMapa from './routes-drawer';
+
 import ScreenListaResponsavel from '../pages/administrador/listar/listarResponsavel/index';
 import ScreenListaFuncionario from '../pages/administrador/listar/listarFuncionario/index';
 import ScreenListaVeiculo from '../pages/administrador/listar/listarVeiculo/index';
@@ -28,13 +35,36 @@ const AppNavigator = createStackNavigator(
         title: ' ',
         headerTintColor: '#FFFF',
         headerShown: false,
-       
       },
     },
     Administrador: {
       screen: ScreenAdministrador,
       navigationOptions: ({ navigation }) => ({
         title: `${navigation.state.params.nome}`,
+        headerTintColor: '#FFFF',
+        headerStyle: {
+          backgroundColor: '#2c6d6a',
+        },
+      }),
+    },
+    MapaTransporte: {
+      screen: ScreenMapa,
+      navigationOptions: ({ navigation }) => ({
+        title: `${navigation.state.params.nome}`,
+        headerLeft: () => {
+          return (
+            <View>
+              <Button
+                icon="menu"
+                color="#fafafa"
+                size={20}
+                onPress={() =>
+                  navigation.dispatch(DrawerActions.toggleDrawer())
+                }
+              />
+            </View>
+          );
+        },
         headerTintColor: '#FFFF',
         headerStyle: {
           backgroundColor: '#2c6d6a',
@@ -89,7 +119,6 @@ const AppNavigator = createStackNavigator(
     AddVeiculo: {
       screen: ScreenAddVeiculo,
     },
-  
 
     LoginAdministrador: {
       screen: ScreenLoginAdministrador,
